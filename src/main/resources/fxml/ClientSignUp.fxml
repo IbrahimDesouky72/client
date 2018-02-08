@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="737.0" prefWidth="618.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="178.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/538303-user_512x512.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="180.0" layoutY="397.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/538351-lock_512x512.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="111.0" layoutX="260.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/CMi6Vv7UsAAanMM.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="260.0" layoutY="84.0" prefHeight="63.0" prefWidth="56.0" text="talk" textFill="#f99806">
+         <font>
+            <Font name="Blackadder ITC" size="37.0" />
+         </font>
+      </Label>
+      <Label layoutX="309.0" layoutY="84.0" prefHeight="44.0" prefWidth="47.0" text="toki" textFill="#4d4d4d">
+         <font>
+            <Font name="Blackadder ITC" size="37.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="30.0" prefHeight="26.0" prefWidth="139.0" text="Back To previous" textFill="#f99806">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="41.0" fitWidth="47.0" layoutX="8.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/arrow-144-512+(1).png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="180.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/538303-user_512x512.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="180.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/538303-user_512x512.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="180.0" layoutY="522.0" prefHeight="17.0" prefWidth="81.0" text="Country" textFill="#f99806">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <TextField layoutX="233.0" layoutY="266.0" prefHeight="26.0" prefWidth="251.0" promptText="Last Name" />
+      <TextField layoutX="233.0" layoutY="198.0" prefHeight="26.0" prefWidth="251.0" promptText="First Name" />
+      <TextField layoutX="233.0" layoutY="327.0" prefHeight="26.0" prefWidth="251.0" promptText="Email" />
+      <RadioButton layoutX="180.0" layoutY="464.0" mnemonicParsing="false" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: Bold;" text="Male" />
+      <RadioButton layoutX="347.0" layoutY="464.0" mnemonicParsing="false" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: bold;" text="Female" />
+      <ComboBox layoutX="184.0" layoutY="561.0" prefHeight="28.0" prefWidth="302.0" />
+      <Button layoutX="367.0" layoutY="643.0" mnemonicParsing="false" style="-fx-background-color: #f99806;" text="Sign up" />
+      <Button layoutX="532.0" layoutY="27.0" mnemonicParsing="false" style="-fx-background-color: #f99806;" text="Sign in" />
+      <Button layoutX="205.0" layoutY="643.0" mnemonicParsing="false" style="-fx-background-color: #4d4d4d;" text="cancel" />
+      <PasswordField layoutX="233.0" layoutY="402.0" prefHeight="26.0" prefWidth="251.0" promptText="Password" />
+   </children>
+</AnchorPane>
