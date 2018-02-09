@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="507.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.talktoki.client.controller.ClientController">
@@ -35,9 +36,12 @@
             <Font name="Blackadder ITC" size="37.0" />
          </font>
       </Label>
-      <Button cancelButton="true" layoutX="181.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-color: #4d4d4d;" text="Cancle" />
-      <Button layoutX="308.0" layoutY="332.0" mnemonicParsing="false" onAction="#Connect" style="-fx-background-color: #f99806; -fx-border-radius: 15px;" text="Connect" />
+      <Button cancelButton="true" layoutX="181.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-color: #4d4d4d;" text="Cancle" textFill="#f5f5f5" />
+      <Button layoutX="308.0" layoutY="332.0" mnemonicParsing="false" onAction="#Connect" style="-fx-background-color: #f99806; -fx-border-radius: 15px;" text="Connect" textFill="#e8dfdf" />
       <TextField fx:id="PortNum" layoutX="178.0" layoutY="255.0" prefHeight="26.0" prefWidth="260.0" promptText="Port number" />
       <TextField fx:id="IpAdd" layoutX="178.0" layoutY="196.0" prefHeight="26.0" prefWidth="260.0" promptText="Ip address" />
+      <Circle fx:id="portCheck" fill="#ff1f1f" layoutX="448.0" layoutY="265.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+      <Circle fx:id="IpCheck" fill="#ff1f1f" layoutX="448.0" layoutY="206.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+      <Label fx:id="refuseCheck" layoutX="181.0" layoutY="299.0" prefHeight="17.0" prefWidth="260.0" textFill="#6ddd0d" />
    </children>
 </AnchorPane>
