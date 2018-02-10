@@ -58,14 +58,14 @@
       <TextField fx:id="lnameValue" layoutX="233.0" layoutY="266.0" prefHeight="26.0" prefWidth="251.0" promptText="Last Name" />
       <TextField fx:id="FnameValue" layoutX="233.0" layoutY="198.0" prefHeight="26.0" prefWidth="251.0" promptText="First Name" />
       <TextField fx:id="EmailValue" layoutX="233.0" layoutY="330.0" prefHeight="26.0" prefWidth="251.0" promptText="Email" />
-      <RadioButton layoutX="180.0" layoutY="464.0" mnemonicParsing="false" selected="true" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: Bold;" text="Male">
+      <RadioButton fx:id="male" layoutX="180.0" layoutY="464.0" mnemonicParsing="false" selected="true" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: Bold;" text="Male">
          <toggleGroup>
             <ToggleGroup fx:id="gender" />
          </toggleGroup></RadioButton>
-      <RadioButton layoutX="347.0" layoutY="464.0" mnemonicParsing="false" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: bold;" text="Female" toggleGroup="$gender" />
+      <RadioButton fx:id="female" layoutX="347.0" layoutY="464.0" mnemonicParsing="false" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: bold;" text="Female" toggleGroup="$gender" />
       <ComboBox fx:id="Mycombo" layoutX="184.0" layoutY="561.0" prefHeight="28.0" prefWidth="302.0" promptText="Choose Country" />
       <Button layoutX="367.0" layoutY="643.0" mnemonicParsing="false" onAction="#signup" style="-fx-background-color: #f99806;" text="Sign up" textFill="#eeebeb" />
-      <Button layoutX="205.0" layoutY="643.0" mnemonicParsing="false" style="-fx-background-color: #4d4d4d;" text="cancel" textFill="#f5f4f4" />
+      <Button cancelButton="true" layoutX="205.0" layoutY="643.0" mnemonicParsing="false" style="-fx-background-color: #4d4d4d;" text="cancel" textFill="#f5f4f4" />
       <PasswordField fx:id="passwordValue" layoutX="233.0" layoutY="397.0" prefHeight="26.0" prefWidth="251.0" promptText="Password" />
       <Circle fx:id="fCircle" fill="#ff1f2d" layoutX="503.0" layoutY="211.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
       <Circle fx:id="Lcircle" fill="#ff1f1f" layoutX="503.0" layoutY="279.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />

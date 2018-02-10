@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.shape.Circle;
@@ -39,8 +40,10 @@ public class ClientSignUpController implements Initializable {
     @FXML
     private PasswordField passwordValue;
 
+     /*@FXML
+    private ToggleGroup gender;*/
       @FXML
-    private ToggleGroup gender;
+    private RadioButton male;
 
     @FXML
     private ComboBox<String> Mycombo;
@@ -115,15 +118,20 @@ public class ClientSignUpController implements Initializable {
         }
         //if(fnameFlagCheck&&lnameFlagCheck&&passwordFlagCheck&&EmailFlagCheck)
        // {
+       ToggleGroup gender= male.getToggleGroup();
+       String gen = "";
      if (gender.getSelectedToggle() != null) {
-
-             userGender=gender.getSelectedToggle().getUserData().toString();
+            
+               RadioButton name = (RadioButton) gender.getSelectedToggle();
+                gen = name.getText();
+               // TODO CHECK GENDER
+            
 
          }
-        Country=Mycombo.getSelectionModel().getSelectedItem().toString();
+        Country=Mycombo.getValue();
         System.out.println("gender : "+userGender+"Country : "+ Country);
         
-        user=new User(FnameValue.getText()+lnameValue.getText(),EmailValue.getText(), FnameValue.getText(),lnameValue.getText(),passwordValue.getText(),userGender,Country,"offline");
+        user=new User(FnameValue.getText()+lnameValue.getText(),EmailValue.getText(), FnameValue.getText(),lnameValue.getText(),passwordValue.getText(),gen,Country,"offline");
         boolean signUpResult=handle.signUp(user);
             Stage stage = (Stage) lnameValue.getScene().getWindow();
         if(signUpResult)
