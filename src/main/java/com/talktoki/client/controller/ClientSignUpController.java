@@ -1,4 +1,3 @@
-
 package com.talktoki.client.controller;
 
 import com.talktoki.chatinterfaces.commans.*;
@@ -26,9 +25,10 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class ClientSignUpController implements Initializable {
+
     HandleConnection handle;
     User user;
-     @FXML
+    @FXML
     private TextField lnameValue;
 
     @FXML
@@ -40,9 +40,9 @@ public class ClientSignUpController implements Initializable {
     @FXML
     private PasswordField passwordValue;
 
-     /*@FXML
+    /*@FXML
     private ToggleGroup gender;*/
-      @FXML
+    @FXML
     private RadioButton male;
 
     @FXML
@@ -59,12 +59,11 @@ public class ClientSignUpController implements Initializable {
 
     @FXML
     private Circle Pcircle;
-       @FXML
+    @FXML
     private Label excist;
 
-    
-    String userGender="";
-    String Country="";
+    String userGender = "";
+    String Country = "";
     //Regular Expression of username Address
     private static final String USERNAME_PATTERN = "^[a-z0-9_-]{3,15}$";
     //Regular Expression of password Address
@@ -77,17 +76,20 @@ public class ClientSignUpController implements Initializable {
     boolean lnameFlagCheck = false;
     boolean EmailFlagCheck = false;
     boolean passwordFlagCheck = false;
+
     public ClientSignUpController(HandleConnection handleConnection) {
-     handle=handleConnection;   
+        handle = handleConnection;
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      
-         Mycombo.getItems().addAll("Cairo","Alexandria","Tanta","sharm");
-    } 
+
+        Mycombo.getItems().addAll("Cairo", "Alexandria", "Tanta", "sharm");
+    }
+
     @FXML
     void signup(ActionEvent event) {
-           if (checkUserName(FnameValue.getText())) {
+        if (checkUserName(FnameValue.getText())) {
             fnameFlagCheck = true;
             fCircle.setVisible(false);
         } else {
@@ -96,75 +98,72 @@ public class ClientSignUpController implements Initializable {
         }
         //check valud format port >>if false there is a circle red point appear
         if (checkpassword(lnameValue.getText())) {
-            lnameFlagCheck= true;
+            lnameFlagCheck = true;
             Ecircle.setVisible(false);
         } else {
-           lnameFlagCheck= false;
+            lnameFlagCheck = false;
             Ecircle.setVisible(true);
         }
         if (checkpassword(EmailValue.getText())) {
-            lnameFlagCheck= true;
+            lnameFlagCheck = true;
             Ecircle.setVisible(false);
         } else {
-           lnameFlagCheck= false;
+            lnameFlagCheck = false;
             Ecircle.setVisible(true);
         }
         if (checkpassword(passwordValue.getText())) {
-            lnameFlagCheck= true;
+            lnameFlagCheck = true;
             Ecircle.setVisible(false);
         } else {
-           lnameFlagCheck= false;
+            lnameFlagCheck = false;
             Ecircle.setVisible(true);
         }
         //if(fnameFlagCheck&&lnameFlagCheck&&passwordFlagCheck&&EmailFlagCheck)
-       // {
-       ToggleGroup gender= male.getToggleGroup();
-       String gen = "";
-     if (gender.getSelectedToggle() != null) {
-            
-               RadioButton name = (RadioButton) gender.getSelectedToggle();
-                gen = name.getText();
-               // TODO CHECK GENDER
-            
+        // {
+        ToggleGroup gender = male.getToggleGroup();
+        String gen = "";
+        if (gender.getSelectedToggle() != null) {
 
-         }
-        Country=Mycombo.getValue();
-        System.out.println("gender : "+userGender+"Country : "+ Country);
-        
-        user=new User(FnameValue.getText()+lnameValue.getText(),EmailValue.getText(), FnameValue.getText(),lnameValue.getText(),passwordValue.getText(),gen,Country,"offline");
-        boolean signUpResult=handle.signUp(user);
-            Stage stage = (Stage) lnameValue.getScene().getWindow();
-        if(signUpResult)
-        {
-           // Create an FXML Loader
-                FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
-                //Create new mainUI controller instance 
-                MainUIController myMainUIController = new MainUIController();
-                // Attach mainUI contorller to the loader
-                myloader.setController(myMainUIController);
-                // Load the FXML file and get root node       
-                Parent root;
-                try {
-                    root = myloader.load();
-                    //Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainUI.fxml"));
-                    // Create a scene and attach root node to it
-                    Scene scene = new Scene(root);
-                    // Attach css file to the scene
-                    scene.getStylesheets().add("/styles/mainui.css");
-                    stage.setScene(scene);
-                    stage.show();
+            RadioButton name = (RadioButton) gender.getSelectedToggle();
+            gen = name.getText();
+            // TODO CHECK GENDER
 
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
-                }
         }
-        else
-        {
-         excist.setText("This Email used");
+        Country = Mycombo.getValue();
+        System.out.println("gender : " + userGender + "Country : " + Country);
+
+        user = new User(FnameValue.getText() + lnameValue.getText(), EmailValue.getText(), FnameValue.getText(), lnameValue.getText(), passwordValue.getText(), gen, Country, "offline");
+        boolean signUpResult = handle.signUp(user);
+        Stage stage = (Stage) lnameValue.getScene().getWindow();
+        if (signUpResult) {
+            // Create an FXML Loader
+            FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
+            //Create new mainUI controller instance 
+            MainUIController myMainUIController = new MainUIController(handle, user);
+            // Attach mainUI contorller to the loader
+            myloader.setController(myMainUIController);
+            // Load the FXML file and get root node       
+            Parent root;
+            try {
+                root = myloader.load();
+                //Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainUI.fxml"));
+                // Create a scene and attach root node to it
+                Scene scene = new Scene(root);
+                // Attach css file to the scene
+                scene.getStylesheets().add("/styles/mainui.css");
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            excist.setText("This Email used");
         }
-       // }
+        // }
     }
-     public boolean checkUserName(String username) {
+
+    public boolean checkUserName(String username) {
         Pattern ipPatern = Pattern.compile(USERNAME_PATTERN);
         Matcher resultMatcher = ipPatern.matcher(username);
         boolean resultFlagCheck = resultMatcher.matches();
@@ -177,6 +176,5 @@ public class ClientSignUpController implements Initializable {
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
     }
-    
-    
+
 }

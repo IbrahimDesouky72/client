@@ -19,10 +19,10 @@ import javafx.stage.Stage;
 
 public class HandleConnection {
 
-    Registry ConnectReg;
-    ServerInterface myServerAuthInt;
-    String test = "No";
-    boolean userFoundFlag=false;
+    private Registry ConnectReg;
+    private ServerInterface myServerAuthInt;
+    private String test = "No";
+    private boolean userFoundFlag=false;
 //class for handle connection to server and send data for server
 
     public boolean checkRegistry(String IP, int port) {
@@ -45,19 +45,19 @@ public class HandleConnection {
         
     }
 
-    public boolean signin(String user, String password) {
+    public User signin(String user, String password) {
         User activeUser=null; 
         try {
             activeUser = myServerAuthInt.signIn(user, password);
             if (activeUser==null) {
-             return false;
+             return activeUser;
         } else {
             
-          return true;
+          return activeUser;
         }
         } catch (RemoteException ex) {
             
-          return false;
+          return activeUser;
         }
          
         
@@ -77,4 +77,9 @@ public class HandleConnection {
         }
        
     }
+
+    public ServerInterface getMyServerAuthInt() {
+        return myServerAuthInt;
+    }
+    
 }

@@ -1,5 +1,6 @@
 package com.talktoki.client.controller;
 
+import com.talktoki.chatinterfaces.commans.User;
 import com.talktoki.client.model.HandleConnection;
 import java.io.IOException;
 import java.net.URL;
@@ -36,8 +37,8 @@ public class ClientSigninController implements Initializable {
     @FXML
     private Circle userCircle;
     HandleConnection handle;
-    
-    private double xOffset,yOffset;
+
+    private double xOffset, yOffset;
 
     public ClientSigninController(HandleConnection h) {
         handle = h;
@@ -76,88 +77,89 @@ public class ClientSigninController implements Initializable {
             passwordFlagCheck = false;
             passcircle.setVisible(true);
         }
-     //   if (usernameFlagCheck && passwordFlagCheck) {
-            boolean resultSignIn = handle.signin(user.getText(), pass.getText());
-            System.out.println("login success ");
-            Stage stage = (Stage) user.getScene().getWindow();
-            if (resultSignIn) {
-                try {
+        //   if (usernameFlagCheck && passwordFlagCheck) {
 
-                    FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
+        User resultSignIn = handle.signin(user.getText(), pass.getText());
+        System.out.println("login success ");
+        Stage stage = (Stage) user.getScene().getWindow();
+        if (resultSignIn != null) {
+            try {
 
-                    //Create new mainUI controller instance 
-                    MainUIController myMainUIController = new MainUIController();
+                FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
 
-                    // Attach mainUI contorller to the loader
-                    myloader.setController(myMainUIController);
+                //Create new mainUI controller instance 
+                MainUIController myMainUIController = new MainUIController(handle, resultSignIn);
 
-                    // Load the FXML file and getx   root node       
-                    Parent root = myloader.load();
+                // Attach mainUI contorller to the loader
+                myloader.setController(myMainUIController);
 
-                    // Create a scene and attach root node to it
-                    Scene scene = new Scene(root);
+                // Load the FXML file and getx   root node       
+                Parent root = myloader.load();
 
-                    // Remove the default Window decoration 
-                    scene.setFill(null);
-                    
-                    //Add listener to move window with mouse press and hold
-                    root.setOnMousePressed(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            xOffset = stage.getX() - event.getScreenX();
-                            yOffset = stage.getY() - event.getScreenY();
-                        }
-                    });
+                // Create a scene and attach root node to it
+                Scene scene = new Scene(root);
 
-                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            stage.setX(event.getScreenX() + xOffset);
-                            stage.setY(event.getScreenY() + yOffset);
-                        }
-                    });
-                    
-                    stage.setScene(scene);
+                // Remove the default Window decoration 
+                scene.setFill(null);
 
-                    stage.show();
+                //Add listener to move window with mouse press and hold
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        xOffset = stage.getX() - event.getScreenX();
+                        yOffset = stage.getY() - event.getScreenY();
+                    }
+                });
 
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        stage.setX(event.getScreenX() + xOffset);
+                        stage.setY(event.getScreenY() + yOffset);
+                    }
+                });
 
-            } else {
-                System.out.println("heloooo");
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientSignUp.fxml"));
-                ClientSignUpController signin = new ClientSignUpController(handle);
-                loader.setController(signin);
-                Parent root;
-                System.out.println("heloooo");
-                try {
-                    root = loader.load();
-                                        //Add listener to move window with mouse press and hold
-                    root.setOnMousePressed(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            xOffset = stage.getX() - event.getScreenX();
-                            yOffset = stage.getY() - event.getScreenY();
-                        }
-                    });
+                stage.setScene(scene);
 
-                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            stage.setX(event.getScreenX() + xOffset);
-                            stage.setY(event.getScreenY() + yOffset);
-                        }
-                    });
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                stage.show();
 
+            } catch (IOException ex) {
+                Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+        } else {
+            System.out.println("heloooo");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientSignUp.fxml"));
+            ClientSignUpController signin = new ClientSignUpController(handle);
+            loader.setController(signin);
+            Parent root;
+            System.out.println("heloooo");
+            try {
+                root = loader.load();
+                //Add listener to move window with mouse press and hold
+                root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        xOffset = stage.getX() - event.getScreenX();
+                        yOffset = stage.getY() - event.getScreenY();
+                    }
+                });
+
+                root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        stage.setX(event.getScreenX() + xOffset);
+                        stage.setY(event.getScreenY() + yOffset);
+                    }
+                });
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
         //}
 
     }

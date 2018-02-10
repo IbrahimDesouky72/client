@@ -6,8 +6,12 @@
 package com.talktoki.client.controller;
 
 import com.talktoki.chatinterfaces.commans.Message;
+import com.talktoki.chatinterfaces.commans.User;
 import com.talktoki.chatinterfaces.server.ServerInterface;
 import com.talktoki.client.model.Client;
+import com.talktoki.client.model.HandleConnection;
+import java.io.NotSerializableException;
+import java.io.Serializable;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
@@ -29,7 +33,14 @@ public class MainUIController implements Initializable {
     private ServerInterface myServer;
     private Client myclient;
 
-    public MainUIController() {
+    public MainUIController(HandleConnection myHandler, User myUser) {
+        try {
+            this.myServer = myHandler.getMyServerAuthInt();
+            myclient = Client.getInstance(this, myUser, myServer);
+            myServer.addClient(myclient);
+        } catch (RemoteException ex) {
+            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -59,12 +70,13 @@ public class MainUIController implements Initializable {
     }
 
     public void testSend() {
+
         try {
             Message mymsg = new Message();
             mymsg.setText("HI FROM" + myclient.getUser().getEmail());
-            myServer.sendToOne(myclient.getUser().getEmail(), "m@m.com", mymsg);
+            myServer.sendToOne(myclient.getUser().getEmail(), "bassemgawesh@gmail.com", mymsg);
         } catch (RemoteException ex) {
-            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
