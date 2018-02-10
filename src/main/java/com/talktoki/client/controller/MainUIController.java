@@ -29,8 +29,6 @@ import javafx.stage.StageStyle;
  */
 public class MainUIController implements Initializable {
 
-    double xOffset, yOffset;
-
     @FXML
     AnchorPane main;
 
@@ -39,30 +37,7 @@ public class MainUIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Stage stage = (Stage) main.getScene().getWindow();
-        Scene scene = main.getScene();
-        // Remove the default Window decoration 
-        scene.setFill(null);
-
-        stage.initStyle(StageStyle.TRANSPARENT);
-
-        // Add listener to move window with mouse press and hold
-        main.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                xOffset = stage.getX() - event.getScreenX();
-                yOffset = stage.getY() - event.getScreenY();
-            }
-        });
-
-        main.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                stage.setX(event.getScreenX() + xOffset);
-                stage.setY(event.getScreenY() + yOffset);
-            }
-        });
-
+        main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
     }
 
     /* 

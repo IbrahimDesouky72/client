@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,8 +17,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class ClientSigninController implements Initializable {
 
@@ -33,6 +36,8 @@ public class ClientSigninController implements Initializable {
     @FXML
     private Circle userCircle;
     HandleConnection handle;
+    
+    private double xOffset,yOffset;
 
     public ClientSigninController(HandleConnection h) {
         handle = h;
@@ -75,24 +80,47 @@ public class ClientSigninController implements Initializable {
             boolean resultSignIn = handle.signin(user.getText(), pass.getText());
             System.out.println("login success ");
             Stage stage = (Stage) user.getScene().getWindow();
-            if (resultSignIn) { try {
-                System.out.println("load gui");
-                // Create an FXML Loader
-                FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
-                
-                //Create new mainUI controller instance 
-                MainUIController myMainUIController = new MainUIController();
+            if (resultSignIn) {
+                try {
 
-                // Attach mainUI contorller to the loader
-                myloader.setController(myMainUIController);
-                
-                // Load the FXML file and get root node       
-                Parent root = myloader.load();
-                root.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
+                    FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
 
-                // Create a scene and attach root node to it
-                Scene scene = new Scene(root);
-                
+                    //Create new mainUI controller instance 
+                    MainUIController myMainUIController = new MainUIController();
+
+                    // Attach mainUI contorller to the loader
+                    myloader.setController(myMainUIController);
+
+                    // Load the FXML file and getx   root node       
+                    Parent root = myloader.load();
+
+                    // Create a scene and attach root node to it
+                    Scene scene = new Scene(root);
+
+                    // Remove the default Window decoration 
+                    scene.setFill(null);
+                    
+                    //Add listener to move window with mouse press and hold
+                    root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            xOffset = stage.getX() - event.getScreenX();
+                            yOffset = stage.getY() - event.getScreenY();
+                        }
+                    });
+
+                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            stage.setX(event.getScreenX() + xOffset);
+                            stage.setY(event.getScreenY() + yOffset);
+                        }
+                    });
+                    
+                    stage.setScene(scene);
+
+                    stage.show();
+
                 } catch (IOException ex) {
                     Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
                 }
