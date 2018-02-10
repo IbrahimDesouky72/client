@@ -1,116 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="1043.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
-   <left>
-      <VBox id="leftbox" prefHeight="635.0" prefWidth="335.0" spacing="5.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
-         <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+<AnchorPane id="../styles/mainui.css" fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1156.0" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button id="dark-blue" layoutX="994.0" layoutY="14.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="72.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="40" />
+         </graphic>
+      </Button>
+      <BorderPane layoutY="89.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="1157.0">
+         <left>
+            <VBox id="leftbox" prefHeight="635.0" prefWidth="335.0" spacing="5.0" style="-fx-background-color: #011627;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="profilePic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                  </ImageView>
-                  <Label fx:id="username" text="Username" textAlignment="CENTER">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="status" text="Online" textAlignment="CENTER" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </padding>
-            </VBox>
-            <VBox prefHeight="446.0" prefWidth="335.0">
-               <children>
-                  <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label text="Contacts">
+                        <FontAwesomeIconView fill="WHITE" glyphName="USER" size="150" />
+                        <Label fx:id="username" text="Mahrous" textAlignment="CENTER" textFill="WHITE">
                            <font>
-                              <Font size="23.0" />
+                              <Font name="FontAwesome Regular" size="22.0" />
                            </font>
                         </Label>
-                        <Button fx:id="addContactBtn" mnemonicParsing="false" text="add" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                           <children>
+                              <Label fx:id="status" text="Online" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <FontAwesomeIconView fill="#3dff02" glyphName="CIRCLE" size="15">
+                                 <HBox.margin>
+                                    <Insets top="2.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                           </children>
+                        </HBox>
                      </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                      <VBox.margin>
-                        <Insets bottom="3.0" top="3.0" />
+                        <Insets bottom="5.0" />
                      </VBox.margin>
-                  </HBox>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                     <content>
-                        <VBox fx:id="contacts" prefHeight="200.0" prefWidth="317.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-               <padding>
-                  <Insets bottom="5.0" top="5.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="206.0" prefHeight="446.0" prefWidth="335.0">
-               <children>
-                  <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="446.0" prefWidth="335.0">
                      <children>
-                        <Label text="Groups">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="addGroupBtn" mnemonicParsing="false" text="add" />
+                        <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="Contacts" textFill="WHITE">
+                                 <font>
+                                    <Font size="29.0" />
+                                 </font>
+                              </Label>
+                              <Button id="record-sales" fx:id="addContactBtn" mnemonicParsing="false" prefHeight="24.0" prefWidth="46.0">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="PLUS" size="18" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="3.0" top="3.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Line endX="100.0" startX="-100.0" stroke="#686868" />
                      </children>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
                      <VBox.margin>
-                        <Insets bottom="3.0" top="3.0" />
+                        <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
-                  </HBox>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                     <content>
-                        <VBox fx:id="groups" prefHeight="200.0" prefWidth="317.0" />
-                     </content>
-                  </ScrollPane>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="206.0" prefHeight="446.0" prefWidth="335.0">
+                     <children>
+                        <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="Groups">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="addGroupBtn" mnemonicParsing="false" text="add" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="3.0" top="3.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </VBox>
                </children>
                <padding>
-                  <Insets bottom="5.0" top="5.0" />
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                </padding>
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin>
             </VBox>
-         </children>
-         <padding>
-            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-         </padding>
-      </VBox>
-   </left>
-   <center>
-      <TabPane fx:id="tabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Server" />
-          <Tab text="client one" />
-            <Tab text="Client two">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-   </center>
-</BorderPane>
+         </left>
+         <center>
+            <TabPane fx:id="tabs" prefHeight="716.0" prefWidth="822.0" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
+               <tabs>
+                  <Tab text="Server" />
+                  <Tab text="client one" />
+                  <Tab text="Client two">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+      <Button id="dark-blue" layoutX="1077.0" layoutY="14.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="54.0">
+         <graphic>
+            <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="40" />
+         </graphic>
+      </Button>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>
