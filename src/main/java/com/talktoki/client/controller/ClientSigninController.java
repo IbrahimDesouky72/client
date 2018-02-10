@@ -76,7 +76,7 @@ public class ClientSigninController implements Initializable {
             passwordFlagCheck = false;
             passcircle.setVisible(true);
         }
-        if (true && passwordFlagCheck) {
+     //   if (usernameFlagCheck && passwordFlagCheck) {
             boolean resultSignIn = handle.signin(user.getText(), pass.getText());
             System.out.println("login success ");
             Stage stage = (Stage) user.getScene().getWindow();
@@ -126,12 +126,30 @@ public class ClientSigninController implements Initializable {
                 }
 
             } else {
+                System.out.println("heloooo");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientSignUp.fxml"));
                 ClientSignUpController signin = new ClientSignUpController(handle);
                 loader.setController(signin);
                 Parent root;
+                System.out.println("heloooo");
                 try {
                     root = loader.load();
+                                        //Add listener to move window with mouse press and hold
+                    root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            xOffset = stage.getX() - event.getScreenX();
+                            yOffset = stage.getY() - event.getScreenY();
+                        }
+                    });
+
+                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            stage.setX(event.getScreenX() + xOffset);
+                            stage.setY(event.getScreenY() + yOffset);
+                        }
+                    });
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
@@ -140,7 +158,7 @@ public class ClientSigninController implements Initializable {
                 }
 
             }
-        }
+        //}
 
     }
 

@@ -58,7 +58,7 @@
       <TextField fx:id="lnameValue" layoutX="233.0" layoutY="266.0" prefHeight="26.0" prefWidth="251.0" promptText="Last Name" />
       <TextField fx:id="FnameValue" layoutX="233.0" layoutY="198.0" prefHeight="26.0" prefWidth="251.0" promptText="First Name" />
       <TextField fx:id="EmailValue" layoutX="233.0" layoutY="330.0" prefHeight="26.0" prefWidth="251.0" promptText="Email" />
-      <RadioButton layoutX="180.0" layoutY="464.0" mnemonicParsing="false" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: Bold;" text="Male">
+      <RadioButton layoutX="180.0" layoutY="464.0" mnemonicParsing="false" selected="true" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: Bold;" text="Male">
          <toggleGroup>
             <ToggleGroup fx:id="gender" />
          </toggleGroup></RadioButton>

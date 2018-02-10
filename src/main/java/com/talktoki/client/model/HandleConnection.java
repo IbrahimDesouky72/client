@@ -28,40 +28,53 @@ public class HandleConnection {
     public boolean checkRegistry(String IP, int port) {
         try {
             ConnectReg = LocateRegistry.getRegistry(IP, port);
-          // myServerAuthInt = (ServerInterface) ConnectReg.lookup("serverInstance");
-            if (ConnectReg.equals(null)) {
-                // if (myServerAuthInt.equals(null)) {
+            myServerAuthInt = (ServerInterface) ConnectReg.lookup("chat");
+            //if (ConnectReg.equals(null)) {
+           if (myServerAuthInt.equals(null)) {
+               System.out.println("connection fail");
                 return false;
             } else {
+                System.out.println("connection sucess");
                 return true;
             }
         } catch (RemoteException ex) {
             return false;
+        } catch (NotBoundException ex) {
+        return false;    
         }
+        
     }
 
     public boolean signin(String user, String password) {
-//       User activeUser  = myServerAuthInt.signIn(user, password); 
-     //  userFoundFlag=activeUser.getFirstName().trim().equals("");
-        if (userFoundFlag) {
+        User activeUser=null; 
+        try {
+            activeUser = myServerAuthInt.signIn(user, password);
+            if (activeUser==null) {
              return false;
         } else {
             
           return true;
         }
+        } catch (RemoteException ex) {
+            
+          return false;
+        }
+         
+        
     }
     public boolean signUp(User user) { 
         int result = 0;
         try {
             result = myServerAuthInt.signUp(user);
-        } catch (RemoteException ex) {
-            Logger.getLogger(HandleConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (result==2||result==3) {
+             if (result==2||result==3) {
              return false;
         } else {
             
           return true;
         }
+        } catch (RemoteException ex) {
+          return false;
+        }
+       
     }
 }

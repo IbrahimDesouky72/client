@@ -113,8 +113,8 @@ public class ClientSignUpController implements Initializable {
            lnameFlagCheck= false;
             Ecircle.setVisible(true);
         }
-        if(fnameFlagCheck&&lnameFlagCheck&&passwordFlagCheck&&EmailFlagCheck)
-        {
+        //if(fnameFlagCheck&&lnameFlagCheck&&passwordFlagCheck&&EmailFlagCheck)
+       // {
      if (gender.getSelectedToggle() != null) {
 
              userGender=gender.getSelectedToggle().getUserData().toString();
@@ -154,7 +154,7 @@ public class ClientSignUpController implements Initializable {
         {
          excist.setText("This Email used");
         }
-        }
+       // }
     }
      public boolean checkUserName(String username) {
         Pattern ipPatern = Pattern.compile(USERNAME_PATTERN);
