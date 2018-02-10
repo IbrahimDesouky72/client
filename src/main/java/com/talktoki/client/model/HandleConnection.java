@@ -22,7 +22,7 @@ public class HandleConnection {
     Registry ConnectReg;
     ServerInterface myServerAuthInt;
     String test = "No";
-    boolean userFoundFlag=true;
+    boolean userFoundFlag=false;
 //class for handle connection to server and send data for server
 
     public boolean checkRegistry(String IP, int port) {

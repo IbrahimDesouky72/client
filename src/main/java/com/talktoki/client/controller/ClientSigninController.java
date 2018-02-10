@@ -71,12 +71,14 @@ public class ClientSigninController implements Initializable {
             passwordFlagCheck = false;
             passcircle.setVisible(true);
         }
-        if (usernameFlagCheck && passwordFlagCheck) {
+        if (true && passwordFlagCheck) {
             boolean resultSignIn = handle.signin(user.getText(), pass.getText());
+            System.out.println("login success ");
             Stage stage = (Stage) user.getScene().getWindow();
             if (resultSignIn) { try {
+                System.out.println("load gui");
                 // Create an FXML Loader
-                FXMLLoader myloader = new FXMLLoader();
+                FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
                 
                 //Create new mainUI controller instance 
                 MainUIController myMainUIController = new MainUIController();
@@ -85,7 +87,7 @@ public class ClientSigninController implements Initializable {
                 myloader.setController(myMainUIController);
                 
                 // Load the FXML file and get root node       
-                Parent root = myloader.load(getClass().getResource("/fxml/mainUI.fxml"));
+                Parent root = myloader.load();
                 root.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
 
                 // Create a scene and attach root node to it
