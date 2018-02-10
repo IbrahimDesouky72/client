@@ -7,15 +7,21 @@ package com.talktoki.client.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -23,53 +29,39 @@ import javafx.scene.text.Text;
  */
 public class MainUIController implements Initializable {
 
-    /*
-    
-    ------ View nodes ------
-    
-     */
-    // Profile pictures of the user
-    @FXML
-    ImageView profilePic;
+    double xOffset, yOffset;
 
-    //User name label
     @FXML
-    Label username;
-
-    //User status
-    @FXML
-    Label status;
-
-    // User's contact list
-    @FXML
-    VBox contacts;
-
-    //User's group chat    
-    @FXML
-    VBox groups;
-
-    // Tabbed pane where user chat sessions are added
-    @FXML
-    TabPane tabs;
-
-    /*
-    
-    ----- Control nodes ------
-    
-     */
-    // Add new contact button
-    @FXML
-    Button addContactBtn;
-
-    // Add new group chat button
-    @FXML
-    Button addGroupBtn;
+    AnchorPane main;
 
     public MainUIController() {
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Stage stage = (Stage) main.getScene().getWindow();
+        Scene scene = main.getScene();
+        // Remove the default Window decoration 
+        scene.setFill(null);
+
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        // Add listener to move window with mouse press and hold
+        main.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = stage.getX() - event.getScreenX();
+                yOffset = stage.getY() - event.getScreenY();
+            }
+        });
+
+        main.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() + xOffset);
+                stage.setY(event.getScreenY() + yOffset);
+            }
+        });
 
     }
 

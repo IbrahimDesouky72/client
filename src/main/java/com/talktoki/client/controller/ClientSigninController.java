@@ -74,28 +74,27 @@ public class ClientSigninController implements Initializable {
         if (usernameFlagCheck && passwordFlagCheck) {
             boolean resultSignIn = handle.signin(user.getText(), pass.getText());
             Stage stage = (Stage) user.getScene().getWindow();
-            if (resultSignIn) {
+            if (resultSignIn) { try {
                 // Create an FXML Loader
-                FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
+                FXMLLoader myloader = new FXMLLoader();
+                
                 //Create new mainUI controller instance 
                 MainUIController myMainUIController = new MainUIController();
+
                 // Attach mainUI contorller to the loader
                 myloader.setController(myMainUIController);
+                
                 // Load the FXML file and get root node       
-                Parent root;
-                try {
-                    root = myloader.load();
-                    //Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainUI.fxml"));
-                    // Create a scene and attach root node to it
-                    Scene scene = new Scene(root);
-                    // Attach css file to the scene
-                    scene.getStylesheets().add("/styles/mainui.css");
-                    stage.setScene(scene);
-                    stage.show();
+                Parent root = myloader.load(getClass().getResource("/fxml/mainUI.fxml"));
+                root.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
 
+                // Create a scene and attach root node to it
+                Scene scene = new Scene(root);
+                
                 } catch (IOException ex) {
                     Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
             } else {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientSignUp.fxml"));
                 ClientSignUpController signin = new ClientSignUpController(handle);

@@ -51,7 +51,12 @@ public class HandleConnection {
         }
     }
     public boolean signUp(User user) { 
-        int result = myServerAuthInt.signUp(user);
+        int result = 0;
+        try {
+            result = myServerAuthInt.signUp(user);
+        } catch (RemoteException ex) {
+            Logger.getLogger(HandleConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (result==2||result==3) {
              return false;
         } else {
