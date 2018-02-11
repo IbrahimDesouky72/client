@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Messages" type="MessagesType"/>
+  <xs:complexType name="MessagesType">
+    <xs:sequence>
+      <xs:element type="MessageType" name="Message" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FontType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="font-size" use="optional"/>
+        <xs:attribute type="xs:string" name="font-family" use="optional"/>
+        <xs:attribute type="xs:string" name="font-type" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="MessageType">
+    <xs:sequence>
+      <xs:element type="FontType" name="Font"/>
+      <xs:element type="xs:string" name="color"/>
+      <xs:element name="Body">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Bassem is Here"/>
+            <xs:enumeration value="Mahrous is Here"/>
+            <xs:enumeration value="Welcome To Test"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Date"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="From" use="optional"/>
+    <xs:attribute type="xs:string" name="To" use="optional"/>
+    <xs:attribute type="xs:string" name="Time" use="optional"/>
+  </xs:complexType>
+</xs:schema>
