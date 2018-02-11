@@ -12,12 +12,29 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class MainApp extends Application {
+    private double xOffset,yOffset;
 
     @Override
     public void start(Stage stage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/ClientIpPort.fxml"));
         Scene scene = new Scene(root);
+                                  //Add listener to move window with mouse press and hold
+                    root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            xOffset = stage.getX() - event.getScreenX();
+                            yOffset = stage.getY() - event.getScreenY();
+                        }
+                    });
+
+                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            stage.setX(event.getScreenX() + xOffset);
+                            stage.setY(event.getScreenY() + yOffset);
+                        }
+                    });
         scene.getStylesheets().add("/styles/Styles.css");
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);

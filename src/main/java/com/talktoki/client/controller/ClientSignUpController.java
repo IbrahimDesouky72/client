@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -61,11 +63,12 @@ public class ClientSignUpController implements Initializable {
     private Circle Pcircle;
     @FXML
     private Label excist;
+    private double xOffset,yOffset;
 
     String userGender = "";
     String Country = "";
     //Regular Expression of username Address
-    private static final String USERNAME_PATTERN = "^[a-z0-9_-]{3,15}$";
+     private static final String Email_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
     //Regular Expression of password Address
     //Password expression : Password must be between 4 and 8 digits long and include at least one numeric digit.
     //Matches	1234 | asdf1234 | asp123
@@ -164,17 +167,26 @@ public class ClientSignUpController implements Initializable {
     }
 
     public boolean checkUserName(String username) {
-        Pattern ipPatern = Pattern.compile(USERNAME_PATTERN);
+        Pattern ipPatern = Pattern.compile(Email_PATTERN);
         Matcher resultMatcher = ipPatern.matcher(username);
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
     }
 
     public boolean checkpassword(String password) {
-        Pattern ipPatern = Pattern.compile(USERNAME_PATTERN);
+        Pattern ipPatern = Pattern.compile(PASSWORD_PATTERN);
         Matcher resultMatcher = ipPatern.matcher(password);
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
+    }
+    @FXML
+    void close(ActionEvent event) {
+         Platform.exit();
+    }
+
+    @FXML
+    void closebutton(MouseEvent event) {
+           Platform.exit();
     }
 
 }

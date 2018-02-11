@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -176,5 +177,14 @@ public class ClientSigninController implements Initializable {
         Matcher resultMatcher = ipPatern.matcher(password);
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
+    }
+     @FXML
+    void closeButton(ActionEvent event) {
+         Platform.exit();
+    }
+
+    @FXML
+    void closeicon(MouseEvent event) {
+       Platform.exit();
     }
 }

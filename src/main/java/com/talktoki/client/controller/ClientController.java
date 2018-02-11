@@ -16,10 +16,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.shape.Circle;
 import com.talktoki.client.model.*;
 import java.io.IOException;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
@@ -44,6 +47,8 @@ public class ClientController implements Initializable {
 
     @FXML
     private Label refuseCheck;
+    
+    private double xOffset,yOffset;
 
     //Regular Expression of IP Address
     private static final String IPADDRESS_PATTERN
@@ -97,6 +102,22 @@ public class ClientController implements Initializable {
                     ClientSigninController signin=new ClientSigninController(handleConnection);
                     loader.setController(signin);
                     Parent root = loader.load();
+                                              //Add listener to move window with mouse press and hold
+                    root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            xOffset = stage.getX() - event.getScreenX();
+                            yOffset = stage.getY() - event.getScreenY();
+                        }
+                    });
+
+                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            stage.setX(event.getScreenX() + xOffset);
+                            stage.setY(event.getScreenY() + yOffset);
+                        }
+                    });
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
@@ -106,6 +127,14 @@ public class ClientController implements Initializable {
             }
 
         }
+    }
+     @FXML
+    void cancleaction(ActionEvent event) {
+         Platform.exit();
+    }
+    @FXML
+    void closebuttton(MouseEvent event) {
+         Platform.exit();
     }
 // This function for check IP input as Right Ip format >>xxxx.xxxx.xxxx.xxxx such 127.0.0.1 
     //Return True if coorect formate, False Others
