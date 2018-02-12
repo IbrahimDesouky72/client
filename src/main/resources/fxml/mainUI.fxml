@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -13,33 +15,50 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="../styles/mainui.css" fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1156.0" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="../styles/mainui.css" fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="686.0" prefWidth="1000.0" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button id="dark-blue" layoutX="994.0" layoutY="14.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="72.0">
+      <Button fx:id="minBtn" layoutX="902.0" layoutY="15.0" mnemonicParsing="false" onAction="#minimize" prefHeight="27.0" prefWidth="36.0" style="-fx-background-color: #282828;">
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="40" />
+            <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="20" />
          </graphic>
       </Button>
-      <BorderPane layoutY="89.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="1157.0">
-         <left>
-            <VBox id="leftbox" prefHeight="635.0" prefWidth="335.0" spacing="5.0" style="-fx-background-color: #011627;" BorderPane.alignment="CENTER">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+      <TabPane layoutX="292.0" layoutY="55.0" prefHeight="630.0" prefWidth="708.0" side="LEFT" tabClosingPolicy="ALL_TABS">
+        <tabs>
+          <Tab closable="false" text="TalkToki">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="630.0" prefWidth="659.0" style="-fx-background-color: #f6f5f5;">
                      <children>
-                        <FontAwesomeIconView fill="WHITE" glyphName="USER" size="150" />
+                        <Label text="TalkToki Chat ">
+                           <font>
+                              <Font name="System Bold" size="59.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <BorderPane layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1000.0">
+         <left>
+            <AnchorPane prefHeight="601.0" prefWidth="331.0" style="-fx-background-color: #282828;" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER" layoutX="49.0" layoutY="-1.0" prefHeight="215.0" prefWidth="282.0">
+                     <children>
+                        <FontAwesomeIconView fx:id="userIcon" fill="WHITE" glyphName="USER" size="120" />
                         <Label fx:id="username" text="Mahrous" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="FontAwesome Regular" size="22.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                        <HBox alignment="CENTER" prefWidth="200.0" spacing="5.0">
                            <children>
                               <Label fx:id="status" text="Online" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <FontAwesomeIconView fill="#3dff02" glyphName="CIRCLE" size="15">
+                              <FontAwesomeIconView fx:id="statusIcon" fill="#3dff02" glyphName="CIRCLE" size="15">
                                  <HBox.margin>
                                     <Insets top="2.0" />
                                  </HBox.margin>
@@ -50,87 +69,52 @@
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
                      <padding>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
                   </VBox>
-                  <VBox prefHeight="446.0" prefWidth="335.0">
+                  <VBox alignment="CENTER" prefHeight="631.0" prefWidth="58.0" spacing="30.0" style="-fx-background-color: #f6f5f5;">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <Label text="Contacts" textFill="WHITE">
-                                 <font>
-                                    <Font size="29.0" />
-                                 </font>
-                              </Label>
-                              <Button id="record-sales" fx:id="addContactBtn" mnemonicParsing="false" onAction="#testSend" prefHeight="24.0" prefWidth="46.0">
-                                 <graphic>
-                                    <FontAwesomeIconView glyphName="PLUS" size="18" />
-                                 </graphic>
-                              </Button>
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="3.0" top="3.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <Line endX="100.0" startX="-100.0" stroke="#686868" />
+                        <JFXButton fx:id="contactsBtn">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ANDROID" size="30" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="groupsBtn">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ANDROID" size="30" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="logOut" onAction="#logoutConfirmation">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ANDROID" size="30" />
+                           </graphic>
+                        </JFXButton>
                      </children>
-                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
                   </VBox>
-                  <VBox layoutX="10.0" layoutY="206.0" prefHeight="446.0" prefWidth="335.0">
-                     <children>
-                        <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
-                           <children>
-                              <Label text="Groups">
-                                 <font>
-                                    <Font size="23.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="addGroupBtn" mnemonicParsing="false" text="add" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="3.0" top="3.0" />
-                           </VBox.margin>
-                        </HBox>
-                     </children>
+                  <VBox layoutX="324.0" prefHeight="631.0" prefWidth="7.0" style="-fx-background-color: #f6f5f5;" />
+                  <Label layoutX="58.0" layoutY="214.0" text="Contacts" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
                      <padding>
-                        <Insets bottom="5.0" top="5.0" />
+                        <Insets left="5.0" />
                      </padding>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </VBox>
+                  </Label>
+                  <Line endX="100.0" layoutX="159.0" layoutY="264.0" startX="-100.0" stroke="WHITE" />
+                  <JFXListView fx:id="contacts" layoutX="67.0" layoutY="278.0" prefHeight="344.0" prefWidth="198.0" />
+                  <JFXButton fx:id="addContactBtn" layoutX="223.0" layoutY="224.0" onAction="#showAddContactDialog">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="20" />
+                     </graphic>
+                  </JFXButton>
                </children>
-               <padding>
-                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-               </padding>
-            </VBox>
+            </AnchorPane>
          </left>
-         <center>
-            <TabPane fx:id="tabs" prefHeight="716.0" prefWidth="822.0" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
-               <tabs>
-                  <Tab text="Server" />
-                  <Tab text="client one" />
-                  <Tab text="Client two">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </Tab>
-               </tabs>
-            </TabPane>
-         </center>
       </BorderPane>
-      <Button id="dark-blue" layoutX="1077.0" layoutY="14.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="54.0">
+      <Button fx:id="closeBtn" layoutX="950.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutConfirmation" prefHeight="33.0" prefWidth="0.0" style="-fx-background-color: #c1272d;">
          <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="40" />
+            <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="20" />
          </graphic>
       </Button>
    </children>

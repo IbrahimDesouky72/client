@@ -69,8 +69,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void receiveFriendshipRequest(String sender_name, String sender_email) throws RemoteException {
-        boolean accepted = myController.showRequestNotification(sender_name, sender_email);
-        myServer.friendshipRequestResponse(myuser.getEmail(), sender_email, accepted);
+        myController.showRequestNotification(sender_name, sender_email);
     }
 
 }

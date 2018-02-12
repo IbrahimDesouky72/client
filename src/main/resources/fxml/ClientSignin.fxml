@@ -39,7 +39,7 @@
          </font>
       </Label>
       <Button layoutX="278.0" layoutY="339.0" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #f99806;" text="Login" textFill="#f8f7f7" />
-      <Button layoutX="143.0" layoutY="339.0" mnemonicParsing="false" onAction="#close" style="-fx-background-color: #4d4d4d;" text="Cancle" textFill="#f5f0f0" />
+      <Button layoutX="143.0" layoutY="339.0" mnemonicParsing="false" onAction="#closeicon" style="-fx-background-color: #4d4d4d;" text="Cancle" textFill="#f5f0f0" />
       <PasswordField fx:id="pass" layoutX="114.0" layoutY="260.0" prefHeight="26.0" prefWidth="285.0" promptText="Password" />
       <TextField fx:id="user" layoutX="114.0" layoutY="202.0" prefHeight="26.0" prefWidth="285.0" promptText="Email" />
       <Circle fx:id="passcircle" fill="#ff1f54" layoutX="475.0" layoutY="272.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
@@ -47,7 +47,7 @@
       <Label layoutX="182.0" layoutY="298.0" prefHeight="31.0" prefWidth="285.0" textFill="#e40e18" />
       <Pane prefHeight="25.0" prefWidth="435.0" style="-fx-background-color: #f99806;">
          <children>
-            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="410.0" onMouseClicked="#closebutton" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="410.0" onMouseClicked="#closeButton" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/closebtnorange.png" />
                </image>
