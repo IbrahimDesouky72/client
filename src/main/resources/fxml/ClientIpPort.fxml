@@ -1,57 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="444.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.talktoki.client.controller.ClientController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="459.0" prefWidth="847.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.talktoki.client.controller.ClientController">
    <children>
-      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="77.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/Ip.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="77.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/P.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="87.0" fitWidth="111.0" layoutX="179.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/CMi6Vv7UsAAanMM.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="192.0" layoutY="121.0" prefHeight="46.0" prefWidth="60.0" text="talk" textFill="#f99806">
-         <font>
-            <Font name="Browallia New Italic" size="37.0" />
-         </font>
-      </Label>
-      <Label layoutX="237.0" layoutY="117.0" prefHeight="54.0" prefWidth="75.0" text="toki" textFill="#4d4d4d">
-         <font>
-            <Font name="Browallia New Italic" size="37.0" />
-         </font>
-      </Label>
-      <Button cancelButton="true" layoutX="124.0" layoutY="345.0" mnemonicParsing="false" onAction="#cancleaction" style="-fx-background-color: #4d4d4d;" text="Cancle" textFill="#f5f5f5" />
-      <Button layoutX="262.0" layoutY="345.0" mnemonicParsing="false" onAction="#Connect" style="-fx-background-color: #f99806; -fx-border-radius: 15px;" text="Connect" textFill="#e8dfdf" />
-      <TextField fx:id="PortNum" layoutX="132.0" layoutY="255.0" prefHeight="26.0" prefWidth="260.0" promptText="Port number" />
-      <TextField fx:id="IpAdd" layoutX="132.0" layoutY="197.0" prefHeight="26.0" prefWidth="260.0" promptText="Ip address" />
-      <Circle fx:id="portCheck" fill="#ff1f1f" layoutX="448.0" layoutY="265.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
-      <Circle fx:id="IpCheck" fill="#ff1f1f" layoutX="448.0" layoutY="206.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
-      <Label fx:id="refuseCheck" layoutX="181.0" layoutY="299.0" prefHeight="17.0" prefWidth="260.0" textFill="#6ddd0d" />
-      <Pane prefHeight="31.0" prefWidth="444.0" style="-fx-background-color: #f99806;">
+      <Pane layoutX="1.0" layoutY="-1.0" prefHeight="31.0" prefWidth="847.0" style="-fx-background-color: #C6194A;">
          <children>
-            <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="418.0" layoutY="1.0" onMouseClicked="#closebuttton" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/closebtnorange.png" />
-               </image>
-            </ImageView>
+            <FontAwesomeIconView glyphName="CLOSE" layoutX="814.0" layoutY="27.0" onMouseClicked="#closebuttton" size="30" wrappingWidth="24.000006675720215" />
          </children>
       </Pane>
+      <Pane layoutX="486.0" layoutY="77.0" prefHeight="340.0" prefWidth="332.0" style="-fx-background-color: #C6194A;">
+         <children>
+            <JFXTextField fx:id="IpAdd" focusColor="#f6f5f5" labelFloat="true" layoutX="68.0" layoutY="107.0" prefHeight="25.0" prefWidth="231.0" promptText="Connection IP Address" style="-jfx-disable-animation: true;" unFocusColor="#f5f0f0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+            <JFXPasswordField fx:id="PortNum" focusColor="#f6f5f5" labelFloat="true" layoutX="68.0" layoutY="199.0" prefHeight="25.0" prefWidth="231.0" promptText="Connection port" unFocusColor="#f5f0f0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXPasswordField>
+            <Label layoutX="111.0" layoutY="28.0" prefHeight="54.0" prefWidth="124.0" text="Connection" textFill="#eeeaea">
+               <font>
+                  <Font name="Arial" size="23.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="68.0" layoutY="287.0" onAction="#Connect" prefHeight="25.0" prefWidth="231.0" style="-fx-background-color: #e6e7e8;" text="Connect" textFill="#4a4c4d" />
+            <Label fx:id="refuseCheck" layoutX="69.0" layoutY="235.0" prefHeight="46.0" prefWidth="231.0" textFill="#87da44" />
+            <FontAwesomeIconView fill="#222020" glyphName="USER" layoutX="38.0" layoutY="132.0" size="25" wrappingWidth="31.0" />
+            <FontAwesomeIconView glyphName="UNLOCK_ALT" layoutX="38.0" layoutY="230.0" size="30" wrappingWidth="6.000001668930054" />
+            <FontAwesomeIconView fx:id="IpCheck" glyphName="CLOSE" layoutX="299.0" layoutY="136.0" onMouseClicked="#closebuttton" size="20" visible="false" wrappingWidth="24.000006675720215" />
+            <FontAwesomeIconView fx:id="portCheck" glyphName="CLOSE" layoutX="299.0" layoutY="226.0" onMouseClicked="#closebuttton" size="20" visible="false" wrappingWidth="24.000006675720215" />
+         </children>
+      </Pane>
+      <ImageView fitHeight="347.0" fitWidth="402.0" layoutX="43.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Background.2e16d0ba.fill-1422x800.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="134.0" fitWidth="190.0" layoutX="149.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Untitled.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="184.0" layoutY="275.0" prefHeight="46.0" prefWidth="60.0" text="talk" textFill="#c6194a">
+         <font>
+            <Font name="Browallia New Italic" size="54.0" />
+         </font>
+      </Label>
+      <Label layoutX="244.0" layoutY="275.0" prefHeight="54.0" prefWidth="60.0" text="toki" textFill="#4d4d4d">
+         <font>
+            <Font name="Browallia New Italic" size="54.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

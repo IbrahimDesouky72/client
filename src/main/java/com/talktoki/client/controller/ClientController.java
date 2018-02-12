@@ -5,6 +5,8 @@
  */
 package com.talktoki.client.controller;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -15,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Circle;
 import com.talktoki.client.model.*;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -33,17 +36,19 @@ import javafx.stage.Stage;
  */
 public class ClientController implements Initializable {
 
-    @FXML
-    private TextField PortNum;
+   
+    
+     @FXML
+    private JFXTextField IpAdd;
 
     @FXML
-    private TextField IpAdd;
+    private JFXPasswordField PortNum;
+
+     @FXML
+    private FontAwesomeIconView IpCheck;
 
     @FXML
-    private Circle portCheck;
-
-    @FXML
-    private Circle IpCheck;
+    private FontAwesomeIconView portCheck;
 
     @FXML
     private Label refuseCheck;
@@ -90,7 +95,7 @@ public class ClientController implements Initializable {
             HandleConnection handleConnection = new HandleConnection();
             boolean checkrResult = handleConnection.checkRegistry(IpAdd.getText(), Integer.parseInt(PortNum.getText()));
             if (!checkrResult) {
-                refuseCheck.setTextFill(Paint.valueOf("#e00d0d"));
+                refuseCheck.setTextFill(Paint.valueOf("#f8f5f6"));
                 refuseCheck.setText("Coonection Refuse");
             } else {
                 refuseCheck.setTextFill(Paint.valueOf("#6ddd0d"));
@@ -127,10 +132,6 @@ public class ClientController implements Initializable {
             }
 
         }
-    }
-     @FXML
-    void cancleaction(ActionEvent event) {
-         Platform.exit();
     }
     @FXML
     void closebuttton(MouseEvent event) {
