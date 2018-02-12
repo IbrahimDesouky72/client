@@ -194,11 +194,11 @@ public class MainUIController implements Initializable {
         dialog.setContentText("Please enter an email:");
 
         // TODO VALIDATE EMAIL AND RESHOW ANOTHER DIALOG IF NOT CORRECT
-        // TODO CHECK SERVER THAT THE USER EXISTS
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             try {
                 myServer.sendFriendshipRequest(myclient.getUser().getEmail(), result.get());
+                // TODO CHECK SERVER THAT THE USER EXISTS
             } catch (RemoteException ex) {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }

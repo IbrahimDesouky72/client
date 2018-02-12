@@ -73,21 +73,21 @@
                         <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="631.0" prefWidth="58.0" spacing="30.0" style="-fx-background-color: #f6f5f5;">
+                  <VBox alignment="CENTER" prefHeight="631.0" prefWidth="58.0" spacing="30.0" style="-fx-background-color: #212121;">
                      <children>
                         <JFXButton fx:id="contactsBtn">
                            <graphic>
-                              <FontAwesomeIconView glyphName="ANDROID" size="30" />
+                              <FontAwesomeIconView fill="#f6f5f5" glyphName="ANDROID" size="30" />
                            </graphic>
                         </JFXButton>
                         <JFXButton fx:id="groupsBtn">
                            <graphic>
-                              <FontAwesomeIconView glyphName="ANDROID" size="30" />
+                              <FontAwesomeIconView fill="#f6f5f5" glyphName="ANDROID" size="30" />
                            </graphic>
                         </JFXButton>
                         <JFXButton fx:id="logOut" onAction="#logoutConfirmation">
                            <graphic>
-                              <FontAwesomeIconView glyphName="ANDROID" size="30" />
+                              <FontAwesomeIconView fill="#f6f5f5" glyphName="ANDROID" size="30" />
                            </graphic>
                         </JFXButton>
                      </children>
@@ -95,17 +95,17 @@
                   <VBox layoutX="324.0" prefHeight="631.0" prefWidth="7.0" style="-fx-background-color: #f6f5f5;" />
                   <Label layoutX="58.0" layoutY="214.0" text="Contacts" textFill="WHITE">
                      <font>
-                        <Font size="34.0" />
+                        <Font name="Calibri Italic" size="39.0" />
                      </font>
                      <padding>
                         <Insets left="5.0" />
                      </padding>
                   </Label>
-                  <Line endX="100.0" layoutX="159.0" layoutY="264.0" startX="-100.0" stroke="WHITE" />
+                  <Line endX="100.0" layoutX="159.0" layoutY="264.0" startX="-100.0" stroke="#c1272d" />
                   <JFXListView fx:id="contacts" layoutX="67.0" layoutY="278.0" prefHeight="344.0" prefWidth="198.0" />
                   <JFXButton fx:id="addContactBtn" layoutX="223.0" layoutY="224.0" onAction="#showAddContactDialog">
                      <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="20" />
+                        <FontAwesomeIconView fill="#02d706" glyphName="PLUS" size="20" />
                      </graphic>
                   </JFXButton>
                </children>
