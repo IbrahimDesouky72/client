@@ -1,86 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="737.0" prefWidth="603.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="743.0" prefWidth="774.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="178.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/538303-user_512x512.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="180.0" layoutY="397.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/538351-lock_512x512.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="87.0" fitWidth="111.0" layoutX="261.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/CMi6Vv7UsAAanMM.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="248.0" layoutY="101.0" prefHeight="63.0" prefWidth="68.0" text="talk" textFill="#f99806">
-         <font>
-            <Font name="Blackadder ITC" size="37.0" />
-         </font>
-      </Label>
-      <Label layoutX="313.0" layoutY="106.0" prefHeight="54.0" prefWidth="68.0" text="toki" textFill="#4d4d4d">
-         <font>
-            <Font name="Blackadder ITC" size="37.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="180.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/538303-user_512x512.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="180.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/538303-user_512x512.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="180.0" layoutY="522.0" prefHeight="17.0" prefWidth="81.0" text="Country" textFill="#f99806">
-         <font>
-            <Font name="System Bold Italic" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="lnameValue" layoutX="233.0" layoutY="266.0" prefHeight="26.0" prefWidth="251.0" promptText="Last Name" />
-      <TextField fx:id="FnameValue" layoutX="233.0" layoutY="198.0" prefHeight="26.0" prefWidth="251.0" promptText="First Name" />
-      <TextField fx:id="EmailValue" layoutX="233.0" layoutY="330.0" prefHeight="26.0" prefWidth="251.0" promptText="Email" />
-      <RadioButton fx:id="male" layoutX="180.0" layoutY="464.0" mnemonicParsing="false" selected="true" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: Bold;" text="Male">
-         <toggleGroup>
-            <ToggleGroup fx:id="gender" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="female" layoutX="347.0" layoutY="464.0" mnemonicParsing="false" style="-fx-text-fill: #f99806; -fx-font-size: 17px; -fx-font-style: bold;" text="Female" toggleGroup="$gender" />
-      <ComboBox fx:id="Mycombo" layoutX="184.0" layoutY="561.0" prefHeight="28.0" prefWidth="302.0" promptText="Choose Country" />
-      <Button layoutX="367.0" layoutY="643.0" mnemonicParsing="false" onAction="#signup" style="-fx-background-color: #f99806;" text="Sign up" textFill="#eeebeb" />
-      <Button cancelButton="true" layoutX="205.0" layoutY="643.0" mnemonicParsing="false" onAction="#closeButton" style="-fx-background-color: #4d4d4d;" text="cancel" textFill="#f5f4f4" />
-      <PasswordField fx:id="passwordValue" layoutX="233.0" layoutY="397.0" prefHeight="26.0" prefWidth="251.0" promptText="Password" />
-      <Circle fx:id="fCircle" fill="#ff1f2d" layoutX="503.0" layoutY="211.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
-      <Circle fx:id="Lcircle" fill="#ff1f1f" layoutX="503.0" layoutY="279.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
-      <Circle fx:id="Ecircle" fill="#ff1f23" layoutX="500.0" layoutY="343.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
-      <Circle fx:id="Pcircle" fill="#ff1f28" layoutX="500.0" layoutY="415.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
-      <Label fx:id="excist" layoutX="180.0" layoutY="604.0" prefHeight="25.0" prefWidth="302.0" />
-      <Pane prefHeight="25.0" prefWidth="603.0" style="-fx-background-color: #f99806;">
+      <Pane layoutX="-5.0" layoutY="-1.0" prefHeight="31.0" prefWidth="782.0" style="-fx-background-color: #C6194A;">
          <children>
-            <ImageView fitHeight="25.0" fitWidth="24.0" layoutX="571.0" onMouseClicked="#closeicon" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/closebtnorange.png" />
-               </image>
-            </ImageView>
+            <FontAwesomeIconView glyphName="CLOSE" layoutX="756.0" layoutY="26.0" onMouseClicked="#closeButton" size="30" text="" wrappingWidth="24.000006675720215" />
          </children>
       </Pane>
+      <Pane layoutX="407.0" layoutY="77.0" prefHeight="617.0" prefWidth="327.0" style="-fx-background-color: #C6194A;">
+         <children>
+            <JFXTextField fx:id="FnameValue" focusColor="#f6f5f5" labelFloat="true" layoutX="68.0" layoutY="51.0" prefHeight="25.0" prefWidth="231.0" promptText="FirstName" unFocusColor="#f5f0f0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+            <JFXPasswordField fx:id="passwordValue" focusColor="#f6f5f5" labelFloat="true" layoutX="68.0" layoutY="229.0" prefHeight="25.0" prefWidth="231.0" promptText="Password" unFocusColor="#f5f0f0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXPasswordField>
+            <Label layoutX="134.0" layoutY="-3.0" prefHeight="54.0" prefWidth="86.0" text="Sign Up" textFill="#eeeaea">
+               <font>
+                  <Font name="Arial" size="23.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="54.0" layoutY="547.0" onAction="#signup" prefHeight="25.0" prefWidth="239.0" style="-fx-background-color: #e6e7e8;" text="Sign Up" textFill="#4a4c4d" />
+            <FontAwesomeIconView fill="#171717" glyphName="USER" layoutX="38.0" layoutY="85.0" size="25" text="" wrappingWidth="31.0" />
+            <FontAwesomeIconView glyphName="UNLOCK_ALT" layoutX="37.0" layoutY="261.0" size="30" text="" wrappingWidth="6.000001668930054" />
+            <FontAwesomeIconView fx:id="fnameCircle" glyphName="CLOSE" layoutX="309.0" layoutY="88.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
+            <FontAwesomeIconView fx:id="lastCheck" glyphName="CLOSE" layoutX="309.0" layoutY="151.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
+            <JFXTextField fx:id="EmailValue" focusColor="#f6f5f5" labelFloat="true" layoutX="69.0" layoutY="170.0" prefHeight="25.0" prefWidth="231.0" promptText="Email" unFocusColor="#f5f0f0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="lnameValue" focusColor="#f6f5f5" labelFloat="true" layoutX="68.0" layoutY="114.0" prefHeight="25.0" prefWidth="231.0" promptText="LastName" unFocusColor="#f5f0f0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXTextField>
+            <FontAwesomeIconView fill="#171717" glyphName="USER" layoutX="38.0" layoutY="199.0" size="25" text="" wrappingWidth="31.0" />
+            <FontAwesomeIconView fill="#171717" glyphName="USER" layoutX="38.0" layoutY="149.0" size="25" text="" wrappingWidth="31.0" />
+            <JFXRadioButton fx:id="male" layoutX="69.0" layoutY="357.0" prefHeight="17.0" prefWidth="77.0" selected="true" text="Male">
+               <toggleGroup>
+                  <ToggleGroup fx:id="gender" />
+               </toggleGroup></JFXRadioButton>
+            <Label layoutX="44.0" layoutY="309.0" text="Gender">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
+            <JFXRadioButton fx:id="female" layoutX="195.0" layoutY="357.0" text="Female" toggleGroup="$gender" />
+            <JFXComboBox fx:id="Mycombo" layoutX="82.0" layoutY="442.0" prefHeight="25.0" prefWidth="190.0" />
+            <Label layoutX="43.0" layoutY="400.0" text="Country">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView fx:id="passcheck" glyphName="CLOSE" layoutX="309.0" layoutY="268.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
+            <FontAwesomeIconView fx:id="Emailcheck" glyphName="CLOSE" layoutX="309.0" layoutY="209.0" size="20" text="" visible="false" wrappingWidth="24.000006675720215" />
+            <Label fx:id="excist" layoutX="62.0" layoutY="490.0" prefHeight="40.0" prefWidth="231.0" />
+         </children>
+      </Pane>
+      <ImageView fitHeight="617.0" fitWidth="335.0" layoutX="35.0" layoutY="77.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/Background.2e16d0ba.fill-1422x800.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="134.0" fitWidth="190.0" layoutX="108.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Untitled.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="133.0" layoutY="417.0" prefHeight="46.0" prefWidth="60.0" text="talk" textFill="#c6194a">
+         <font>
+            <Font name="Browallia New Italic" size="54.0" />
+         </font>
+      </Label>
+      <Label layoutX="193.0" layoutY="417.0" prefHeight="54.0" prefWidth="60.0" text="toki" textFill="#4d4d4d">
+         <font>
+            <Font name="Browallia New Italic" size="54.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
