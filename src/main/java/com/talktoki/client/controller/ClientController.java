@@ -19,6 +19,8 @@ import javafx.scene.shape.Circle;
 import com.talktoki.client.model.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -40,9 +42,9 @@ public class ClientController implements Initializable {
     
      @FXML
     private JFXTextField IpAdd;
-
-    @FXML
-    private JFXPasswordField PortNum;
+     
+      @FXML
+    private JFXTextField PortNum;
 
      @FXML
     private FontAwesomeIconView IpCheck;
@@ -100,13 +102,17 @@ public class ClientController implements Initializable {
             } else {
                 refuseCheck.setTextFill(Paint.valueOf("#6ddd0d"));
                 refuseCheck.setText("True connection");
+                 try {
                  //Load the sign in Page
                  Stage stage = (Stage) refuseCheck.getScene().getWindow();
-                try {
+                
                     FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/ClientSignin.fxml"));
                     ClientSigninController signin=new ClientSigninController(handleConnection);
                     loader.setController(signin);
-                    Parent root = loader.load();
+                    Parent root;
+               
+                    root = loader.load();
+                
                                               //Add listener to move window with mouse press and hold
                     root.setOnMousePressed(new EventHandler<MouseEvent>() {
                         @Override
@@ -126,9 +132,10 @@ public class ClientController implements Initializable {
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
-                } catch (IOException ex) {
-                    System.out.println("Load false");
+                    } catch (IOException ex) {
+                    Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
             }
 
         }
