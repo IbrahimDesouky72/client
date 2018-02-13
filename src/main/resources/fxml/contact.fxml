@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="55.0" prefWidth="251.0" style="-fx-background-color: #f6f5f5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <FontAwesomeIconView fx:id="userIcon" fill="#c1272d" glyphName="USER" layoutX="14.0" layoutY="38.0" size="30" />
+      <Label fx:id="userName" layoutX="46.0" layoutY="12.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <FontAwesomeIconView fx:id="userStatus" glyphName="CIRCLE" layoutX="230.0" layoutY="32.0" />
+   </children>
+</AnchorPane>

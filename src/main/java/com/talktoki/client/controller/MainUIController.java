@@ -6,37 +6,51 @@
 package com.talktoki.client.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 import com.talktoki.chatinterfaces.commans.Message;
 import com.talktoki.chatinterfaces.commans.User;
 import com.talktoki.chatinterfaces.server.ServerInterface;
 import com.talktoki.client.model.Client;
 import com.talktoki.client.model.HandleConnection;
+import com.talktoki.client.view.ContactsCellFactory;
+import com.talktoki.client.view.CustomContact;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.Serializable;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
 
 /**
@@ -45,16 +59,23 @@ import org.controlsfx.control.Notifications;
  */
 public class MainUIController implements Initializable {
 
+    // Main container
     @FXML
     private AnchorPane main;
+
+    // Icons
     @FXML
     private FontAwesomeIconView userIcon;
+    @FXML
+    private FontAwesomeIconView statusIcon;
+
+    // Labels
     @FXML
     private Label username;
     @FXML
     private Label status;
-    @FXML
-    private FontAwesomeIconView statusIcon;
+
+    // Buttons
     @FXML
     private Button closeBtn;
     @FXML
@@ -64,15 +85,24 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXButton groupsBtn;
     @FXML
+    private JFXButton requestsBtn;
+    @FXML
     private JFXButton logOut;
     @FXML
     private JFXButton addContactBtn;
+
+    // Lists
     @FXML
-    private JFXListView contacts;
+    private ListView<User> contentList;
+
+    private JFXListView<User> contactsList = new JFXListView();
+
+    private JFXListView requestsList = new JFXListView();
+
+    private JFXListView groupsList = new JFXListView();
+
     private ServerInterface myServer;
     private Client myclient;
-
-    private HashMap<String, Integer> mycontacts;
 
     public MainUIController(HandleConnection myHandler, User myUser) {
         try {
@@ -84,20 +114,38 @@ public class MainUIController implements Initializable {
         }
     }
 
+    public MainUIController() {
+    }
+    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
-            username.setText(myclient.getUser().getUserName());
-            status.setText(myclient.getUser().getStatus());
-            statusIcon.setFill(Color.GREEN);
+//        try {
+//            main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
+//            username.setText(myclient.getUser().getUserName());
+//            status.setText(myclient.getUser().getStatus());
+//            statusIcon.setFill(Color.GREEN);
 
-            // Initialize contact list
-            /*mycontacts = myServer.getContactList(myclient.getUser().getEmail());
-             contacts.getItems().addAll(mycontacts);*/
-        } catch (RemoteException ex) {
-            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            //Testing data
+            ObservableList<User> contacts = FXCollections.observableArrayList(
+                    new User("Bodour", "Bodour@mail.com", null, "female", "Egypt", "online"),
+                    new User("Ibrahim", "hema@mail.com", null, "male", "UK", "offline"),
+                    new User("Bassem", "Bassem@gmail.cm", null, "female", "Egypt", "online")
+            );
+            contentList.getItems().setAll(contacts);
+            contentList.setCellFactory(new ContactsCellFactory());
+
+//            //contentList = contactsList;
+//            //Make requests list cell custom cell
+//            requestsList.setCellFactory(new Callback() {
+//                @Override
+//                public Object call(Object param) {
+//                    return new RequestCell();
+//                }
+//            });
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 
@@ -112,35 +160,14 @@ public class MainUIController implements Initializable {
 
     public void showRequestNotification(String sender_name, String sender_email) {
         System.out.println("Received from:" + sender_email + " Friendship request");
-
-        JFXButton accept = new JFXButton("Accept");
-        accept.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                friendshipRequestResponse(sender_email, true);
-            }
-        });
-
-        JFXButton refuse = new JFXButton("Refuse");
-        accept.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                friendshipRequestResponse(sender_email, false);
-            }
-        });
-        HBox mybox = new HBox(accept, refuse);
-        mybox.setSpacing(5);
+        requestsList.getItems().add(sender_email);
         Platform.runLater(new Runnable() {
-
             @Override
             public void run() {
                 Notifications.create()
                         .title("Friendship Request!")
                         .text(sender_name + " Sent you a friendship request!")
                         .darkStyle()
-                        .graphic(mybox)
                         .showInformation();
             }
 
@@ -170,6 +197,20 @@ public class MainUIController implements Initializable {
             logout();
         }
 
+    }
+
+    public void removeRequestFromPending(String sender_email) {
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                requestsList.getItems().remove(sender_email);
+            }
+        });
+    }
+
+    public void loadRequests() {
+        contentList = requestsList;
     }
 
     public void minimize() {
@@ -216,4 +257,45 @@ public class MainUIController implements Initializable {
         }
     }
 
+//    class RequestCell extends ListCell<String> {
+//
+//        @Override
+//        protected void updateItem(String sender_email, boolean empty) {
+//            super.updateItem(sender_email, empty);
+//            if (sender_email == null || empty) {
+//                setGraphic(null);
+//            } else {
+//                VBox request = new VBox(5);
+//                request.setId(sender_email);
+//                request.getChildren().add(new Label("From " + sender_email));
+//
+//                JFXButton accept = new JFXButton("Accept");
+//                accept.setOnAction(new EventHandler<ActionEvent>() {
+//
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//                        friendshipRequestResponse(sender_email, true);
+//                        removeRequestFromPending(sender_email);
+//                    }
+//                });
+//
+//                JFXButton refuse = new JFXButton("Refuse");
+//                accept.setOnAction(new EventHandler<ActionEvent>() {
+//
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//                        friendshipRequestResponse(sender_email, false);
+//                        removeRequestFromPending(sender_email);
+//
+//                    }
+//                });
+//                HBox responseButtons = new HBox(accept, refuse);
+//                responseButtons.setSpacing(5);
+//                request.getChildren().add(responseButtons);
+//                setGraphic(request);
+//
+//            }
+//        }
+//
+//    }
 }
