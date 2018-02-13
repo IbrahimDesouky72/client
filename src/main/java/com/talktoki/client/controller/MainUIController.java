@@ -15,6 +15,7 @@ import com.talktoki.client.model.Client;
 import com.talktoki.client.model.HandleConnection;
 import com.talktoki.client.view.ContactsCellFactory;
 import com.talktoki.client.view.CustomContact;
+import com.talktoki.client.view.RequestsCellFactory;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
@@ -43,6 +44,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -59,9 +61,11 @@ import org.controlsfx.control.Notifications;
  */
 public class MainUIController implements Initializable {
 
-    // Main container
+    // Panes
     @FXML
     private AnchorPane main;
+    @FXML
+    private ScrollPane contentPane;
 
     // Icons
     @FXML
@@ -74,7 +78,8 @@ public class MainUIController implements Initializable {
     private Label username;
     @FXML
     private Label status;
-
+    @FXML
+    private Label contentLabel;
     // Buttons
     @FXML
     private Button closeBtn;
@@ -90,16 +95,19 @@ public class MainUIController implements Initializable {
     private JFXButton logOut;
     @FXML
     private JFXButton addContactBtn;
+    @FXML
+    private JFXButton createGroupBtn;
 
     // Lists
-    @FXML
-    private ListView<User> contentList;
+    private ListView<User> contactsList = new ListView();
+    
+    ObservableList<User> contacts = FXCollections.observableArrayList();
 
-    private JFXListView<User> contactsList = new JFXListView();
+    private ListView<User> requestsList = new ListView();
+    ObservableList<User> requests = FXCollections.observableArrayList();
 
-    private JFXListView requestsList = new JFXListView();
-
-    private JFXListView groupsList = new JFXListView();
+    private ListView<User> groupsList = new ListView();
+    ObservableList<User> groups = FXCollections.observableArrayList();
 
     private ServerInterface myServer;
     private Client myclient;
@@ -116,37 +124,35 @@ public class MainUIController implements Initializable {
 
     public MainUIController() {
     }
-    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        try {
-//            main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
-//            username.setText(myclient.getUser().getUserName());
-//            status.setText(myclient.getUser().getStatus());
-//            statusIcon.setFill(Color.GREEN);
+        try {
+            main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
+            username.setText(myclient.getUser().getUserName());
+            status.setText(myclient.getUser().getStatus());
+            statusIcon.setFill(Color.GREEN);
 
-            //Testing data
-            ObservableList<User> contacts = FXCollections.observableArrayList(
-                    new User("Bodour", "Bodour@mail.com", null, "female", "Egypt", "online"),
-                    new User("Ibrahim", "hema@mail.com", null, "male", "UK", "offline"),
-                    new User("Bassem", "Bassem@gmail.cm", null, "female", "Egypt", "online")
-            );
-            contentList.getItems().setAll(contacts);
-            contentList.setCellFactory(new ContactsCellFactory());
+//        //Testing data
+//        ObservableList<User> contacts = FXCollections.observableArrayList(
+//                new User("Bodour", "Bodour@mail.com", null, "female", "Egypt", "online"),
+//                new User("Ibrahim", "hema@mail.com", null, "male", "UK", "offline"),
+//                new User("Bassem", "Bassem@gmail.cm", null, "female", "Egypt", "online")
+//        );
+            contacts.addAll(myServer.getContactList(myclient.getUser().getEmail()));
+            
+            contactsList.setCellFactory(new ContactsCellFactory());
+            contactsList.getItems().addAll(contacts);
+            
+            requestsList.setCellFactory(new RequestsCellFactory());
+            requestsList.getItems().addAll(requests);
+            groupsList.getItems().addAll(groups);
 
-//            //contentList = contactsList;
-//            //Make requests list cell custom cell
-//            requestsList.setCellFactory(new Callback() {
-//                @Override
-//                public Object call(Object param) {
-//                    return new RequestCell();
-//                }
-//            });
-//        } catch (RemoteException ex) {
-//            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+            contentPane.setContent(contactsList);
 
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void exit() {
@@ -160,7 +166,10 @@ public class MainUIController implements Initializable {
 
     public void showRequestNotification(String sender_name, String sender_email) {
         System.out.println("Received from:" + sender_email + " Friendship request");
-        requestsList.getItems().add(sender_email);
+        User myuser = new User();
+        myuser.setEmail(sender_email);
+        myuser.setUserName(sender_name);
+        requests.add(myuser);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -209,10 +218,6 @@ public class MainUIController implements Initializable {
         });
     }
 
-    public void loadRequests() {
-        contentList = requestsList;
-    }
-
     public void minimize() {
         Stage mystage = (Stage) main.getScene().getWindow();
         mystage.setIconified(true);
@@ -246,6 +251,26 @@ public class MainUIController implements Initializable {
         }
     }
 
+    public void setContactsAsContent() {
+        contentLabel.setText("Contacts");
+        createGroupBtn.setVisible(false);
+        contentPane.setContent(contactsList);
+    }
+
+    public void setRequestsAsContent() {
+        contentLabel.setText("Requests");
+        addContactBtn.setVisible(false);
+        createGroupBtn.setVisible(false);
+        contentPane.setContent(requestsList);
+
+    }
+
+    public void setGroupsAsContent() {
+        contentLabel.setText("Groups");
+        addContactBtn.setVisible(false);
+        contentPane.setContent(groupsList);
+    }
+
     public void testSend() {
 
         try {
@@ -257,45 +282,4 @@ public class MainUIController implements Initializable {
         }
     }
 
-//    class RequestCell extends ListCell<String> {
-//
-//        @Override
-//        protected void updateItem(String sender_email, boolean empty) {
-//            super.updateItem(sender_email, empty);
-//            if (sender_email == null || empty) {
-//                setGraphic(null);
-//            } else {
-//                VBox request = new VBox(5);
-//                request.setId(sender_email);
-//                request.getChildren().add(new Label("From " + sender_email));
-//
-//                JFXButton accept = new JFXButton("Accept");
-//                accept.setOnAction(new EventHandler<ActionEvent>() {
-//
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        friendshipRequestResponse(sender_email, true);
-//                        removeRequestFromPending(sender_email);
-//                    }
-//                });
-//
-//                JFXButton refuse = new JFXButton("Refuse");
-//                accept.setOnAction(new EventHandler<ActionEvent>() {
-//
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        friendshipRequestResponse(sender_email, false);
-//                        removeRequestFromPending(sender_email);
-//
-//                    }
-//                });
-//                HBox responseButtons = new HBox(accept, refuse);
-//                responseButtons.setSpacing(5);
-//                request.getChildren().add(responseButtons);
-//                setGraphic(request);
-//
-//            }
-//        }
-//
-//    }
 }

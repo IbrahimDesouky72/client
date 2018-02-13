@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-    
+<AnchorPane id="AnchorPane" prefHeight="55.0" prefWidth="281.0" style="-fx-background-color: #f6f5f5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="userName" layoutX="46.0" layoutY="12.0" text="Muhammed">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <FontAwesomeIconView fx:id="accept" fill="#007517" glyphName="CHECK" layoutX="212.0" layoutY="38.0" size="30" text="" wrappingWidth="12.0" />
+      <FontAwesomeIconView fx:id="refuse" fill="#c1272d" glyphName="CLOSE" layoutX="253.0" layoutY="38.0" size="30" text="" />
+      <FontAwesomeIconView fx:id="userIcon" fill="#c1272d" glyphName="USER" layoutX="7.0" layoutY="38.0" size="30" />
+   </children>
 </AnchorPane>

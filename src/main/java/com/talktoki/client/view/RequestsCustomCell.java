@@ -7,6 +7,8 @@ package com.talktoki.client.view;
 
 import com.talktoki.chatinterfaces.commans.User;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
@@ -16,7 +18,7 @@ import javafx.scene.paint.Color;
  *
  * @author Mohamed Mahrou
  */
-public class ContactsCustomCell extends ListCell<User> {
+public class RequestsCustomCell extends ListCell<User> {
 
     @Override
     protected void updateItem(User myuser, boolean empty) {
@@ -25,20 +27,12 @@ public class ContactsCustomCell extends ListCell<User> {
             setGraphic(null);
         } else {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contact.fxml"));
-                CustomContact contact = new CustomContact();
-                fxmlLoader.setController(contact);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/request.fxml"));
+                CustomRequest request = new CustomRequest();
+                fxmlLoader.setController(request);
                 Parent node = fxmlLoader.load();
-                contact.setUsername(myuser.getUserName());
-
-                if (myuser.getStatus().equals("online")) {
-                    contact.setStatus(Color.GREEN);
-                } else // TODO SET COLOR UPON ALL STATES
-                {
-                    contact.setStatus(Color.RED);
-                }
-                // TODO CHOOSE Icon upon gender
-                contact.setIconGlyphName("USER");
+                request.setUsername(myuser.getUserName());
+                request.setIconGlyphName("USER");
                 setGraphic(node);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -49,7 +43,5 @@ public class ContactsCustomCell extends ListCell<User> {
     @Override
     public void updateSelected(boolean selected) {
     }
-    
-    
 
 }
