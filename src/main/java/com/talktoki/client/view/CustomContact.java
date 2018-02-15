@@ -6,13 +6,16 @@
 package com.talktoki.client.view;
 
 import com.talktoki.chatinterfaces.commans.User;
+import com.talktoki.client.controller.MainUIController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
@@ -35,10 +38,10 @@ public class CustomContact implements Initializable {
 
     @FXML
     private FontAwesomeIconView userStatus;
+    private MainUIController mycontroller;
 
-    
-    public CustomContact() {
-
+    public CustomContact(MainUIController mycontroller) {
+        this.mycontroller = mycontroller;
     }
 
     public void setStatus(Color color) {
@@ -55,6 +58,14 @@ public class CustomContact implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Parent root = userIcon.getParent();
+        root.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                mycontroller.openChatWindow(myUser.getEmail(), myUser.getUserName());
+            }
+        });
         setUsername(myUser.getUserName());
         if (myUser.getStatus().equals("online")) {
             setStatus(Color.GREEN);
