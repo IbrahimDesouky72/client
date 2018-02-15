@@ -45,13 +45,11 @@
         </HBox>
     </top>
     <center>
-        <TabPane prefHeight="630.0" prefWidth="708.0" side="LEFT" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER"
-        fx:id="chatWindows" 
-        >
+        <TabPane fx:id="chatWindows" prefHeight="764.0" prefWidth="627.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab closable="false" text="TalkToki">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="630.0" prefWidth="659.0" style="-fx-background-color: #f6f5f5;">
+                        <AnchorPane minHeight="604.0" minWidth="659.0" prefHeight="604.0" prefWidth="684.0" style="-fx-background-color: #f6f5f5;">
                             <children>
                                 <Label text="TalkToki Chat ">
                                     <font>

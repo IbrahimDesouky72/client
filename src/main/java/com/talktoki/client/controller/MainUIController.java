@@ -331,7 +331,7 @@ public class MainUIController implements Initializable {
         Parent node = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contact.fxml"));
-            CustomContact contact = new CustomContact(myUser);
+            CustomContact contact = new CustomContact(myUser, this);
             fxmlLoader.setController(contact);
             node = fxmlLoader.load();
 

@@ -26,10 +26,6 @@ public class CustomContact implements Initializable {
 
     private User myUser;
 
-    public CustomContact(User myuser) {
-        this.myUser = myuser;
-    }
-
     @FXML
     private FontAwesomeIconView userIcon;
 
@@ -40,7 +36,8 @@ public class CustomContact implements Initializable {
     private FontAwesomeIconView userStatus;
     private MainUIController mycontroller;
 
-    public CustomContact(MainUIController mycontroller) {
+    public CustomContact(User myuser, MainUIController mycontroller) {
+        this.myUser = myuser;
         this.mycontroller = mycontroller;
     }
 
