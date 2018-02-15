@@ -306,6 +306,7 @@ public class MainUIController implements Initializable {
         try {
             // REFRESH LIST WITH LATEST IN THER SERVER
             ArrayList<User> myfriends = myServer.getContactList(myclient.getUser().getEmail());
+            contactsList.getChildren().setAll();
             myfriends.forEach((friend) -> {
                 contactsList.getChildren().add(getNewContact(friend));
             });
