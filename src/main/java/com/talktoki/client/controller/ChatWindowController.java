@@ -123,12 +123,15 @@ public class ChatWindowController implements Initializable {
             if(!(messageTextField.getText().trim().equals("")||messageTextField==null)){
                 msg.setText(messageTextField.getText());
                 XmlFont xmlFont=new XmlFont();
-                xmlFont.setFontFamily(fontFamily.getSelectionModel().getSelectedItem().toString());
-                xmlFont.setFontSize(fontSize.getSelectionModel().getSelectedItem().toString());
-                xmlFont.setFontType(fontType.getSelectionModel().getSelectedItem().toString());
+                //fontFamily.getSelectionModel().getSelectedItem().toString()
+                xmlFont.setFontFamily("hell");
+                //fontSize.getSelectionModel().getSelectedItem().toString()
+                xmlFont.setFontSize("d");
+                //fontType.getSelectionModel().getSelectedItem().toString()
+                xmlFont.setFontType("ff");
                 msg.setFont(xmlFont);
-                String hex1 = Integer.toHexString(colorPallet.getValue().hashCode());
-                msg.setTextColor(hex1);
+//                String hex1 = Integer.toHexString(colorPallet.getValue().hashCode());
+//                msg.setTextColor(hex1);
                 messages.add(msg);
                 myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , msg);
                 //draw message
