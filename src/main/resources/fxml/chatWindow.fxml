@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXColorPicker?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="687.0" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane layoutX="-2.0" layoutY="96.0" prefHeight="422.0" prefWidth="687.0">
+      <ScrollPane layoutX="4.0" layoutY="95.0" prefHeight="422.0" prefWidth="677.0">
          <content>
-            <VBox fx:id="messageVBox" prefHeight="412.0" prefWidth="675.0" />
+            <VBox fx:id="messageVBox" prefHeight="412.0" prefWidth="668.0" />
          </content></ScrollPane>
       <TextField fx:id="messageTextField" layoutX="10.0" layoutY="568.0" prefHeight="46.0" prefWidth="567.0" promptText="Type Your Message" style="-fx-background-radius: 20;" />
-      <FontAwesomeIconView fx:id="fileAttachment" glyphName="PAPERCLIP" glyphStyle="SOLID" layoutX="581.0" layoutY="601.0" size="30" />
-      <FontAwesomeIconView fx:id="sendMessage" fill="#103de3" glyphName="LOCATION_ARROW" layoutX="624.0" layoutY="604.0" rotate="45.0" size="40" wrappingWidth="42.85715173184872" />
+      <FontAwesomeIconView id="attachFile" fx:id="fileAttachment" glyphName="PAPERCLIP" glyphStyle="SOLID" layoutX="469.0" layoutY="55.0" size="30" />
+      <FontAwesomeIconView fx:id="sendMessage" fill="#103de3" glyphName="LOCATION_ARROW" layoutX="618.0" layoutY="604.0" rotate="45.0" size="40" wrappingWidth="42.85715173184872" />
       <Circle fx:id="profileImage" fill="WHITE" layoutX="53.0" layoutY="47.0" radius="39.0" stroke="BLACK" strokeType="INSIDE" />
       <ImageView fitHeight="19.0" fitWidth="17.0" layoutX="75.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="file:/F:/ITI/javaProject/client/src/main/resources/images/online.png" />
          </image>
       </ImageView>
-      <FontAwesomeIconView glyphName="USERS" glyphStyle="REGULAR" layoutX="514.0" layoutY="60.0" size="40" />
-      <FontAwesomeIconView fx:id="phoneCall" glyphName="PHONE" layoutX="577.0" layoutY="59.0" size="40" />
-      <FontAwesomeIconView fx:id="addGroup" glyphName="PLUS" layoutX="467.0" layoutY="57.0" size="30" />
-      <FontIcon layoutX="639.0" layoutY="51.0"/>
+      <FontAwesomeIconView id="phone" fx:id="phoneCall" glyphName="PHONE" layoutX="577.0" layoutY="59.0" size="40">
+         <effect>
+            <InnerShadow />
+         </effect></FontAwesomeIconView>
+      <FontAwesomeIconView id="groupChat" fx:id="addGroup" glyphName="PLUS" layoutX="518.0" layoutY="55.0" size="30" />
       <JFXComboBox fx:id="fontFamily" layoutX="26.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" />
-      <JFXComboBox fx:id="fontSize" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" />
-      <JFXComboBox fx:id="messageColor" layoutX="273.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText="color" />
+      <JFXComboBox fx:id="fontSize" focusColor="#406ba8" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" />
+      <JFXColorPicker layoutX="277.0" layoutY="525.0" prefHeight="25.0" prefWidth="131.0" />
    </children>
 </AnchorPane>
