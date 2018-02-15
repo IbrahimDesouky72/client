@@ -22,6 +22,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,8 +63,6 @@ public class MainUIController implements Initializable {
     private Label username;
     @FXML
     private Label status;
-    @FXML
-    private Label contentLabel;
     // Buttons
     @FXML
     private Button closeBtn;
@@ -98,21 +98,14 @@ public class MainUIController implements Initializable {
     private Client myclient;
 
     public MainUIController(HandleConnection myHandler, User myUser) {
-        try {
-            this.myServer = myHandler.getMyServerAuthInt();
-            myclient = Client.getInstance(this, myUser, myServer);
-            myServer.addClient(myclient);
-        } catch (RemoteException ex) {
-            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public MainUIController() {
+        this.myServer = myHandler.getMyServerAuthInt();
+        myclient = Client.getInstance(this, myUser, myServer);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            myServer.addClient(myclient);
 //            main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
             username.setText(myclient.getUser().getUserName());
             status.setText(myclient.getUser().getStatus());
@@ -122,13 +115,7 @@ public class MainUIController implements Initializable {
             myfriends.forEach((friend) -> {
                 contactsList.getChildren().add(getNewContact(friend));
             });
-//            contactsList.setCellFactory(new ContactsCellFactory());
-//            contactsList.getItems().addAll(contacts);
-//                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            requestsList.setCellFactory(new RequestsCellFactory());
-//            requestsList.getItems().addAll(requests);
-//            groupsList.getItems().addAll(groups);
+
             contentPane.getChildren().setAll(contactsList);
         } catch (RemoteException ex) {
             ex.printStackTrace();
@@ -150,7 +137,9 @@ public class MainUIController implements Initializable {
         myuser.setEmail(sender_email);
         myuser.setUserName(sender_name);
         requestsList.getChildren().add(getNewRequest(myuser));
+        requestsBtn.fire();
         Platform.runLater(new Runnable() {
+
             @Override
             public void run() {
                 Notifications.create()
@@ -159,7 +148,6 @@ public class MainUIController implements Initializable {
                         .darkStyle()
                         .showInformation();
             }
-
         });
 
     }
@@ -167,6 +155,7 @@ public class MainUIController implements Initializable {
     public void friendshipRequestResponse(String sender_email, boolean accepted) {
         try {
             myServer.friendshipRequestResponse(myclient.getUser().getEmail(), sender_email, accepted);
+            // RELOAD FRIENDS AND GOTO IT
         } catch (RemoteException ex) {
             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -207,10 +196,19 @@ public class MainUIController implements Initializable {
     public void logout() {
         try {
             myServer.signOut(myclient);
-            System.exit(0);
         } catch (RemoteException ex) {
             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.exit(0);
         }
+    }
+
+    public boolean checkEmail(String Email) {
+        String Email_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+        Pattern ipPatern = Pattern.compile(Email_PATTERN);
+        Matcher resultMatcher = ipPatern.matcher(Email);
+        boolean resultFlagCheck = resultMatcher.matches();
+        return resultFlagCheck;
     }
 
     public void showAddContactDialog() {
@@ -218,16 +216,60 @@ public class MainUIController implements Initializable {
         dialog.setTitle("Add friend");
         dialog.setHeaderText("Add new contact");
         dialog.setContentText("Please enter an email:");
-
-        // TODO VALIDATE EMAIL AND RESHOW ANOTHER DIALOG IF NOT CORRECT
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            try {
-                myServer.sendFriendshipRequest(myclient.getUser().getEmail(), result.get());
-                // TODO CHECK SERVER THAT THE USER EXISTS
-            } catch (RemoteException ex) {
-                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            String email = result.get();
+            if (checkEmail(email)) {
+                try {
+                    int requestCode = myServer.sendFriendshipRequest(myclient.getUser().getEmail(), result.get());
+
+                    // USER ALREADY EXIST
+                    if (requestCode == 1) {
+                        Alert myAlert = new Alert(Alert.AlertType.ERROR);
+                        myAlert.setTitle("ERROR!");
+                        myAlert.setHeaderText("Error in adding a friend");
+                        myAlert.setContentText("User does not exist!");
+                        myAlert.showAndWait();
+                    } else if (requestCode == 2) {
+                        Alert myAlert = new Alert(Alert.AlertType.ERROR);
+                        myAlert.setTitle("ERROR!");
+                        myAlert.setHeaderText("Error in adding a friend");
+                        myAlert.setContentText("User is already in your friends list!");
+                        myAlert.showAndWait();
+                    } else if (requestCode == 3) {
+                        Alert myAlert = new Alert(Alert.AlertType.ERROR);
+                        myAlert.setTitle("ERROR!");
+                        myAlert.setHeaderText("Error in adding a friend");
+                        myAlert.setContentText("A previous request was sent to this user");
+                        myAlert.showAndWait();
+                    } else if (requestCode == 4) {
+                        Alert myAlert = new Alert(Alert.AlertType.ERROR);
+                        myAlert.setTitle("ERROR!");
+                        myAlert.setHeaderText("Error in adding a friend");
+                        myAlert.setContentText("FATAL ERROR OCCURED! PLEASE TRY AGAIN LATER.");
+                        myAlert.showAndWait();
+                    } else if (requestCode == 5) {
+                        Alert myAlert = new Alert(Alert.AlertType.INFORMATION);
+                        myAlert.setTitle("SUCCESS");
+                        myAlert.setHeaderText("SUCCESSFUL!");
+                        myAlert.setContentText("Successfully sent a friendship request!");
+                        myAlert.showAndWait();
+                    }
+                } catch (RemoteException ex) {
+                    Alert myAlert = new Alert(Alert.AlertType.ERROR);
+                    myAlert.setTitle("ERROR!");
+                    myAlert.setHeaderText("Error in adding a friend");
+                    myAlert.setContentText("FATAL ERROR OCCURED! PLEASE TRY AGAIN LATER.");
+                    myAlert.showAndWait();
+                }
+            } else {
+                Alert myAlert = new Alert(Alert.AlertType.ERROR);
+                myAlert.setTitle("ERROR!");
+                myAlert.setHeaderText("EMAIL FORMAT IS NOT VALID!");
+                myAlert.setContentText("Please retry with a valid email!");
+                myAlert.showAndWait();
             }
+
         }
     }
 
@@ -261,25 +303,55 @@ public class MainUIController implements Initializable {
     }
 
     public void setContactsAsContent() {
-        contentLabel.setText("Contacts");
-        createGroupBtn.setVisible(false);
-        addContactBtn.setVisible(true);
-        contentPane.getChildren().setAll(contactsList);
+        try {
+            // REFRESH LIST WITH LATEST IN THER SERVER
+            ArrayList<User> myfriends = myServer.getContactList(myclient.getUser().getEmail());
+            contactsList.getChildren().setAll();
+            myfriends.forEach((friend) -> {
+                contactsList.getChildren().add(getNewContact(friend));
+            });
+            createGroupBtn.setVisible(false);
+            addContactBtn.setVisible(true);
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    contentPane.getChildren().setAll(contactsList);
+
+                }
+            });
+
+        } catch (RemoteException ex) {
+            Logger.getLogger(MainUIController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setRequestsAsContent() {
-        contentLabel.setText("Requests");
+        // TODO GET REQUESTS FROM SERVER
         addContactBtn.setVisible(false);
         createGroupBtn.setVisible(false);
-        contentPane.getChildren().setAll(requestsList);
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                contentPane.getChildren().setAll(requestsList);
+            }
+        });
 
     }
 
     public void setGroupsAsContent() {
-        contentLabel.setText("Groups");
+        // TODO GET GROUPS FROM SERVER
         addContactBtn.setVisible(false);
         createGroupBtn.setVisible(true);
-        contentPane.getChildren().setAll(groupsList);
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                contentPane.getChildren().setAll(groupsList);
+            }
+        });
     }
 
     public void testSend() {

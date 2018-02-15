@@ -57,7 +57,7 @@ public class CustomRequest implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setUsername(myUser.getUserName());
+        setUsername(myUser.getEmail());
         setIconGlyphName("USER");
         accept.setOnAction(new EventHandler<ActionEvent>() {
             @Override
