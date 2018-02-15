@@ -48,7 +48,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public boolean receiveFromOne(String sender_email, Message message) throws RemoteException {
-        myController.openOrAppendToSingleChat(sender_email, message);
+        myController.printToChatWindow(sender_email, message);
         return true;
     }
 
@@ -65,6 +65,18 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     @Override
     public User getUser() throws RemoteException {
         return myuser;
+    }
+
+    public MainUIController getMyController() {
+        return myController;
+    }
+
+    public User getMyuser() {
+        return myuser;
+    }
+
+    public ServerInterface getMyServer() {
+        return myServer;
     }
 
     @Override

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -33,6 +34,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -51,7 +54,8 @@ public class MainUIController implements Initializable {
     private BorderPane main;
     @FXML
     private VBox contentPane;
-
+    @FXML
+    private TabPane chatWindows;
     // Icons
     @FXML
     private FontAwesomeIconView userIcon;
@@ -93,9 +97,11 @@ public class MainUIController implements Initializable {
 //    private ListView<User> groupsList = new ListView();
     private VBox groupsList = new VBox();
 //    ObservableList<User> groups = FXCollections.observableArrayList();
-
+    ArrayList<User> myfriends;
     private ServerInterface myServer;
     private Client myclient;
+
+    private HashMap<String, ChatWindowController> chatWindowsControllers = new HashMap<>();
 
     public MainUIController(HandleConnection myHandler, User myUser) {
         this.myServer = myHandler.getMyServerAuthInt();
@@ -111,7 +117,7 @@ public class MainUIController implements Initializable {
             status.setText(myclient.getUser().getStatus());
             statusIcon.setFill(Color.GREEN);
 
-            ArrayList<User> myfriends = myServer.getContactList(myclient.getUser().getEmail());
+            myfriends = myServer.getContactList(myclient.getUser().getEmail());
             myfriends.forEach((friend) -> {
                 contactsList.getChildren().add(getNewContact(friend));
             });
@@ -162,8 +168,56 @@ public class MainUIController implements Initializable {
 
     }
 
-    public void openOrAppendToSingleChat(String sender_email, Message message) {
-        System.out.println("Received from:" + sender_email + " Message:" + message.getText());
+    public void printToChatWindow(String sender_email, Message message) {
+        ChatWindowController mycontroller = chatWindowsControllers.get(sender_email);
+        if (mycontroller == null) {
+            User myuser = myfriends.stream().filter((user) -> {
+                return user.getEmail().equals(sender_email);
+            }).findFirst().get();
+            openChatWindow(sender_email, myuser.getUserName());
+        }
+
+        // TODO Call controller and give it the message
+    }
+
+    public void openChatWindow(String friendMail, String userName) {
+        ChatWindowController myController = chatWindowsControllers.get(friendMail);
+
+        // ChatWindow needs to be created
+        if (myController == null) {
+            try {
+
+                // Load new Chat Window with its controller
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/chatWindow.fxml"));
+
+                // Properly call controller with needed objs
+                User myuser = myfriends.stream().filter((user) -> {
+                    return user.getEmail().equals(friendMail);
+                }).findFirst().get();
+                myController = new ChatWindowController(myuser);
+                // Add controller to hashmap
+                chatWindowsControllers.put(friendMail, myController);
+
+                fxmlLoader.setController(myController);
+                Parent node = fxmlLoader.load();
+
+                // create a new tab and add it to the window
+                Tab mytab = new Tab(userName, node);
+                mytab.setId(friendMail);
+
+                // Add the new tab to the tab pane
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        chatWindows.getTabs().add(mytab);
+                    }
+                });
+
+            } catch (IOException ex) {
+                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void logoutConfirmation() {
@@ -277,7 +331,7 @@ public class MainUIController implements Initializable {
         Parent node = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contact.fxml"));
-            CustomContact contact = new CustomContact(myUser);
+            CustomContact contact = new CustomContact(myUser, this);
             fxmlLoader.setController(contact);
             node = fxmlLoader.load();
 
@@ -306,6 +360,7 @@ public class MainUIController implements Initializable {
         try {
             // REFRESH LIST WITH LATEST IN THER SERVER
             ArrayList<User> myfriends = myServer.getContactList(myclient.getUser().getEmail());
+            contactsList.getChildren().setAll();
             myfriends.forEach((friend) -> {
                 contactsList.getChildren().add(getNewContact(friend));
             });
