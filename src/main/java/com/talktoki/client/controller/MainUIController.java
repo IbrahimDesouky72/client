@@ -97,7 +97,7 @@ public class MainUIController implements Initializable {
 //    private ListView<User> groupsList = new ListView();
     private VBox groupsList = new VBox();
 //    ObservableList<User> groups = FXCollections.observableArrayList();
-
+    ArrayList<User> myfriends;
     private ServerInterface myServer;
     private Client myclient;
 
@@ -117,7 +117,7 @@ public class MainUIController implements Initializable {
             status.setText(myclient.getUser().getStatus());
             statusIcon.setFill(Color.GREEN);
 
-            ArrayList<User> myfriends = myServer.getContactList(myclient.getUser().getEmail());
+            myfriends = myServer.getContactList(myclient.getUser().getEmail());
             myfriends.forEach((friend) -> {
                 contactsList.getChildren().add(getNewContact(friend));
             });
@@ -171,8 +171,10 @@ public class MainUIController implements Initializable {
     public void printToChatWindow(String sender_email, Message message) {
         ChatWindowController mycontroller = chatWindowsControllers.get(sender_email);
         if (mycontroller == null) {
-            // TODO Change second param to username
-            openChatWindow(sender_email, sender_email);
+            User myuser = myfriends.stream().filter((user) -> {
+                return user.getEmail().equals(sender_email);
+            }).findFirst().get();
+            openChatWindow(sender_email, myuser.getUserName());
         }
 
         // TODO Call controller and give it the message
@@ -189,7 +191,10 @@ public class MainUIController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/chatWindow.fxml"));
 
                 // Properly call controller with needed objs
-                myController = new ChatWindowController();
+                User myuser = myfriends.stream().filter((user) -> {
+                    return user.getEmail().equals(friendMail);
+                }).findFirst().get();
+                myController = new ChatWindowController(myuser);
                 // Add controller to hashmap
                 chatWindowsControllers.put(friendMail, myController);
 
@@ -213,8 +218,6 @@ public class MainUIController implements Initializable {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        // TODO CALL ADD MESSAGE IN CONTROLLER
     }
 
     public void logoutConfirmation() {
@@ -328,7 +331,7 @@ public class MainUIController implements Initializable {
         Parent node = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contact.fxml"));
-            CustomContact contact = new CustomContact(myUser);
+            CustomContact contact = new CustomContact(myUser, this);
             fxmlLoader.setController(contact);
             node = fxmlLoader.load();
 
