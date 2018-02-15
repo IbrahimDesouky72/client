@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefWidth="353.0" style="-fx-background-color: #2E383D;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="userName" layoutX="46.0" layoutY="12.0" prefHeight="32.0" prefWidth="218.0" textFill="#808080">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="accept" layoutX="264.0" layoutY="7.0" prefHeight="41.0" prefWidth="24.0">
+         <graphic>
+            <FontAwesomeIconView fill="#007517" glyphName="CHECK" size="30" text="" wrappingWidth="29.0" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="refuse" layoutX="310.0" layoutY="7.0" prefHeight="41.0" prefWidth="39.0">
+         <graphic>
+            <FontAwesomeIconView fill="#c1272d" glyphName="CLOSE" size="30" text="" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <FontAwesomeIconView fx:id="userIcon" fill="#c1272d" glyphName="USER" layoutX="7.0" layoutY="38.0" size="30" />
+   </children>
+</AnchorPane>

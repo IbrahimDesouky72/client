@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.ComboBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXColorPicker?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.TextFlow?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="473.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="687.0" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0">
+      <ScrollPane layoutX="4.0" layoutY="95.0" prefHeight="422.0" prefWidth="677.0">
          <content>
-            <VBox prefHeight="219.0" prefWidth="582.0" />
-         </content>
-      </ScrollPane>
-      <VBox prefHeight="205.0" prefWidth="463.0">
-         <children>
-            <HBox alignment="CENTER" prefWidth="200.0" spacing="5.0">
-               <children>
-                  <ComboBox prefWidth="150.0" promptText="Font family" />
-                  <ComboBox prefWidth="150.0" promptText="Font size" />
-                  <ColorPicker />
-                  <ToggleButton mnemonicParsing="false" text="B" />
-                  <ToggleButton mnemonicParsing="false" text="I" />
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </HBox>
-            <TextArea prefHeight="169.0" prefWidth="463.0" />
-         </children>
-      </VBox>
+            <VBox fx:id="messageVBox" prefHeight="412.0" prefWidth="668.0" />
+         </content></ScrollPane>
+      <TextField fx:id="messageTextField" layoutX="10.0" layoutY="568.0" prefHeight="46.0" prefWidth="567.0" promptText="Type Your Message" style="-fx-background-radius: 20;" />
+      <FontAwesomeIconView id="attachFile" fx:id="fileAttachment" glyphName="PAPERCLIP" glyphStyle="SOLID" layoutX="531.0" layoutY="55.0" onMouseClicked="#attachFile" size="30" />
+      <FontAwesomeIconView fx:id="sendMessage" fill="#103de3" glyphName="LOCATION_ARROW" layoutX="618.0" layoutY="604.0" onMouseClicked="#sendMessage" rotate="45.0" size="40" wrappingWidth="42.85715173184872" />
+      <Circle fx:id="profileImage" fill="WHITE" layoutX="53.0" layoutY="47.0" radius="39.0" stroke="BLACK" strokeType="INSIDE" />
+      <ImageView fx:id="onlineImage" fitHeight="19.0" fitWidth="17.0" layoutX="75.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="file:/F:/ITI/javaProject/client/src/main/resources/images/online.png" />
+         </image>
+      </ImageView>
+      <FontAwesomeIconView id="phone" fx:id="phoneCall" glyphName="PHONE" layoutX="623.0" layoutY="59.0" size="40">
+         <effect>
+            <InnerShadow />
+         </effect></FontAwesomeIconView>
+      <FontAwesomeIconView id="groupChat" fx:id="addGroup" glyphName="PLUS" layoutX="577.0" layoutY="56.0" size="30" />
+      <JFXComboBox fx:id="fontFamily" layoutX="26.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" />
+      <JFXComboBox fx:id="fontSize" focusColor="#406ba8" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" />
+      <JFXColorPicker fx:id="colorPallet" layoutX="429.0" layoutY="525.0" prefHeight="25.0" prefWidth="131.0" />
+      <JFXButton fx:id="saveButton" layoutX="453.0" layoutY="35.0" onAction="#saveMessages" text="Save" />
+      <TextFlow fx:id="userName" layoutX="107.0" layoutY="35.0" prefHeight="41.0" prefWidth="226.0" />
+      <JFXComboBox fx:id="fontType" layoutX="277.0" layoutY="525.0" prefHeight="25.0" prefWidth="124.0" promptText="fontType" />
    </children>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
-</VBox>
+</AnchorPane>

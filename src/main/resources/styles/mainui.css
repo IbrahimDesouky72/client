@@ -226,6 +226,10 @@
     -fx-text-fill: black;
     -fx-font-size: 14px;
 }
+#test:hover {
+    -fx-background-color: #383838;
+    -fx-scale-y: 1.1;
+}
 
 
 

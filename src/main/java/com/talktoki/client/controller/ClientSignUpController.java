@@ -1,7 +1,12 @@
 package com.talktoki.client.controller;
 
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
 import com.talktoki.chatinterfaces.commans.*;
 import com.talktoki.client.model.HandleConnection;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,6 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,45 +36,52 @@ public class ClientSignUpController implements Initializable {
 
     HandleConnection handle;
     User user;
-    @FXML
-    private TextField lnameValue;
+    
+        @FXML
+    private JFXTextField FnameValue;
 
     @FXML
-    private TextField FnameValue;
+    private JFXPasswordField passwordValue;
 
     @FXML
-    private TextField EmailValue;
+    private JFXTextField EmailValue;
 
     @FXML
-    private PasswordField passwordValue;
-
-    /*@FXML
-    private ToggleGroup gender;*/
-    @FXML
-    private RadioButton male;
+    private JFXTextField lnameValue;
 
     @FXML
-    private ComboBox<String> Mycombo;
+    private JFXRadioButton male;
 
     @FXML
-    private Circle fCircle;
+    private ToggleGroup gender;
 
     @FXML
-    private Circle Lcircle;
+    private JFXRadioButton female;
+    
+     @FXML
+    private FontAwesomeIconView fnameCircle;
 
     @FXML
-    private Circle Ecircle;
+    private FontAwesomeIconView lastCheck;
+    
+    @FXML
+    private FontAwesomeIconView passcheck;
 
     @FXML
-    private Circle Pcircle;
+    private FontAwesomeIconView Emailcheck;
+
     @FXML
+    private JFXComboBox<String> Mycombo;
+     @FXML
     private Label excist;
+
     private double xOffset,yOffset;
 
     String userGender = "";
     String Country = "";
     //Regular Expression of username Address
-     private static final String Email_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+    private static final String USERNAME_PATTERN = "^[a-z0-9_-]{3,15}$";
+    private static final String Email_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";    
     //Regular Expression of password Address
     //Password expression : Password must be between 4 and 8 digits long and include at least one numeric digit.
     //Matches	1234 | asdf1234 | asp123
@@ -79,7 +92,6 @@ public class ClientSignUpController implements Initializable {
     boolean lnameFlagCheck = false;
     boolean EmailFlagCheck = false;
     boolean passwordFlagCheck = false;
-
     public ClientSignUpController(HandleConnection handleConnection) {
         handle = handleConnection;
     }
@@ -88,41 +100,43 @@ public class ClientSignUpController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         Mycombo.getItems().addAll("Cairo", "Alexandria", "Tanta", "sharm");
+        Mycombo.setValue("Cairo");
     }
 
     @FXML
     void signup(ActionEvent event) {
+        excist.setText(" ");
         if (checkUserName(FnameValue.getText())) {
             fnameFlagCheck = true;
-            fCircle.setVisible(false);
+           fnameCircle.setVisible(false);
         } else {
             fnameFlagCheck = false;
-            fCircle.setVisible(true);
+            fnameCircle.setVisible(true);
         }
         //check valud format port >>if false there is a circle red point appear
-        if (checkpassword(lnameValue.getText())) {
+        if (checkUserName(lnameValue.getText())) {
             lnameFlagCheck = true;
-            Ecircle.setVisible(false);
+           lastCheck.setVisible(false);
         } else {
             lnameFlagCheck = false;
-            Ecircle.setVisible(true);
+          lastCheck.setVisible(true);
         }
-        if (checkpassword(EmailValue.getText())) {
+        if (checkEmail(EmailValue.getText())) {
             lnameFlagCheck = true;
-            Ecircle.setVisible(false);
+            Emailcheck.setVisible(false);
         } else {
             lnameFlagCheck = false;
-            Ecircle.setVisible(true);
+            Emailcheck.setVisible(true);
         }
         if (checkpassword(passwordValue.getText())) {
             lnameFlagCheck = true;
-            Ecircle.setVisible(false);
+           passcheck.setVisible(false);
         } else {
             lnameFlagCheck = false;
-            Ecircle.setVisible(true);
+           passcheck.setVisible(true);
         }
-        //if(fnameFlagCheck&&lnameFlagCheck&&passwordFlagCheck&&EmailFlagCheck)
-        // {
+        if(fnameFlagCheck&&lnameFlagCheck&&passwordFlagCheck&&EmailFlagCheck)
+        {
         ToggleGroup gender = male.getToggleGroup();
         String gen = "";
         if (gender.getSelectedToggle() != null) {
@@ -139,36 +153,56 @@ public class ClientSignUpController implements Initializable {
         boolean signUpResult = handle.signUp(user);
         Stage stage = (Stage) lnameValue.getScene().getWindow();
         if (signUpResult) {
-            // Create an FXML Loader
-            FXMLLoader myloader = new FXMLLoader(getClass().getResource("/fxml/mainUI.fxml"));
-            //Create new mainUI controller instance 
-            MainUIController myMainUIController = new MainUIController(handle, user);
-            // Attach mainUI contorller to the loader
-            myloader.setController(myMainUIController);
-            // Load the FXML file and get root node       
-            Parent root;
+            excist.setText("sign up success");
+                        //Load the sign in Page
+                    FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/ClientSignin.fxml"));
+                    ClientSigninController signin=new ClientSigninController(handle);
+                    loader.setController(signin);
+                    Parent root;
+               
             try {
-                root = myloader.load();
-                //Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainUI.fxml"));
-                // Create a scene and attach root node to it
-                Scene scene = new Scene(root);
-                // Attach css file to the scene
-                scene.getStylesheets().add("/styles/mainui.css");
-                stage.setScene(scene);
-                stage.show();
+                root = loader.load();
+            
+                
+                                              //Add listener to move window with mouse press and hold
+                    root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            xOffset = stage.getX() - event.getScreenX();
+                            yOffset = stage.getY() - event.getScreenY();
+                        }
+                    });
 
-            } catch (IOException ex) {
-                Logger.getLogger(ClientSigninController.class.getName()).log(Level.SEVERE, null, ex);
+                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            stage.setX(event.getScreenX() + xOffset);
+                            stage.setY(event.getScreenY() + yOffset);
+                        }
+                    });
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                    } catch (IOException ex) {
+                Logger.getLogger(ClientSignUpController.class.getName()).log(Level.SEVERE, null, ex);
             }
+                   
+            
         } else {
-            excist.setText("This Email used");
+           excist.setText("This Email used");
         }
-        // }
+        }
     }
 
     public boolean checkUserName(String username) {
-        Pattern ipPatern = Pattern.compile(Email_PATTERN);
+        Pattern ipPatern = Pattern.compile(USERNAME_PATTERN);
         Matcher resultMatcher = ipPatern.matcher(username);
+        boolean resultFlagCheck = resultMatcher.matches();
+        return resultFlagCheck;
+    }
+    public boolean checkEmail(String Email) {
+        Pattern ipPatern = Pattern.compile(Email_PATTERN);
+        Matcher resultMatcher = ipPatern.matcher(Email);
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
     }
@@ -180,12 +214,7 @@ public class ClientSignUpController implements Initializable {
         return resultFlagCheck;
     }
     @FXML
-    void close(ActionEvent event) {
-         Platform.exit();
-    }
-
-    @FXML
-    void closebutton(MouseEvent event) {
+    void closeButton(MouseEvent event) {
            Platform.exit();
     }
 
