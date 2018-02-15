@@ -67,6 +67,18 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         return myuser;
     }
 
+    public MainUIController getMyController() {
+        return myController;
+    }
+
+    public User getMyuser() {
+        return myuser;
+    }
+
+    public ServerInterface getMyServer() {
+        return myServer;
+    }
+
     @Override
     public void receiveFriendshipRequest(String sender_name, String sender_email) throws RemoteException {
         myController.showRequestNotification(sender_name, sender_email);

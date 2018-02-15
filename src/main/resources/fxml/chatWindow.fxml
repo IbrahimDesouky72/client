@@ -22,7 +22,7 @@
       <FontAwesomeIconView id="attachFile" fx:id="fileAttachment" glyphName="PAPERCLIP" glyphStyle="SOLID" layoutX="469.0" layoutY="55.0" size="30" />
       <FontAwesomeIconView fx:id="sendMessage" fill="#103de3" glyphName="LOCATION_ARROW" layoutX="618.0" layoutY="604.0" rotate="45.0" size="40" wrappingWidth="42.85715173184872" />
       <Circle fx:id="profileImage" fill="WHITE" layoutX="53.0" layoutY="47.0" radius="39.0" stroke="BLACK" strokeType="INSIDE" />
-      <ImageView fitHeight="19.0" fitWidth="17.0" layoutX="75.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="onlineImage" fitHeight="19.0" fitWidth="17.0" layoutX="75.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="file:/F:/ITI/javaProject/client/src/main/resources/images/online.png" />
          </image>
@@ -34,6 +34,6 @@
       <FontAwesomeIconView id="groupChat" fx:id="addGroup" glyphName="PLUS" layoutX="518.0" layoutY="55.0" size="30" />
       <JFXComboBox fx:id="fontFamily" layoutX="26.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" />
       <JFXComboBox fx:id="fontSize" focusColor="#406ba8" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" />
-      <JFXColorPicker layoutX="277.0" layoutY="525.0" prefHeight="25.0" prefWidth="131.0" />
+      <JFXColorPicker fx:id="colorPallet" layoutX="277.0" layoutY="525.0" prefHeight="25.0" prefWidth="131.0" />
    </children>
 </AnchorPane>
