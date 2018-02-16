@@ -93,6 +93,7 @@ public class ChatWindowController implements Initializable {
     FontWeight fontWeghtValue;
     Font font;
     Color messageColor;
+    String hex1="";
     
     
      ObservableList<String> fontFamilyStrings = FXCollections.observableArrayList("serif","calibri","antiqua","architect","arial","calibri",
@@ -124,8 +125,12 @@ public class ChatWindowController implements Initializable {
         fontWeghtValue=fontWeight.getValue();
          font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
          colorPallet.setValue(Color.BLACK);
-         
-        
+         messageColor=colorPallet.getValue();
+        message.setFontSize(fontSizeValue);
+        message.setFontFamily(fontFamilyValue);
+        message.setFontWeight(fontWeghtValue.toString());
+        hex1 = Integer.toHexString(messageColor.hashCode()); 
+        message.setTextColor("#"+hex1);
         
         fontSize.valueProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -133,6 +138,7 @@ public class ChatWindowController implements Initializable {
                 fontSizeValue=fontSize.getValue();
                 font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
                 messageTextField.setFont(font);
+                message.setFontSize(fontSizeValue);
                 //messageTextField.setStyle("-fx-text-fill: green");
                 System.out.println(font.getSize());
                 
@@ -147,6 +153,8 @@ public class ChatWindowController implements Initializable {
                 fontFamilyValue=fontFamily.getValue();
                 font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
                 messageTextField.setFont(font);
+                message.setFontFamily(fontFamilyValue);
+        
                 //messageTextField.setStyle("-fx-text-fill: green");
                 System.out.println(font.getFamily());
             
@@ -160,8 +168,9 @@ public class ChatWindowController implements Initializable {
                 fontWeghtValue=fontWeight.getValue();
                 font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
                 messageTextField.setFont(font);
+                message.setFontWeight(fontWeghtValue.toString());
                 //messageTextField.setStyle("-fx-text-fill: green");
-                System.out.println(font.getStyle());
+                System.out.println(fontWeghtValue.toString());
             }
         } );
         
@@ -169,7 +178,9 @@ public class ChatWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Color> observable, Color oldValue, Color newValue) {
                 messageColor=colorPallet.getValue();
-                messageTextField.setStyle("-fx-text-fill:"+messageColor.toString());
+                 hex1 = Integer.toHexString(messageColor.hashCode()); 
+                System.out.println(hex1);
+                messageTextField.setStyle("-fx-text-fill:#"+hex1);
             }
         } );
         
@@ -217,7 +228,7 @@ public class ChatWindowController implements Initializable {
                     
             if(!(messageTextField.getText().trim().equals("")||messageTextField==null)){
                 message.setText(messageTextField.getText());
-                message.setFont(font);
+               // message.setFont(new XmlFont());
                 //message.set
                 messages.add(message);
                 myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , message);
@@ -229,6 +240,7 @@ public class ChatWindowController implements Initializable {
                 
                 Text text=new Text();
                 text.setText(message.getText());
+                text.setFont(font);
                 
                 Platform.runLater(new Runnable() {
                     @Override
