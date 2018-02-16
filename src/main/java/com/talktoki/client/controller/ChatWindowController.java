@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,6 +35,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /**
@@ -80,14 +83,23 @@ public class ChatWindowController implements Initializable {
     private JFXColorPicker colorPallet;
     
     @FXML
-    private JFXComboBox<String> fontType;
+    private JFXComboBox<FontWeight> fontWeight;
+    
+    
+    Message message = new Message();
+    
+    String fontSizeValue;
+    String fontFamilyValue;
+    FontWeight fontWeghtValue;
+    
     
      ObservableList<String> fontFamilyStrings = FXCollections.observableArrayList("serif","calibri","antiqua","architect","arial","calibri",
      "cursive","courier");
      
      ObservableList<String> fontSizeStrings = FXCollections.observableArrayList("10","12","14","16","18","20","22","24");
      
-     ObservableList<String> fontTypeStrings = FXCollections.observableArrayList("bold","italic");
+     ObservableList<FontWeight> fontWeightStrings= FXCollections.observableArrayList(FontWeight.BOLD,
+             FontWeight.EXTRA_BOLD,FontWeight.LIGHT,FontWeight.MEDIUM,FontWeight.NORMAL,FontWeight.SEMI_BOLD);
     
     /**
      * Initializes the controller class.
@@ -100,8 +112,27 @@ public class ChatWindowController implements Initializable {
         myserver = myclient.getMyServer();
         messages=new ArrayList<Message>();
         fontFamily.getItems().addAll(fontFamilyStrings);
+        fontFamily.setValue("serif");
         fontSize.getItems().addAll(fontSizeStrings);
-        fontType.getItems().addAll(fontTypeStrings);
+        fontSize.setValue("12");
+        fontWeight.getItems().addAll(fontWeightStrings);
+        fontWeight.setValue(FontWeight.LIGHT);
+        fontSizeValue=fontSize.getValue();
+        fontFamilyValue=fontFamily.getValue();
+        fontWeghtValue=fontWeight.getValue();
+        
+        
+        
+        fontSize.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                fontSizeValue=fontSize.getValue();
+                System.out.println(fontSize);
+            
+            }
+        
+    });
+        
         
     }    
 
@@ -113,14 +144,18 @@ public class ChatWindowController implements Initializable {
         //draw messsage
         Text text=new Text();
         
+        
+        text.setText(message.getText());
+        
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 
-                text.setText(message.getText());
+                
+                messageVBox.getChildren().add(text);
             }
         });
-        messageVBox.getChildren().add(text);
+        
            
     }
     
@@ -139,33 +174,39 @@ public class ChatWindowController implements Initializable {
 
          try {
             //
-            Message msg = new Message();
-            
+                    
             if(!(messageTextField.getText().trim().equals("")||messageTextField==null)){
-                msg.setText(messageTextField.getText());
-                XmlFont xmlFont=new XmlFont();
-                //fontFamily.getSelectionModel().getSelectedItem().toString()
-                xmlFont.setFontFamily("hell");
-                //fontSize.getSelectionModel().getSelectedItem().toString()
-                xmlFont.setFontSize("d");
-                //fontType.getSelectionModel().getSelectedItem().toString()
-                xmlFont.setFontType("ff");
-                msg.setFont(xmlFont);
-//                String hex1 = Integer.toHexString(colorPallet.getValue().hashCode());
-//                msg.setTextColor(hex1);
-                messages.add(msg);
-                myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , msg);
+                message.setText(messageTextField.getText());
+//                XmlFont xmlFont=new XmlFont();
+//                //fontFamily.getSelectionModel().getSelectedItem().toString()
+//                xmlFont.setFontFamily("hell");
+//                //fontSize.getSelectionModel().getSelectedItem().toString()
+//                xmlFont.setFontSize("d");
+//                //fontType.getSelectionModel().getSelectedItem().toString()
+//                //xmlFont.setFontType("ff");
+//                msg.setFont(xmlFont);
+////                String hex1 = Integer.toHexString(colorPallet.getValue().hashCode());
+////                msg.setTextColor(hex1);
+                messages.add(message);
+                myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , message);
                 //draw message
+                
+                
+                
+                
+                
                 Text text=new Text();
+                text.setText(message.getText());
                 
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         
-                        text.setText(msg.getText());
+                        
+                        messageVBox.getChildren().add(text);
                     }
                 });
-                 messageVBox.getChildren().add(text);
+                 
             }
             
 
