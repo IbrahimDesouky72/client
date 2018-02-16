@@ -40,12 +40,15 @@ public CreatGroupController(ServerInterface myServer,ArrayList friends,MainUICon
 }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        for(int i=0;i<myFriends.size();i++)
+        {
             
+        }    
     }
     public Parent getNewContact(User myUser) {
         Parent node = null;
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/contact.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/UserCheck.fxml"));
             //CustomContact contact = new CustomContact(myUser, this);
             //fxmlLoader.setController(contact);
             node = fxmlLoader.load();
