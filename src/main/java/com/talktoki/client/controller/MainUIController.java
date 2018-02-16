@@ -26,9 +26,12 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -42,6 +45,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
+import sun.font.CreatedFontTracker;
 
 /**
  *
@@ -56,6 +60,7 @@ public class MainUIController implements Initializable {
     private VBox contentPane;
     @FXML
     private TabPane chatWindows;
+
     // Icons
     @FXML
     private FontAwesomeIconView userIcon;
@@ -81,50 +86,45 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXButton logOut;
     @FXML
+    private JFXButton groupCreationBtn;
+
     private JFXButton addContactBtn;
-    @FXML
-    private JFXButton createGroupBtn;
 
     // Lists
-//    private ListView<User> contactsList = new ListView();
     private VBox contactsList = new VBox();
-
-//    ObservableList<User> contacts = FXCollections.observableArrayList();
-//    private ListView<User> requestsList = new ListView();
     private VBox requestsList = new VBox();
-//    ObservableList<User> requests = FXCollections.observableArrayList();
-//
-//    private ListView<User> groupsList = new ListView();
     private VBox groupsList = new VBox();
-//    ObservableList<User> groups = FXCollections.observableArrayList();
+    private Parent createGroupUI;
+
+    // Models
     private volatile ArrayList<User> myfriends;
     private ServerInterface myServer;
     private Client myclient;
-    
+
+    // Controllers
     private HashMap<String, ChatWindowController> chatWindowsControllers = new HashMap<>();
-    
+    private CreatGroupController createGroupController;
+
     public MainUIController(HandleConnection myHandler, User myUser) {
         this.myServer = myHandler.getMyServerAuthInt();
         myclient = Client.getInstance(this, myUser, myServer);
     }
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             myServer.addClient(myclient);
-//            main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
-            username.setText(myclient.getUser().getUserName());
-            status.setText(myclient.getUser().getStatus());
-            statusIcon.setFill(Color.GREEN);
+            // Initialize Friends list
+            myfriends = myServer.getContactList(myclient.getUser().getEmail());
 
             // Start a thread that refreshes contact list in background 
-            Runnable contactsRefresher = new Runnable() {                
+            Thread contactsRefresher = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (true) {
                         try {
-                            Thread.sleep(3000);
                             myfriends = myServer.getContactList(myclient.getUser().getEmail());
+                            Thread.sleep(3000);
                         } catch (RemoteException ex) {
                             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (InterruptedException ex) {
@@ -132,13 +132,35 @@ public class MainUIController implements Initializable {
                         }
                     }
                 }
-            };
+            });
+            contactsRefresher.start();
+
+            //main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
+            username.setText(myclient.getUser().getUserName());
+            status.setText(myclient.getUser().getStatus());
+            statusIcon.setFill(Color.GREEN);
             
+            // Initialize Contact list 
+            contactsList.setSpacing(5);
+            contactsList.setAlignment(Pos.CENTER);
+            //Add contact button
+            addContactBtn = new JFXButton("Add");
+            addContactBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    showAddContactDialog();
+                }
+            });
+            contactsList.getChildren().add(addContactBtn);
+            // Initialize contacts
             myfriends.forEach((friend) -> {
                 contactsList.getChildren().add(getNewContact(friend));
             });
-            
+
+            //Initialize Requests 
+            // Set content pane as contact list
             contentPane.getChildren().setAll(contactsList);
+            createGroupUI = initCreateGroup();
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
@@ -147,7 +169,7 @@ public class MainUIController implements Initializable {
     public ArrayList<User> getMyfriends() {
         return myfriends;
     }
-            
+
     public void exit() {
         Alert mylert = new Alert(Alert.AlertType.ERROR);
         mylert.setTitle("ERROR");
@@ -156,7 +178,7 @@ public class MainUIController implements Initializable {
         mylert.showAndWait();
         System.exit(0);
     }
-    
+
     public void showRequestNotification(String sender_name, String sender_email) {
         System.out.println("Received from:" + sender_email + " Friendship request");
         User myuser = new User();
@@ -165,7 +187,7 @@ public class MainUIController implements Initializable {
         requestsList.getChildren().add(getNewRequest(myuser));
         requestsBtn.fire();
         Platform.runLater(new Runnable() {
-            
+
             @Override
             public void run() {
                 Notifications.create()
@@ -175,9 +197,9 @@ public class MainUIController implements Initializable {
                         .showInformation();
             }
         });
-        
+
     }
-    
+
     public void friendshipRequestResponse(String sender_email, boolean accepted) {
         try {
             myServer.friendshipRequestResponse(myclient.getUser().getEmail(), sender_email, accepted);
@@ -185,9 +207,9 @@ public class MainUIController implements Initializable {
         } catch (RemoteException ex) {
             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     public void printToChatWindow(String sender_email, Message message) {
         ChatWindowController mycontroller = chatWindowsControllers.get(sender_email);
         if (mycontroller == null) {
@@ -196,10 +218,10 @@ public class MainUIController implements Initializable {
             }).findFirst().get();
             mycontroller = openChatWindow(sender_email, myuser.getUserName());
         }
-        
+
         mycontroller.receiveFromOne(sender_email, message);
     }
-    
+
     public ChatWindowController openChatWindow(String friendMail, String userName) {
         ChatWindowController myController = chatWindowsControllers.get(friendMail);
 
@@ -217,7 +239,7 @@ public class MainUIController implements Initializable {
                 myController = new ChatWindowController(myuser);
                 // Add controller to hashmap
                 chatWindowsControllers.put(friendMail, myController);
-                
+
                 fxmlLoader.setController(myController);
                 Parent node = fxmlLoader.load();
 
@@ -227,57 +249,53 @@ public class MainUIController implements Initializable {
 
                 // Add the new tab to the tab pane
                 Platform.runLater(new Runnable() {
-                    
+
                     @Override
                     public void run() {
                         chatWindows.getTabs().add(mytab);
                     }
                 });
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return myController;
     }
-    
+
     public void logoutConfirmation() {
         Alert myalert = new Alert(Alert.AlertType.CONFIRMATION);
         myalert.setTitle("Signout confirmation");
         myalert.setContentText("Are you sure you want to log out?");
         Optional result = myalert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            logout();
+            try {
+                myServer.signOut(myclient);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                System.exit(0);
+            }
         }
-        
+
     }
-    
+
     public void removeRequestFromPending(Parent node) {
         Platform.runLater(new Runnable() {
-            
+
             @Override
             public void run() {
                 requestsList.getChildren().remove(node);
             }
         });
     }
-    
+
     public void minimize() {
         Stage mystage = (Stage) main.getScene().getWindow();
         mystage.setIconified(true);
-        
+
     }
-    
-    public void logout() {
-        try {
-            myServer.signOut(myclient);
-        } catch (RemoteException ex) {
-            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            System.exit(0);
-        }
-    }
-    
+
     public boolean checkEmail(String Email) {
         String Email_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
         Pattern ipPatern = Pattern.compile(Email_PATTERN);
@@ -285,7 +303,7 @@ public class MainUIController implements Initializable {
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
     }
-    
+
     public void showAddContactDialog() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Add friend");
@@ -344,10 +362,10 @@ public class MainUIController implements Initializable {
                 myAlert.setContentText("Please retry with a valid email!");
                 myAlert.showAndWait();
             }
-            
+
         }
     }
-    
+
     public Parent getNewContact(User myUser) {
         Parent node = null;
         try {
@@ -355,13 +373,13 @@ public class MainUIController implements Initializable {
             CustomContact contact = new CustomContact(myUser, this);
             fxmlLoader.setController(contact);
             node = fxmlLoader.load();
-            
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return node;
     }
-    
+
     public Parent getNewRequest(User myUser) {
         Parent node = null;
         try {
@@ -370,67 +388,66 @@ public class MainUIController implements Initializable {
             fxmlLoader.setController(request);
             node = fxmlLoader.load();
             request.setMyview(node);
-            
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return node;
     }
-    
+
     public void setContactsAsContent() {
-        contactsList.getChildren().setAll();
+        contactsList.getChildren().setAll(addContactBtn);
         myfriends.forEach((friend) -> {
             contactsList.getChildren().add(getNewContact(friend));
         });
-        createGroupBtn.setVisible(false);
-        addContactBtn.setVisible(true);
         Platform.runLater(new Runnable() {
-            
+
             @Override
             public void run() {
                 contentPane.getChildren().setAll(contactsList);
-                
+
             }
         });
-        
+
     }
-    
+
     public void setRequestsAsContent() {
-        // TODO GET REQUESTS FROM SERVER
-        addContactBtn.setVisible(false);
-        createGroupBtn.setVisible(false);
         Platform.runLater(new Runnable() {
-            
+
             @Override
             public void run() {
                 contentPane.getChildren().setAll(requestsList);
             }
         });
-        
+
     }
-    
+
     public void setGroupsAsContent() {
-        // TODO GET GROUPS FROM SERVER
-        addContactBtn.setVisible(false);
-        createGroupBtn.setVisible(true);
         Platform.runLater(new Runnable() {
-            
+
             @Override
             public void run() {
                 contentPane.getChildren().setAll(groupsList);
             }
         });
     }
-    
-    public void testSend() {
-        
+
+    public Parent initCreateGroup() {
+
+        Parent node = null;
         try {
-            Message mymsg = new Message();
-            mymsg.setText("HI FROM" + myclient.getUser().getEmail());
-            myServer.sendToOne(myclient.getUser().getEmail(), "bassemgawesh@gmail.com", mymsg);
-        } catch (RemoteException ex) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/CreatGroup.fxml"));
+            createGroupController = new CreatGroupController(myServer, myfriends, this);
+            fxmlLoader.setController(createGroupController);
+            node = fxmlLoader.load();
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
+        return node;
     }
-    
+
+    public void openCreateGroup() {
+        createGroupController.notifyChange();
+    }
+
 }
