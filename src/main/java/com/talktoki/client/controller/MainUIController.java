@@ -26,9 +26,12 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -42,6 +45,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
+import sun.font.CreatedFontTracker;
 
 /**
  *
@@ -56,6 +60,7 @@ public class MainUIController implements Initializable {
     private VBox contentPane;
     @FXML
     private TabPane chatWindows;
+
     // Icons
     @FXML
     private FontAwesomeIconView userIcon;
@@ -81,27 +86,24 @@ public class MainUIController implements Initializable {
     @FXML
     private JFXButton logOut;
     @FXML
+    private JFXButton groupCreationBtn;
+
     private JFXButton addContactBtn;
-    @FXML
-    private JFXButton createGroupBtn;
 
     // Lists
-//    private ListView<User> contactsList = new ListView();
     private VBox contactsList = new VBox();
-
-//    ObservableList<User> contacts = FXCollections.observableArrayList();
-//    private ListView<User> requestsList = new ListView();
     private VBox requestsList = new VBox();
-//    ObservableList<User> requests = FXCollections.observableArrayList();
-//
-//    private ListView<User> groupsList = new ListView();
     private VBox groupsList = new VBox();
-//    ObservableList<User> groups = FXCollections.observableArrayList();
-    ArrayList<User> myfriends;
+    private Parent createGroupUI;
+
+    // Models
+    private volatile ArrayList<User> myfriends;
     private ServerInterface myServer;
     private Client myclient;
 
+    // Controllers
     private HashMap<String, ChatWindowController> chatWindowsControllers = new HashMap<>();
+    private CreatGroupController createGroupController;
 
     public MainUIController(HandleConnection myHandler, User myUser) {
         this.myServer = myHandler.getMyServerAuthInt();
@@ -112,20 +114,60 @@ public class MainUIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             myServer.addClient(myclient);
-//            main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
+            // Initialize Friends list
+            myfriends = myServer.getContactList(myclient.getUser().getEmail());
+
+            // Start a thread that refreshes contact list in background 
+            Thread contactsRefresher = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            myfriends = myServer.getContactList(myclient.getUser().getEmail());
+                            Thread.sleep(3000);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            });
+            contactsRefresher.start();
+
+            //main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
             username.setText(myclient.getUser().getUserName());
             status.setText(myclient.getUser().getStatus());
             statusIcon.setFill(Color.GREEN);
-
-            myfriends = myServer.getContactList(myclient.getUser().getEmail());
+            
+            // Initialize Contact list 
+            contactsList.setSpacing(5);
+            contactsList.setAlignment(Pos.CENTER);
+            //Add contact button
+            addContactBtn = new JFXButton("Add");
+            addContactBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    showAddContactDialog();
+                }
+            });
+            contactsList.getChildren().add(addContactBtn);
+            // Initialize contacts
             myfriends.forEach((friend) -> {
                 contactsList.getChildren().add(getNewContact(friend));
             });
 
+            //Initialize Requests 
+            // Set content pane as contact list
             contentPane.getChildren().setAll(contactsList);
+            createGroupUI = initCreateGroup();
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public ArrayList<User> getMyfriends() {
+        return myfriends;
     }
 
     public void exit() {
@@ -227,7 +269,13 @@ public class MainUIController implements Initializable {
         myalert.setContentText("Are you sure you want to log out?");
         Optional result = myalert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            logout();
+            try {
+                myServer.signOut(myclient);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                System.exit(0);
+            }
         }
 
     }
@@ -248,16 +296,6 @@ public class MainUIController implements Initializable {
 
     }
 
-    public void logout() {
-        try {
-            myServer.signOut(myclient);
-        } catch (RemoteException ex) {
-            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            System.exit(0);
-        }
-    }
-
     public boolean checkEmail(String Email) {
         String Email_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
         Pattern ipPatern = Pattern.compile(Email_PATTERN);
@@ -273,7 +311,7 @@ public class MainUIController implements Initializable {
         dialog.setContentText("Please enter an email:");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            String email = result.get();
+            String email = result.get().trim();
             if (checkEmail(email)) {
                 try {
                     int requestCode = myServer.sendFriendshipRequest(myclient.getUser().getEmail(), result.get());
@@ -358,34 +396,22 @@ public class MainUIController implements Initializable {
     }
 
     public void setContactsAsContent() {
-        try {
-            // REFRESH LIST WITH LATEST IN THER SERVER
-            ArrayList<User> myfriends = myServer.getContactList(myclient.getUser().getEmail());
-            contactsList.getChildren().setAll();
-            myfriends.forEach((friend) -> {
-                contactsList.getChildren().add(getNewContact(friend));
-            });
-            createGroupBtn.setVisible(false);
-            addContactBtn.setVisible(true);
-            Platform.runLater(new Runnable() {
+        contactsList.getChildren().setAll(addContactBtn);
+        myfriends.forEach((friend) -> {
+            contactsList.getChildren().add(getNewContact(friend));
+        });
+        Platform.runLater(new Runnable() {
 
-                @Override
-                public void run() {
-                    contentPane.getChildren().setAll(contactsList);
+            @Override
+            public void run() {
+                contentPane.getChildren().setAll(contactsList);
 
-                }
-            });
+            }
+        });
 
-        } catch (RemoteException ex) {
-            Logger.getLogger(MainUIController.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void setRequestsAsContent() {
-        // TODO GET REQUESTS FROM SERVER
-        addContactBtn.setVisible(false);
-        createGroupBtn.setVisible(false);
         Platform.runLater(new Runnable() {
 
             @Override
@@ -397,9 +423,6 @@ public class MainUIController implements Initializable {
     }
 
     public void setGroupsAsContent() {
-        // TODO GET GROUPS FROM SERVER
-        addContactBtn.setVisible(false);
-        createGroupBtn.setVisible(true);
         Platform.runLater(new Runnable() {
 
             @Override
@@ -409,15 +432,22 @@ public class MainUIController implements Initializable {
         });
     }
 
-    public void testSend() {
+    public Parent initCreateGroup() {
 
+        Parent node = null;
         try {
-            Message mymsg = new Message();
-            mymsg.setText("HI FROM" + myclient.getUser().getEmail());
-            myServer.sendToOne(myclient.getUser().getEmail(), "bassemgawesh@gmail.com", mymsg);
-        } catch (RemoteException ex) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/CreatGroup.fxml"));
+            createGroupController = new CreatGroupController(myServer, myfriends, this);
+            fxmlLoader.setController(createGroupController);
+            node = fxmlLoader.load();
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
+        return node;
+    }
+
+    public void openCreateGroup() {
+        createGroupController.notifyChange();
     }
 
 }

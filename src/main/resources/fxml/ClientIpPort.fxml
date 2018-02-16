@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="459.0" prefWidth="847.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.talktoki.client.controller.ClientController">
    <children>
-      <Pane layoutX="1.0" layoutY="-1.0" prefHeight="31.0" prefWidth="847.0" style="-fx-background-color: #C6194A;">
+      <Pane layoutX="22.0" layoutY="-1.0" prefHeight="31.0" prefWidth="847.0" style="-fx-background-color: #C6194A;">
          <children>
             <FontAwesomeIconView glyphName="CLOSE" layoutX="814.0" layoutY="27.0" onMouseClicked="#closebuttton" size="30" wrappingWidth="24.000006675720215" />
          </children>

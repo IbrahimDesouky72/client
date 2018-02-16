@@ -1,4 +1,4 @@
-#green {
+/*#green {
     -fx-background-color:
         linear-gradient(#f0ff35, #a9ff00),
         radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
@@ -225,11 +225,10 @@
     -fx-padding: 3 30 3 30;
     -fx-text-fill: black;
     -fx-font-size: 14px;
+}*/
+.btnHover:hover {
+    -fx-background-color: white;
 }
-#test:hover {
-    -fx-background-color: #383838;
-    -fx-scale-y: 1.1;
-}
-
-
-
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}	
