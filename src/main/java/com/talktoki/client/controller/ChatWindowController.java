@@ -127,11 +127,29 @@ public class ChatWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 fontSizeValue=fontSize.getValue();
-                System.out.println(fontSize);
+                System.out.println(fontSizeValue);
             
             }
         
-    });
+        });
+        
+        fontFamily.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                fontFamilyValue=fontFamily.getValue();
+                System.out.println(fontFamilyValue);
+            
+            }
+        
+        });
+        
+        fontWeight.valueProperty().addListener(new ChangeListener<FontWeight>() {
+            @Override
+            public void changed(ObservableValue<? extends FontWeight> observable, FontWeight oldValue, FontWeight newValue) {
+                fontWeghtValue=fontWeight.getValue();
+                System.out.println(fontWeghtValue);
+            }
+        } );
         
         
     }    
