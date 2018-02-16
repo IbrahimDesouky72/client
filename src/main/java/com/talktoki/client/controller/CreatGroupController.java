@@ -29,18 +29,18 @@ import javafx.scene.layout.VBox;
 
 public class CreatGroupController implements Initializable {
        @FXML
-    private VBox myFriendListVBox;
-       
+    private VBox myFriendListVBox;   
     private ServerInterface Server ;
     private ArrayList<User> myFriends;
+    private MainUIController ChatController;
 public CreatGroupController(ServerInterface myServer,ArrayList friends,MainUIController chatController)
 {
   this.Server=myServer; 
+  this.ChatController=chatController;
 }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
+            
     }
     public Parent getNewContact(User myUser) {
         Parent node = null;
@@ -54,7 +54,11 @@ public CreatGroupController(ServerInterface myServer,ArrayList friends,MainUICon
             ex.printStackTrace();
         }
         return node;
-    }    
+    } 
+    public void notifyChange()
+    {
+     myFriends= ChatController.getMyfriends();
+    }
     @FXML
     void closeWindow(ActionEvent event) {
        
