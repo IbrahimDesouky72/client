@@ -13,21 +13,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="1046.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<!--<?import org.kordamp.ikonli.javafx.FontIcon?>-->
+
+<BorderPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="1046.0" style="-fx-border-width: 1;" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <top>
-        <HBox alignment="TOP_RIGHT" minHeight="-Infinity" prefHeight="30.0" prefWidth="888.0" spacing="10.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+        <HBox alignment="TOP_RIGHT" minHeight="-Infinity" prefHeight="30.0" prefWidth="888.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="minBtn" minHeight="-Infinity" mnemonicParsing="false" onAction="#minimize" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #282828;">
+                <Button fx:id="minBtn" alignment="CENTER" minHeight="-Infinity" mnemonicParsing="false" onAction="#minimize" prefHeight="20.0" prefWidth="33.0" style="-fx-background-color: #282828;" textAlignment="CENTER">
                     <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="20" wrappingWidth="12.785714149475098" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="MINUS" size="20" textAlignment="CENTER" wrappingWidth="12.785714149475098" />
                     </graphic>
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button fx:id="closeBtn" minHeight="-Infinity" mnemonicParsing="false" onAction="#logoutConfirmation" prefHeight="20.0" prefWidth="36.0" style="-fx-background-color: #c1272d;">
+                <Button fx:id="closeBtn" alignment="CENTER" minHeight="-Infinity" mnemonicParsing="false" onAction="#logoutConfirmation" prefHeight="20.0" prefWidth="36.0" style="-fx-background-color: #c1272d;">
                     <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="20" />
                     </graphic>
@@ -37,7 +38,7 @@
                 </Button>
             </children>
             <padding>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
             <cursor>
                 <Cursor fx:constant="MOVE" />
@@ -51,7 +52,7 @@
                     <content>
                         <AnchorPane minHeight="604.0" minWidth="659.0" prefHeight="604.0" prefWidth="684.0" style="-fx-background-color: #f6f5f5;">
                             <children>
-                                <Label text="TalkToki Chat ">
+                                <Label text="TalkToki Chat " textAlignment="CENTER">
                                     <font>
                                         <Font name="System Bold" size="59.0" />
                                     </font>
@@ -61,6 +62,9 @@
                     </content>
                 </Tab>
             </tabs>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
         </TabPane>
     </center>
     <left>
@@ -78,7 +82,7 @@
                                 </Label>
                                 <JFXButton id="windows7">
                                     <graphic>
-                                        <HBox alignment="CENTER" prefHeight="25.0" prefWidth="332.0" spacing="5.0">
+                                        <HBox alignment="CENTER" prefHeight="25.0" prefWidth="74.0" spacing="5.0">
                                             <children>
                                                 <Label fx:id="status" text="Online" textAlignment="CENTER" textFill="WHITE">
                                                     <font>
@@ -102,7 +106,7 @@
                                 <Insets />
                             </opaqueInsets>
                             <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                             <cursor>
                                 <Cursor fx:constant="DEFAULT" />
@@ -112,33 +116,33 @@
                             <children>
                                 <HBox alignment="CENTER" prefWidth="351.0" spacing="10.0" style="-fx-background-color: #b3cde0; -fx-background-radius: 0 0 0 0;"> 
                                     <children>
-                                        <JFXButton fx:id="contactsBtn" onAction="#setContactsAsContent">
+                                        <JFXButton fx:id="contactsBtn" onAction="#setContactsAsContent" styleClass="btnHover">
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                             <graphic>
-                                                <FontIcon iconLiteral="fas-address-book" iconSize="30" iconColor="#6b7982" />
+<!--                                                <FontIcon iconLiteral="fas-address-book" iconSize="30" iconColor="#6b7982" />-->
                                             </graphic>
                                         </JFXButton>
-                                        <JFXButton fx:id="groupsBtn" onAction="#setGroupsAsContent">
+                                        <JFXButton fx:id="groupsBtn" onAction="#setGroupsAsContent" styleClass="btnHover">
                                             <graphic>
-                                                                                <FontIcon iconLiteral="fas-users" iconSize="30" iconColor="#6b7982" />                     
-                                            </graphic>
-                                            <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                            </cursor>
-                                        </JFXButton>
-                                        <JFXButton fx:id="requestsBtn" onAction="#setRequestsAsContent">
-                                            <graphic>
-                                                                                <FontIcon iconLiteral="fas-user-plus" iconSize="30" iconColor="#6b7982" />                            
+<!--                                                                                <FontIcon iconLiteral="fas-users" iconSize="30" iconColor="#6b7982" />                     -->
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </JFXButton>
-                                        <JFXButton fx:id="logOut" onAction="#logoutConfirmation">
+                                        <JFXButton fx:id="requestsBtn" onAction="#setRequestsAsContent" styleClass="btnHover">
                                             <graphic>
-                                                <FontIcon iconLiteral="fas-sign-out-alt" iconSize="30" iconColor="#6b7982" /> 
+<!--                                                                                <FontIcon iconLiteral="fas-user-plus" iconSize="30" iconColor="#6b7982" />                            -->
+                                            </graphic>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </JFXButton>
+                                        <JFXButton fx:id="logOut" onAction="#logoutConfirmation" styleClass="btnHover">
+                                            <graphic>
+<!--                                                <FontIcon iconLiteral="fas-sign-out-alt" iconSize="30" iconColor="#6b7982" /> -->
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
@@ -160,10 +164,19 @@
                                         <FontAwesomeIconView fx:id="addButton1" fill="#02d706" glyphName="PLUS" size="20" />
                                     </graphic>
                                 </JFXButton>
-                                <VBox fx:id="contentPane" prefHeight="478.0" prefWidth="275.0" />
+                                <VBox fx:id="contentPane" prefHeight="460.0" prefWidth="331.0" spacing="5.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding></VBox>
                             </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
                         </VBox>
                     </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
                 </VBox>
             </center>
         </BorderPane>
