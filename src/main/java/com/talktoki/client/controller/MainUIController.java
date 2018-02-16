@@ -174,13 +174,13 @@ public class MainUIController implements Initializable {
             User myuser = myfriends.stream().filter((user) -> {
                 return user.getEmail().equals(sender_email);
             }).findFirst().get();
-            openChatWindow(sender_email, myuser.getUserName());
+            mycontroller = openChatWindow(sender_email, myuser.getUserName());
         }
 
-        // TODO Call controller and give it the message
+        mycontroller.receiveFromOne(sender_email, message);
     }
 
-    public void openChatWindow(String friendMail, String userName) {
+    public ChatWindowController openChatWindow(String friendMail, String userName) {
         ChatWindowController myController = chatWindowsControllers.get(friendMail);
 
         // ChatWindow needs to be created
@@ -218,6 +218,7 @@ public class MainUIController implements Initializable {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return myController;
     }
 
     public void logoutConfirmation() {
