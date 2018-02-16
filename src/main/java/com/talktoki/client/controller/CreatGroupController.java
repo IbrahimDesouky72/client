@@ -59,9 +59,5 @@ public CreatGroupController(ServerInterface myServer,ArrayList friends,MainUICon
     {
      myFriends= ChatController.getMyfriends();
     }
-    @FXML
-    void closeWindow(ActionEvent event) {
-       
-    } 
 }
 
