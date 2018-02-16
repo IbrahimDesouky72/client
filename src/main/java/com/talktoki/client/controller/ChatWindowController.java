@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -68,16 +71,23 @@ public class ChatWindowController implements Initializable {
     private FontAwesomeIconView addGroup;
 
     @FXML
-    private JFXComboBox<?> fontFamily;
+    private JFXComboBox<String> fontFamily;
 
     @FXML
-    private JFXComboBox<?> fontSize;
+    private JFXComboBox<String> fontSize;
 
     @FXML
     private JFXColorPicker colorPallet;
     
     @FXML
-    private JFXComboBox<?> fontType;
+    private JFXComboBox<String> fontType;
+    
+     ObservableList<String> fontFamilyStrings = FXCollections.observableArrayList("serif","calibri","antiqua","architect","arial","calibri",
+     "cursive","courier");
+     
+     ObservableList<String> fontSizeStrings = FXCollections.observableArrayList("10","12","14","16","18","20","22","24");
+     
+     ObservableList<String> fontTypeStrings = FXCollections.observableArrayList("bold","italic");
     
     /**
      * Initializes the controller class.
@@ -89,6 +99,10 @@ public class ChatWindowController implements Initializable {
         myclient = Client.getInstance();
         myserver = myclient.getMyServer();
         messages=new ArrayList<Message>();
+        fontFamily.getItems().addAll(fontFamilyStrings);
+        fontSize.getItems().addAll(fontSizeStrings);
+        fontType.getItems().addAll(fontTypeStrings);
+        
     }    
 
     public ChatWindowController(User otherUser) {
@@ -98,7 +112,14 @@ public class ChatWindowController implements Initializable {
     public void receiveFromOne(String sender_email,Message message){
         //draw messsage
         Text text=new Text();
-        text.setText(message.getText());
+        
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                
+                text.setText(message.getText());
+            }
+        });
         messageVBox.getChildren().add(text);
            
     }
@@ -136,7 +157,14 @@ public class ChatWindowController implements Initializable {
                 myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , msg);
                 //draw message
                 Text text=new Text();
-                text.setText(msg.getText());
+                
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        
+                        text.setText(msg.getText());
+                    }
+                });
                  messageVBox.getChildren().add(text);
             }
             
