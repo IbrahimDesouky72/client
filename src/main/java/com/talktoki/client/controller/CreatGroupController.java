@@ -33,7 +33,7 @@ public class CreatGroupController implements Initializable {
        
     private ServerInterface Server ;
     private ArrayList<User> myFriends;
-public CreatGroupController(ServerInterface myServer,ArrayList friends)
+public CreatGroupController(ServerInterface myServer,ArrayList friends,MainUIController chatController)
 {
   this.Server=myServer; 
 }
