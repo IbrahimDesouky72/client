@@ -27,6 +27,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -90,7 +92,7 @@ public class MainUIController implements Initializable {
 
     @FXML
     private JFXComboBox statusBox;
-    
+
     private JFXButton addContactBtn;
 
     // Lists
@@ -121,9 +123,14 @@ public class MainUIController implements Initializable {
             statusBox.getItems().add("offline");
             statusBox.getItems().add("away");
             statusBox.getItems().add("busy");
-            //status.set
-            
-            
+            statusBox.valueProperty().addListener(new ChangeListener() {
+
+                @Override
+                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                    statusChanged();
+                }
+            });
+
             myServer.addClient(myclient);
             // Initialize Friends list
             myfriends = myServer.getContactList(myclient.getUser().getEmail());
@@ -464,10 +471,18 @@ public class MainUIController implements Initializable {
     public void statusChanged() {
         try {
             // (0) offline <br> (1) Online <br> (2) Away </b> (3) Busy
-
-            // TODO get new status
-            int status = 0;
-            myServer.notifyStatus(myclient.getUser().getEmail(), status);
+            String statusStr = statusBox.getValue().toString();
+            int statusNum = 0;
+            if (statusStr.equals("offline")) {
+                statusNum = 0;
+            } else if (statusStr.equals("online")) {
+                statusNum = 1;
+            } else if (statusStr.equals("away")) {
+                statusNum = 2;
+            } else if (statusStr.equals("busy")) {
+                statusNum = 3;
+            }
+            myServer.notifyStatus(myclient.getUser().getEmail(), statusNum);
         } catch (RemoteException ex) {
             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -476,31 +491,24 @@ public class MainUIController implements Initializable {
     public void friendStatusChanged(User friend, int status) {
         //(0) offline <br> (1) Online <br> (2) Away </b> (3) Busy
         String tempStrStatus = null;
-        if(status == 0)
-        {
+        if (status == 0) {
             tempStrStatus = "offline";
-        }
-        else if(status == 1)
-        {
+        } else if (status == 1) {
             tempStrStatus = "online";
-        } 
-        else if(status == 2)
-        {
+        } else if (status == 2) {
             tempStrStatus = "away";
-        }
-        else if(status == 3)
-        {
+        } else if (status == 3) {
             tempStrStatus = "busy";
         }
         final String strStatus = tempStrStatus;
         // Show status notification
         Platform.runLater(new Runnable() {
-        
+
             @Override
             public void run() {
                 Notifications.create()
                         .title("Friendship Request!")
-                        .text(friend.getUserName() + " Status changed to "+ strStatus)
+                        .text(friend.getUserName() + " Status changed to " + strStatus)
                         .darkStyle()
                         .showInformation();
             }
