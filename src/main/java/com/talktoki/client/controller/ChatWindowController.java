@@ -91,6 +91,8 @@ public class ChatWindowController implements Initializable {
     String fontSizeValue;
     String fontFamilyValue;
     FontWeight fontWeghtValue;
+    Font font;
+    Color messageColor;
     
     
      ObservableList<String> fontFamilyStrings = FXCollections.observableArrayList("serif","calibri","antiqua","architect","arial","calibri",
@@ -99,7 +101,7 @@ public class ChatWindowController implements Initializable {
      ObservableList<String> fontSizeStrings = FXCollections.observableArrayList("10","12","14","16","18","20","22","24");
      
      ObservableList<FontWeight> fontWeightStrings= FXCollections.observableArrayList(FontWeight.BOLD,
-             FontWeight.EXTRA_BOLD,FontWeight.LIGHT,FontWeight.MEDIUM,FontWeight.NORMAL,FontWeight.SEMI_BOLD);
+             FontWeight.NORMAL);
     
     /**
      * Initializes the controller class.
@@ -120,14 +122,20 @@ public class ChatWindowController implements Initializable {
         fontSizeValue=fontSize.getValue();
         fontFamilyValue=fontFamily.getValue();
         fontWeghtValue=fontWeight.getValue();
-        
+         font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
+         colorPallet.setValue(Color.BLACK);
+         
         
         
         fontSize.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 fontSizeValue=fontSize.getValue();
-                System.out.println(fontSizeValue);
+                font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
+                messageTextField.setFont(font);
+                //messageTextField.setStyle("-fx-text-fill: green");
+                System.out.println(font.getSize());
+                
             
             }
         
@@ -137,7 +145,10 @@ public class ChatWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 fontFamilyValue=fontFamily.getValue();
-                System.out.println(fontFamilyValue);
+                font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
+                messageTextField.setFont(font);
+                //messageTextField.setStyle("-fx-text-fill: green");
+                System.out.println(font.getFamily());
             
             }
         
@@ -147,7 +158,18 @@ public class ChatWindowController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends FontWeight> observable, FontWeight oldValue, FontWeight newValue) {
                 fontWeghtValue=fontWeight.getValue();
-                System.out.println(fontWeghtValue);
+                font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
+                messageTextField.setFont(font);
+                //messageTextField.setStyle("-fx-text-fill: green");
+                System.out.println(font.getStyle());
+            }
+        } );
+        
+        colorPallet.valueProperty().addListener(new ChangeListener<Color>() {
+            @Override
+            public void changed(ObservableValue<? extends Color> observable, Color oldValue, Color newValue) {
+                messageColor=colorPallet.getValue();
+                messageTextField.setStyle("-fx-text-fill:"+messageColor.toString());
             }
         } );
         
@@ -195,16 +217,8 @@ public class ChatWindowController implements Initializable {
                     
             if(!(messageTextField.getText().trim().equals("")||messageTextField==null)){
                 message.setText(messageTextField.getText());
-//                XmlFont xmlFont=new XmlFont();
-//                //fontFamily.getSelectionModel().getSelectedItem().toString()
-//                xmlFont.setFontFamily("hell");
-//                //fontSize.getSelectionModel().getSelectedItem().toString()
-//                xmlFont.setFontSize("d");
-//                //fontType.getSelectionModel().getSelectedItem().toString()
-//                //xmlFont.setFontType("ff");
-//                msg.setFont(xmlFont);
-////                String hex1 = Integer.toHexString(colorPallet.getValue().hashCode());
-////                msg.setTextColor(hex1);
+                message.setFont(font);
+                //message.set
                 messages.add(message);
                 myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , message);
                 //draw message

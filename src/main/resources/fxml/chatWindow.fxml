@@ -36,7 +36,7 @@
       <FontAwesomeIconView id="groupChat" fx:id="addGroup" glyphName="PLUS" layoutX="577.0" layoutY="56.0" size="30" />
       <JFXComboBox fx:id="fontFamily" labelFloat="true" layoutX="26.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" unFocusColor="#d70202" />
       <JFXComboBox fx:id="fontSize" focusColor="#0e6aeb" labelFloat="true" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" unFocusColor="#f20b0b" />
-      <JFXColorPicker fx:id="colorPallet" layoutX="429.0" layoutY="525.0" prefHeight="25.0" prefWidth="131.0" />
+      <JFXColorPicker fx:id="colorPallet" layoutX="429.0" layoutY="525.0" prefHeight="25.0" prefWidth="17.0" />
       <JFXButton fx:id="saveButton" layoutX="453.0" layoutY="35.0" onAction="#saveMessages" text="Save" />
       <TextFlow fx:id="userName" layoutX="107.0" layoutY="35.0" prefHeight="41.0" prefWidth="226.0" />
       <JFXComboBox fx:id="fontWeight" focusColor="#0c3dd0" labelFloat="true" layoutX="277.0" layoutY="525.0" prefHeight="25.0" prefWidth="124.0" promptText="fontType" unFocusColor="#bf0a0a" />
