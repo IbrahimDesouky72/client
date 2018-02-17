@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.TextFlow?>
 
 
-<HBox fx:id="hboxId" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="377.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="hboxId" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="340.0" spacing="10.0" style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.talktoki.client.controller.MessageController">
    <children>
-      <Circle fx:id="circleId" fill="#f2f2f2" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
-      <TextFlow fx:id="textId" prefHeight="30.0" prefWidth="345.0" />
+      <FontAwesomeIconView glyphName="USER" size="25" />
+      <TextFlow fx:id="textId" prefHeight="30.0" prefWidth="297.0" style="-fx-background-radius: 20; -fx-background-color: #0083c0;" />
    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </HBox>

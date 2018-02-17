@@ -16,6 +16,7 @@ import com.talktoki.client.model.Client;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -29,10 +30,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -57,6 +60,7 @@ public class ChatWindowController implements Initializable {
     private ServerInterface myserver;
     private User otherUser;
     ArrayList<Message>messages;
+    TextFlow messageTextFlow;
     
     @FXML
     private VBox messageVBox;
@@ -93,7 +97,7 @@ public class ChatWindowController implements Initializable {
     
     @FXML
     private JFXComboBox<FontWeight> fontWeight;
-    
+    //private FontAwesomeIconView userIcon=new FontAwesomeIconView();
     
     Message message = new Message();
     
@@ -132,8 +136,8 @@ public class ChatWindowController implements Initializable {
         fontSizeValue=fontSize.getValue();
         fontFamilyValue=fontFamily.getValue();
         fontWeghtValue=fontWeight.getValue();
-         font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
-         colorPallet.setValue(Color.BLACK);
+        font=Font.font(fontFamilyValue, fontWeghtValue, Double.parseDouble(fontSizeValue));
+        colorPallet.setValue(Color.BLACK);
          messageColor=colorPallet.getValue();
         message.setFontSize(fontSizeValue);
         message.setFontFamily(fontFamilyValue);
@@ -211,12 +215,31 @@ public class ChatWindowController implements Initializable {
         text.setFont(receivedMessageFont);
         text.setStyle("-fx-fill:#"+receivedMessage.getTextColor());
         
+        FontAwesomeIconView userIcon=new FontAwesomeIconView();
+          
+        HBox hBox=new HBox();
+        
+        //Text sentMessage=new Text(message.getText());
+        TextFlow textFlow=new TextFlow(text);
+        messageTextFlow=textFlow;
+       userIcon.setGlyphName("USER");
+        userIcon.setSize("25");
+        textFlow.setStyle("-fx-background-color:#f4f2e2;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+        textFlow.setPadding(new Insets(5, 5, 5, 5));
+        if(messageVBox.getChildren().size()>0){
+           ((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size()-1)).getChildren().get(0).setVisible(false);
+            hBox.getChildren().addAll(userIcon,textFlow);
+            hBox.setAlignment(Pos.BASELINE_LEFT);
+        }else{
+            hBox.getChildren().addAll(userIcon,textFlow);
+            hBox.setAlignment(Pos.BASELINE_LEFT);
+        }
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 
                 
-                messageVBox.getChildren().add(text);
+                messageVBox.getChildren().addAll(hBox);
             }
         });
         
@@ -261,14 +284,17 @@ public class ChatWindowController implements Initializable {
         
         //Text sentMessage=new Text(message.getText());
         TextFlow textFlow=new TextFlow(text);
-        Circle picCircle=new Circle();
-        picCircle.setId("pcId");
-        picCircle.setRadius(10);
-        picCircle.setStroke(Color.LIGHTCYAN);
+        messageTextFlow=textFlow;
+//        Circle picCircle=new Circle();
+//        userIcon.setGlyphName("USER");
+//        userIcon.setSize("25");
+//        picCircle.setId("pcId");
+//        picCircle.setRadius(10);
+//        picCircle.setStroke(Color.LIGHTCYAN);
         
-        FileInputStream is=new FileInputStream("C:/Users/IbrahimDesouky/Documents/NetBeansProjects/ChatWithFx3/src/Male.png");
-        Image im=new Image(is);
-        textFlow.setStyle("-fx-background-color:#5edbff;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+//        FileInputStream is=new FileInputStream("C:/Users/IbrahimDesouky/Documents/NetBeansProjects/ChatWithFx3/src/Male.png");
+//        Image im=new Image(is);
+        textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
         textFlow.setPadding(new Insets(5, 5, 5, 5));
         //hBox.getChildren().add(im);
        
@@ -277,7 +303,7 @@ public class ChatWindowController implements Initializable {
         
         hBox.getChildren().addAll(textFlow);
         hBox.setAlignment(Pos.BASELINE_RIGHT);
-                
+                //Parent node=getMessageController();
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -293,9 +319,26 @@ public class ChatWindowController implements Initializable {
             
         } catch (RemoteException ex) {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+     public Parent getMessageController(){
+        Parent node = null;
+         try {
+            
+           FXMLLoader loader = new FXMLLoader();
+                node = loader.load(getClass().getResource("/fxml/message.fxml").openStream());
+                MessageController listController = loader.getController();
+            listController.setMessageController(messageTextFlow);
+            
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            return node;
+        }
+        
     }
     
     
