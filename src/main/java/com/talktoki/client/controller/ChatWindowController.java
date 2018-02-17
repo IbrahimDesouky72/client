@@ -14,6 +14,7 @@ import com.talktoki.chatinterfaces.commans.XmlFont;
 import com.talktoki.chatinterfaces.server.ServerInterface;
 import com.talktoki.client.model.Client;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,6 +37,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -49,6 +52,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -249,6 +253,24 @@ public class ChatWindowController implements Initializable {
     @FXML
     void attachFile(MouseEvent event) {
         
+        try {
+            final FileChooser fileChooser = new FileChooser();
+             File file = fileChooser.showOpenDialog(null);
+             if(file!=null)
+             {
+               myserver.SendFile(myclient.getUser().getEmail(),otherUser.getEmail(),file);
+             }
+             else
+             {
+               Alert alert = new Alert(AlertType.INFORMATION);
+               alert.setTitle("SendFile Dialog");
+               alert.setHeaderText("Confirm on send File");
+               alert.setContentText("the file is null\nPlease choose afile!");
+               alert.showAndWait();
+             }
+        } catch (RemoteException ex) {
+            System.out.println("Remote Exception");    
+        }
     }
 
     @FXML

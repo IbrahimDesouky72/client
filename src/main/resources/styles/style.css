@@ -1,0 +1,7 @@
+#rootPane
+{
+-fx-background-image:url("\src\main\resources\images\Background.2e16d0ba.fill-1422x800.jpg");
+}
+.conn:hover{
+    -fx-fill:#28aad8;
+}

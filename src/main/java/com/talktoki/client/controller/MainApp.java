@@ -18,6 +18,7 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/ClientIpPort.fxml"));
+        root.setId("rootPane");
         Scene scene = new Scene(root);
                                   //Add listener to move window with mouse press and hold
                     root.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -27,15 +28,14 @@ public class MainApp extends Application {
                             yOffset = stage.getY() - event.getScreenY();
                         }
                     });
-
-                    root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                   root.setOnMouseDragged(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
                             stage.setX(event.getScreenX() + xOffset);
                             stage.setY(event.getScreenY() + yOffset);
                         }
                     });
-        scene.getStylesheets().add("/styles/Styles.css");
+        scene.getStylesheets().add("/styles/style.css");
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
