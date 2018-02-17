@@ -134,6 +134,8 @@ public class MainUIController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            //Notify my friends that i became online
+            myServer.notifyStatus(myclient.getUser().getEmail(), 1);
             initScrollPane();
             // TEST statusBox 
             statusBox.getItems().add("online");
@@ -449,6 +451,7 @@ public class MainUIController implements Initializable {
         Optional result = myalert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
+                myServer.notifyStatus(myclient.getUser().getEmail(), 0);
                 myServer.signOut(myclient);
             } catch (RemoteException ex) {
                 Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
