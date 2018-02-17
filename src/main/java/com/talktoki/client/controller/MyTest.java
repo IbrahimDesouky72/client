@@ -29,30 +29,22 @@ import javafx.stage.StageStyle;
  */
 public class MyTest extends Application {
      private ServerInterface Server ;
-    private ArrayList<User> myFriends;
+    private ArrayList<User> myFriends=new ArrayList<>();
     private MainUIController ChatController;
     @Override
     public void start(Stage primaryStage) {
-        /*
-        
-         this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.gender = gender;
-        this.country = country;
-        this.status = status;
-        */
          for(int i=0;i<5;i++)
          {
-            User u= new User("bodour",i+"bodour@yahoo.com","1234","female","egypt","offline");
+            User u= new User("bodour"+i,"bodour@yahoo.com","1234","female","egypt","offline");
              myFriends.add(u);
          }
             try {
                 FXMLLoader GrounpLoder = new FXMLLoader(getClass().getResource("/fxml/CreatGroup.fxml"));
-                CreatGroupController GroupShat=new CreatGroupController(Server, myFriends, ChatController);
-                GrounpLoder.setController(ChatController);
+                //CreatGroupController GroupShat=new CreatGroupController(Server, myFriends, ChatController);
+                //GrounpLoder.setController(GroupShat);
                 Parent root=GrounpLoder.load();
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add("/styles/mainui.css");
                 primaryStage.setTitle("JavaFX and Maven");
                 primaryStage.setScene(scene);
                 primaryStage.show();
@@ -60,10 +52,6 @@ public class MyTest extends Application {
                 Logger.getLogger(MyTest.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }

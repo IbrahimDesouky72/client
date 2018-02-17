@@ -5,8 +5,10 @@
  */
 package com.talktoki.client.controller;
 import com.jfoenix.controls.JFXCheckBox;
+import com.talktoki.chatinterfaces.commans.User;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,14 +26,28 @@ public class UserCheckController implements Initializable {
     @FXML
     private Label userName;
     @FXML
-    private JFXCheckBox UserCheck;
-
-    /**
-     * Initializes the controller class.
-     */
+    private  JFXCheckBox UserCheck;
+    User myfriend;
+    public   UserCheckController(User user)
+    {
+           myfriend=user;
+           
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+      userName.setText(myfriend.getUserName());  
+    } 
+    public boolean CheckUserAdded()
+    {
+        if(UserCheck.isSelected())
+           return true;
+        else
+           return false;
+    }
+
+    public User getMyfriend() {
+        return myfriend;
+    }
+    
     
 }
