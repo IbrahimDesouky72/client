@@ -30,24 +30,36 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  *
@@ -72,8 +84,6 @@ public class MainUIController implements Initializable {
     // Labels
     @FXML
     private Label username;
-    @FXML
-    private Label status;
     // Buttons
     @FXML
     private Button closeBtn;
@@ -123,11 +133,41 @@ public class MainUIController implements Initializable {
             statusBox.getItems().add("offline");
             statusBox.getItems().add("away");
             statusBox.getItems().add("busy");
+            statusBox.getSelectionModel().selectFirst();
+            statusBox.setCellFactory(
+                    new Callback<ListView<String>, ListCell<String>>() {
+                        @Override
+                        public ListCell<String> call(ListView<String> param) {
+                            final ListCell<String> cell = new ListCell<String>() {
+                                @Override
+                                public void updateItem(String item,
+                                        boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (item == null && empty) {
+                                        setGraphic(null);
+                                    } else {
+                                        Label mytext = new Label(item);
+                                        mytext.setAlignment(Pos.CENTER);
+                                        mytext.setTextFill(Color.BLACK);
+                                        mytext.setStyle("-fx-background-color:#b3cde0");
+                                        mytext.setPadding(new Insets(2, 2, 2, 2));
+                                        setGraphic(mytext);
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+                    });
             statusBox.valueProperty().addListener(new ChangeListener() {
-
                 @Override
                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    statusChanged();
+                    new Thread() {
+
+                        @Override
+                        public void run() {
+                            statusChanged();
+                        }
+                    }.start();
                 }
             });
 
@@ -155,14 +195,18 @@ public class MainUIController implements Initializable {
 
             //main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
             username.setText(myclient.getUser().getUserName());
-            status.setText(myclient.getUser().getStatus());
             statusIcon.setFill(Color.GREEN);
 
             // Initialize Contact list 
             contactsList.setSpacing(5);
             contactsList.setAlignment(Pos.CENTER);
             //Add contact button
-            addContactBtn = new JFXButton("Add");
+            addContactBtn = new JFXButton("Add Friend");
+            addContactBtn.setFont(Font.font("", FontWeight.BOLD, FontPosture.REGULAR, 20));
+            addContactBtn.getStyleClass().add("btnHover");
+            FontIcon addFriend = new FontIcon("mdi-account-plus");
+            addFriend.setIconSize(30);
+            addContactBtn.setGraphic(addFriend);
             addContactBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -265,12 +309,19 @@ public class MainUIController implements Initializable {
                 Tab mytab = new Tab(userName, node);
                 mytab.setId(friendMail);
 
+                mytab.setOnCloseRequest(new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+                        chatWindowsControllers.remove(friendMail);
+                    }
+                });
                 // Add the new tab to the tab pane
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
                         chatWindows.getTabs().add(mytab);
+                        chatWindows.getSelectionModel().select(mytab);
                     }
                 });
 
@@ -455,7 +506,7 @@ public class MainUIController implements Initializable {
         Parent node = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/CreatGroup.fxml"));
-            createGroupController = new CreatGroupController(myServer, myfriends, this);
+            createGroupController = new CreatGroupController(myServer, this);
             fxmlLoader.setController(createGroupController);
             node = fxmlLoader.load();
         } catch (IOException ex) {
@@ -465,6 +516,7 @@ public class MainUIController implements Initializable {
     }
 
     public void openCreateGroup() {
+        contentPane.getChildren().setAll(createGroupUI);
         createGroupController.notifyChange();
     }
 
@@ -475,12 +527,16 @@ public class MainUIController implements Initializable {
             int statusNum = 0;
             if (statusStr.equals("offline")) {
                 statusNum = 0;
+                statusIcon.setFill(Color.GREY);
             } else if (statusStr.equals("online")) {
                 statusNum = 1;
+                statusIcon.setFill(Color.GREEN);
             } else if (statusStr.equals("away")) {
                 statusNum = 2;
+                statusIcon.setFill(Color.YELLOW);
             } else if (statusStr.equals("busy")) {
                 statusNum = 3;
+                statusIcon.setFill(Color.RED);
             }
             myServer.notifyStatus(myclient.getUser().getEmail(), statusNum);
         } catch (RemoteException ex) {
@@ -514,6 +570,6 @@ public class MainUIController implements Initializable {
             }
         });
 
-        // Check if chat window is opend if so then pass to it the new status
+        // TODO if chat window is opend if so then pass to it the new status
     }
 }

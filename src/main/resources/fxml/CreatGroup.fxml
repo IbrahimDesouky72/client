@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXColorPicker?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="460.0" prefWidth="331.0" scaleShape="false" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="460.0" prefWidth="331.0" scaleShape="false" snapToPixel="false" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="460.0" prefWidth="331.0">
+      <VBox prefHeight="370.0" prefWidth="331.0">
          <children>
-            <TextField alignment="CENTER" prefHeight="42.0" prefWidth="331.0" promptText="CreateGroup" style="-fx-background-radius: 40;">
+            <TextField fx:id="GroupName" alignment="CENTER" opacity="0.66" prefHeight="42.0" prefWidth="331.0" promptText="CreateGroup" style="-fx-background-radius: 40; -fx-background-color: #ffffff;">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <ColorPicker prefHeight="25.0" prefWidth="40.0" />
-            <JFXColorPicker prefHeight="25.0" prefWidth="20.0" />
-            <JFXColorPicker />
+            <ScrollPane prefHeight="302.0" prefWidth="311.0" style="-fx-background-color: Transparent;">
+               <content>
+                  <VBox fx:id="GroupsVBOx" prefHeight="294.0" prefWidth="306.0" />
+               </content>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin></ScrollPane>
          </children>
       </VBox>
+      <JFXButton layoutX="13.0" layoutY="414.0" onAction="#AddGroup" prefHeight="32.0" prefWidth="305.0" style="-fx-background-color: #4da6ff; -fx-background-radius: 20;" text="Add Group" />
+      <Label fx:id="CheckKLabel" layoutX="52.0" layoutY="372.0" prefHeight="32.0" prefWidth="242.0" textFill="#e13232" />
    </children>
 </AnchorPane>
