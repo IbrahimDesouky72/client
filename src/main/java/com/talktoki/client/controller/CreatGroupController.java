@@ -72,7 +72,7 @@ public class CreatGroupController implements Initializable {
             }
         }
     }
-
+    
     public Parent getNode(User myUser) {
         Parent node = null;
         try {
