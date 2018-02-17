@@ -75,7 +75,7 @@
             <Label fx:id="excist" layoutX="62.0" layoutY="490.0" prefHeight="40.0" prefWidth="231.0" />
          </children>
       </Pane>
-      <ImageView fitHeight="617.0" fitWidth="335.0" layoutX="35.0" layoutY="77.0" pickOnBounds="true">
+      <ImageView fitHeight="617.0" fitWidth="380.0" layoutX="35.0" layoutY="77.0" pickOnBounds="true">
          <image>
             <Image url="@../images/Background.2e16d0ba.fill-1422x800.jpg" />
          </image>
