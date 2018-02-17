@@ -30,6 +30,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -202,6 +203,7 @@ public class MainUIController implements Initializable {
             //Add contact button
             addContactBtn = new JFXButton("Add Friend");
             addContactBtn.setFont(Font.font("", FontWeight.BOLD, FontPosture.REGULAR, 20));
+            addContactBtn.getStyleClass().add("btnHover");
             FontIcon addFriend = new FontIcon("mdi-account-plus");
             addFriend.setIconSize(30);
             addContactBtn.setGraphic(addFriend);
@@ -307,12 +309,19 @@ public class MainUIController implements Initializable {
                 Tab mytab = new Tab(userName, node);
                 mytab.setId(friendMail);
 
+                mytab.setOnCloseRequest(new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+                        chatWindowsControllers.remove(friendMail);
+                    }
+                });
                 // Add the new tab to the tab pane
                 Platform.runLater(new Runnable() {
 
                     @Override
                     public void run() {
                         chatWindows.getTabs().add(mytab);
+                        chatWindows.getSelectionModel().select(mytab);
                     }
                 });
 
