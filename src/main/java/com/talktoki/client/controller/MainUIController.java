@@ -15,7 +15,6 @@ import com.talktoki.client.model.HandleConnection;
 import com.talktoki.client.view.CustomContact;
 import com.talktoki.client.view.CustomRequest;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import java.awt.Font;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -52,6 +51,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -145,9 +146,9 @@ public class MainUIController implements Initializable {
                                         setGraphic(null);
                                     } else {
                                         Label mytext = new Label(item);
-                                        mytext.setStyle("-fx-background-color: #52aafb");
                                         mytext.setAlignment(Pos.CENTER);
-                                        mytext.setTextFill(Color.WHITE);
+                                        mytext.setTextFill(Color.BLACK);
+                                        mytext.setStyle("-fx-background-color:#b3cde0");
                                         mytext.setPadding(new Insets(2, 2, 2, 2));
                                         setGraphic(mytext);
                                     }
@@ -199,7 +200,8 @@ public class MainUIController implements Initializable {
             contactsList.setSpacing(5);
             contactsList.setAlignment(Pos.CENTER);
             //Add contact button
-            addContactBtn = new JFXButton("Add");
+            addContactBtn = new JFXButton("Add Friend");
+            addContactBtn.setFont(Font.font("", FontWeight.BOLD, FontPosture.REGULAR, 20));
             FontIcon addFriend = new FontIcon("mdi-account-plus");
             addFriend.setIconSize(30);
             addContactBtn.setGraphic(addFriend);

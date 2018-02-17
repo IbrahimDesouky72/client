@@ -90,7 +90,7 @@
                                           </FontAwesomeIconView>
                            </children>
                         </HBox>
-                        <JFXComboBox fx:id="statusBox" prefHeight="31.0" prefWidth="201.0" promptText="Status" styleClass="btnHover" unFocusColor="#026eb2">
+                        <JFXComboBox fx:id="statusBox" prefHeight="37.0" prefWidth="118.0" promptText="Status" style="-fx-background-color: #b3cde0;" styleClass="btnHover" unFocusColor="#026eb2">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
