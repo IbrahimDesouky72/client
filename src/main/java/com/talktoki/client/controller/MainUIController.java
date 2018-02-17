@@ -516,6 +516,7 @@ public class MainUIController implements Initializable {
     }
 
     public void openCreateGroup() {
+        contentPane.getChildren().setAll(createGroupUI);
         createGroupController.notifyChange();
     }
 

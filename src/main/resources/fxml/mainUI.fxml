@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<!--<?import org.kordamp.ikonli.javafx.FontIcon?>-->
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="1046.0" style="-fx-border-width: 1;" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <top>
@@ -63,9 +63,9 @@
                     </content>
                 </Tab>
             </tabs>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
         </TabPane>
     </center>
     <left>
@@ -76,28 +76,28 @@
                         <VBox alignment="CENTER" prefHeight="215.0" prefWidth="282.0" spacing="5.0">
                             <children>
                                 <FontAwesomeIconView fx:id="userIcon" fill="WHITE" glyphName="USER" size="120" />
-                        <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
-                           <children>
-                                      <Label fx:id="username" text="Mahrous" textAlignment="CENTER" textFill="WHITE">
-                                          <font>
-                                              <Font name="FontAwesome Regular" size="22.0" />
-                                          </font>
-                                      </Label>
-                                          <FontAwesomeIconView fx:id="statusIcon" fill="#3dff02" glyphName="CIRCLE" size="15">
-                                              <HBox.margin>
-                                                  <Insets top="2.0" />
-                                              </HBox.margin>
-                                          </FontAwesomeIconView>
-                           </children>
-                        </HBox>
-                        <JFXComboBox fx:id="statusBox" prefHeight="37.0" prefWidth="118.0" promptText="Status" style="-fx-background-color: #b3cde0;" styleClass="btnHover" unFocusColor="#026eb2">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <padding>
-                              <Insets bottom="3.0" left="5.0" right="3.0" top="3.0" />
-                           </padding>
-                        </JFXComboBox>
+                                <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
+                                    <children>
+                                        <Label fx:id="username" text="Mahrous" textAlignment="CENTER" textFill="WHITE">
+                                            <font>
+                                                <Font name="FontAwesome Regular" size="22.0" />
+                                            </font>
+                                        </Label>
+                                        <FontAwesomeIconView fx:id="statusIcon" fill="#3dff02" glyphName="CIRCLE" size="15">
+                                            <HBox.margin>
+                                                <Insets top="2.0" />
+                                            </HBox.margin>
+                                        </FontAwesomeIconView>
+                                    </children>
+                                </HBox>
+                                <JFXComboBox fx:id="statusBox" prefHeight="37.0" prefWidth="118.0" promptText="Status" style="-fx-background-color: #b3cde0;" styleClass="btnHover" unFocusColor="#026eb2">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                    <padding>
+                                        <Insets bottom="3.0" left="5.0" right="3.0" top="3.0" />
+                                    </padding>
+                                </JFXComboBox>
                             </children>
                             <opaqueInsets>
                                 <Insets />
@@ -118,12 +118,12 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                             <graphic>
-<!--                                                <FontIcon iconLiteral="fas-address-book" iconSize="30" iconColor="#6b7982" />-->
+                                                <FontIcon iconLiteral="fas-address-book" iconSize="30" iconColor="#6b7982" />
                                             </graphic>
                                         </JFXButton>
                                         <JFXButton fx:id="groupsBtn" onAction="#setGroupsAsContent" styleClass="btnHover">
                                             <graphic>
-<!--                                                                                <FontIcon iconLiteral="fas-users" iconSize="30" iconColor="#6b7982" />                     -->
+                                                <FontIcon iconLiteral="fas-users" iconSize="30" iconColor="#6b7982" />                     
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
@@ -131,16 +131,23 @@
                                         </JFXButton>
                                         <JFXButton fx:id="requestsBtn" onAction="#setRequestsAsContent" styleClass="btnHover">
                                             <graphic>
-<!--                                                                                <FontIcon iconLiteral="fas-user-plus" iconSize="30" iconColor="#6b7982" />                            -->
+                                                <FontIcon iconLiteral="mdi-account-alert" iconSize="30" iconColor="#6b7982" />                            
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                         </JFXButton>
-                              <JFXButton fx:id="groupCreationBtn" onAction="#openCreateGroup" styleClass="btnHover" />
+                                        <JFXButton fx:id="groupCreationBtn" onAction="#openCreateGroup" styleClass="btnHover" >
+                                            <graphic>
+                                                <FontIcon iconLiteral="mdi-account-multiple-plus" iconSize="30" iconColor="#6b7982" /> 
+                                            </graphic>
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </JFXButton>
                                         <JFXButton fx:id="logOut" onAction="#logoutConfirmation" styleClass="btnHover">
                                             <graphic>
-<!--                                                <FontIcon iconLiteral="fas-sign-out-alt" iconSize="30" iconColor="#6b7982" /> -->
+                                                <FontIcon iconLiteral="fas-sign-out-alt" iconSize="30" iconColor="#6b7982" /> 
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
@@ -148,28 +155,29 @@
                                         </JFXButton>
 
                                     </children>
-                           <padding>
-                              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                           </padding>
+                                    <padding>
+                                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                    </padding>
                                 </HBox>
                                 <VBox fx:id="contentPane" prefHeight="485.0" prefWidth="331.0" spacing="5.0">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding></VBox>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                </VBox>
                             </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
                         </VBox>
                     </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
                 </VBox>
             </center>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
         </BorderPane>
     </left>
 </BorderPane>
