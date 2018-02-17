@@ -7,12 +7,15 @@ package com.talktoki.client.controller;
 
 import com.jfoenix.controls.JFXColorPicker;
 import com.jfoenix.controls.JFXComboBox;
+import com.sun.javafx.css.converters.FontConverter;
 import com.talktoki.chatinterfaces.commans.Message;
 import com.talktoki.chatinterfaces.commans.User;
 import com.talktoki.chatinterfaces.commans.XmlFont;
 import com.talktoki.chatinterfaces.server.ServerInterface;
 import com.talktoki.client.model.Client;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -27,16 +30,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  * FXML Controller class
@@ -180,6 +189,7 @@ public class ChatWindowController implements Initializable {
                 messageColor=colorPallet.getValue();
                  hex1 = Integer.toHexString(messageColor.hashCode()); 
                 System.out.println(hex1);
+                message.setTextColor(hex1);
                 messageTextField.setStyle("-fx-text-fill:#"+hex1);
             }
         } );
@@ -191,12 +201,15 @@ public class ChatWindowController implements Initializable {
         this.otherUser = otherUser;
     }
     
-    public void receiveFromOne(String sender_email,Message message){
+    public void receiveFromOne(String sender_email,Message receivedMessage){
         //draw messsage
         Text text=new Text();
+        FontWeight fw=FontWeight.findByName(receivedMessage.getFontWeight());
+        Font receivedMessageFont=Font.font(receivedMessage.getFontFamily(), fw, Double.parseDouble(receivedMessage.getFontSize()));
         
-        
-        text.setText(message.getText());
+        text.setText(receivedMessage.getText());
+        text.setFont(receivedMessageFont);
+        text.setStyle("-fx-fill:#"+receivedMessage.getTextColor());
         
         Platform.runLater(new Runnable() {
             @Override
@@ -228,8 +241,6 @@ public class ChatWindowController implements Initializable {
                     
             if(!(messageTextField.getText().trim().equals("")||messageTextField==null)){
                 message.setText(messageTextField.getText());
-               // message.setFont(new XmlFont());
-                //message.set
                 messages.add(message);
                 myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , message);
                 //draw message
@@ -242,12 +253,37 @@ public class ChatWindowController implements Initializable {
                 text.setText(message.getText());
                 text.setFont(font);
                 
+                text.setFill(messageColor);
+                System.out.println(message.getTextColor());
+                
+                
+                HBox hBox=new HBox();
+        
+        //Text sentMessage=new Text(message.getText());
+        TextFlow textFlow=new TextFlow(text);
+        Circle picCircle=new Circle();
+        picCircle.setId("pcId");
+        picCircle.setRadius(10);
+        picCircle.setStroke(Color.LIGHTCYAN);
+        
+        FileInputStream is=new FileInputStream("C:/Users/IbrahimDesouky/Documents/NetBeansProjects/ChatWithFx3/src/Male.png");
+        Image im=new Image(is);
+        textFlow.setStyle("-fx-background-color:#5edbff;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+        textFlow.setPadding(new Insets(5, 5, 5, 5));
+        //hBox.getChildren().add(im);
+       
+        
+       
+        
+        hBox.getChildren().addAll(textFlow);
+        hBox.setAlignment(Pos.BASELINE_RIGHT);
+                
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         
                         
-                        messageVBox.getChildren().add(text);
+                        messageVBox.getChildren().add(hBox);
                     }
                 });
                  
@@ -256,6 +292,8 @@ public class ChatWindowController implements Initializable {
 
             
         } catch (RemoteException ex) {
+            Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
