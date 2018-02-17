@@ -13,6 +13,7 @@ import com.talktoki.chatinterfaces.server.ServerInterface;
 import com.talktoki.client.model.Client;
 import com.talktoki.client.model.HandleConnection;
 import com.talktoki.client.view.CustomContact;
+import com.talktoki.client.view.CustomGroup;
 import com.talktoki.client.view.CustomRequest;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
@@ -113,11 +114,14 @@ public class MainUIController implements Initializable {
 
     // Models
     private volatile ArrayList<User> myfriends;
+    private volatile ArrayList<String> myGroups;
     private ServerInterface myServer;
     private Client myclient;
 
     // Controllers
     private HashMap<String, ChatWindowController> chatWindowsControllers = new HashMap<>();
+    private HashMap<String, GroupChatWindowController> groupChatWindowsControllers = new HashMap<>();
+
     private CreatGroupController createGroupController;
 
     public MainUIController(HandleConnection myHandler, User myUser) {
@@ -193,10 +197,32 @@ public class MainUIController implements Initializable {
             });
             contactsRefresher.start();
 
+            // Start a thread that refreshes groups list in background 
+            Thread groupsRefresher = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            myGroups = myServer.getUserGroupsIDs(myclient.getUser().getEmail());
+                            Thread.sleep(3000);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            });
+            groupsRefresher.start();
+
             //main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
             username.setText(myclient.getUser().getUserName());
             statusIcon.setFill(Color.GREEN);
 
+            // Initialize Groups list 
+            groupsList.setSpacing(5);
+            groupsList.setAlignment(Pos.CENTER);
+            
             // Initialize Contact list 
             contactsList.setSpacing(5);
             contactsList.setAlignment(Pos.CENTER);
@@ -332,6 +358,72 @@ public class MainUIController implements Initializable {
         return myController;
     }
 
+    public void printToGroupChatWindow(String group_id, String sender_email, Message message) {
+        GroupChatWindowController mycontroller = groupChatWindowsControllers.get(group_id);
+        if (mycontroller == null) {
+            mycontroller = openGroupChatWindow(group_id);
+        }
+
+        mycontroller.receiveFromGroup(sender_email, message);
+
+    }
+
+    public GroupChatWindowController openGroupChatWindow(String group_id) {
+        GroupChatWindowController myController = groupChatWindowsControllers.get(group_id);
+
+        // ChatWindow needs to be created
+        if (myController == null) {
+            try {
+
+                // Load new Chat Window with its controller
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/groupChatWindow.fxml"));
+
+                myController = new GroupChatWindowController(group_id);
+                // Add controller to hashmap
+                groupChatWindowsControllers.put(group_id, myController);
+
+                fxmlLoader.setController(myController);
+                Parent node = fxmlLoader.load();
+
+                // create a new tab and add it to the window
+                Tab mytab = new Tab(group_id.split("\\$")[0], node);
+                mytab.setId(group_id);
+
+                mytab.setOnCloseRequest(new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+                        groupChatWindowsControllers.remove(group_id);
+                    }
+                });
+                // Add the new tab to the tab pane
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        chatWindows.getTabs().add(mytab);
+                        chatWindows.getSelectionModel().select(mytab);
+                    }
+                });
+
+            } catch (IOException ex) {
+                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return myController;
+
+    }
+
+    public User getMyUser() {
+        User myUser = null;
+        try {
+            myUser = myclient.getUser();
+        } catch (RemoteException ex) {
+            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return myUser;
+        }
+    }
+
     public void logoutConfirmation() {
         Alert myalert = new Alert(Alert.AlertType.CONFIRMATION);
         myalert.setTitle("Signout confirmation");
@@ -464,6 +556,19 @@ public class MainUIController implements Initializable {
         return node;
     }
 
+    public Parent getNewGroup(String group_id) {
+        Parent node = null;
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"));
+            CustomGroup group = new CustomGroup(group_id, this);
+            fxmlLoader.setController(group);
+            node = fxmlLoader.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return node;
+    }
+
     public void setContactsAsContent() {
         contactsList.getChildren().setAll(addContactBtn);
         myfriends.forEach((friend) -> {
@@ -492,6 +597,10 @@ public class MainUIController implements Initializable {
     }
 
     public void setGroupsAsContent() {
+        groupsList.getChildren().setAll();
+        myGroups.forEach((group_id) -> {
+            groupsList.getChildren().add(getNewGroup(group_id));
+        });
         Platform.runLater(new Runnable() {
 
             @Override

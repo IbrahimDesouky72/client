@@ -46,6 +46,7 @@ public class CreatGroupController implements Initializable {
     private HashMap<String, ArrayList<User>> myHash = new HashMap<>();
     @FXML
     private Label CheckKLabel;
+    private User myUser;
 
     @FXML
     private TextField GroupName;
@@ -53,6 +54,7 @@ public class CreatGroupController implements Initializable {
         this.Server = myServer;
         this.ChatController = chatController;
         this.myFriends = ChatController.getMyfriends();
+        this.myUser = chatController.getMyUser();
     }
 
     @Override
@@ -72,7 +74,7 @@ public class CreatGroupController implements Initializable {
             }
         }
     }
-
+    
     public Parent getNode(User myUser) {
         Parent node = null;
         try {
@@ -94,6 +96,8 @@ public class CreatGroupController implements Initializable {
 
     @FXML
     void AddGroup(ActionEvent event) {
+        GroupMember.clear();
+        GroupMember.add(myUser);
         for (int i = 0; i < listOfUsers.size(); i++) {
             boolean checked = listOfUsers.get(i).CheckUserAdded();
             if (checked) {

@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefWidth="353.0" style="-fx-background-color: #2E383D;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefWidth="353.0" style="-fx-background-color: f8f8f8; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="userName" layoutX="46.0" layoutY="12.0" prefHeight="32.0" prefWidth="218.0" textFill="#808080">
+      <Label fx:id="userName" layoutX="46.0" layoutY="12.0" prefHeight="32.0" prefWidth="218.0" textFill="WHITE">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
       <JFXButton fx:id="accept" layoutX="264.0" layoutY="7.0" prefHeight="41.0" prefWidth="24.0">
          <graphic>
-            <FontAwesomeIconView fill="#007517" glyphName="CHECK" size="30" text="" wrappingWidth="29.0" />
+            <FontAwesomeIconView fill="#0aae28" glyphName="CHECK" size="30" text="" wrappingWidth="29.0" />
          </graphic>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -30,6 +30,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <FontAwesomeIconView fx:id="userIcon" fill="#c1272d" glyphName="USER" layoutX="7.0" layoutY="38.0" size="30" />
+      <FontAwesomeIconView fx:id="userIcon" glyphName="USER" layoutX="8.0" layoutY="35.0" size="30" />
    </children>
 </AnchorPane>
