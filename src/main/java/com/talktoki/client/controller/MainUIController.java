@@ -592,17 +592,17 @@ public class MainUIController implements Initializable {
 
     public void setContactsAsContent() {
         initScrollPane();
-        contactsList.getChildren().setAll(addContactBtn);
-        myfriends.forEach((friend) -> {
-            contactsList.getChildren().add(getNewContact(friend));
-        });
-        contactsList.setAlignment(Pos.CENTER);
-        scrollpane.setContent(contactsList);
 
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
+                contactsList.getChildren().setAll(addContactBtn);
+                myfriends.forEach((friend) -> {
+                    contactsList.getChildren().add(getNewContact(friend));
+                });
+                contactsList.setAlignment(Pos.CENTER);
+                scrollpane.setContent(contactsList);
                 contentPane.getChildren().setAll(scrollpane);
 
             }
@@ -626,17 +626,17 @@ public class MainUIController implements Initializable {
 
     public void setGroupsAsContent() {
         initScrollPane();
-        groupsList.getChildren().setAll();
-        myGroups.forEach((group_id) -> {
-            groupsList.getChildren().add(getNewGroup(group_id));
-        });
-        groupsList.setAlignment(Pos.CENTER);
-        scrollpane.setContent(groupsList);
 
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
+                groupsList.getChildren().setAll();
+                myGroups.forEach((group_id) -> {
+                    groupsList.getChildren().add(getNewGroup(group_id));
+                });
+                groupsList.setAlignment(Pos.CENTER);
+                scrollpane.setContent(groupsList);
                 contentPane.getChildren().setAll(scrollpane);
             }
         });
@@ -704,6 +704,7 @@ public class MainUIController implements Initializable {
 
     public void friendStatusChanged(User friend, int status) {
         updateFriendsList();
+        setContactsAsContent();
         boolean offline = false;
         //(0) offline <br> (1) Online <br> (2) Away </b> (3) Busy
         String tempStrStatus = null;
@@ -734,9 +735,16 @@ public class MainUIController implements Initializable {
         // if chat window is opened and status is offline then close it.
         if (offline) {
             chatWindowsControllers.remove(friend.getEmail());
-            chatWindows.getTabs().forEach((tab) -> {
-                tab.getId().equals(friend.getEmail());
-            });
+            for (Tab mytab : chatWindows.getTabs()) {
+                if (mytab.getId() != null && mytab.getId().equals(friend.getEmail())) {
+                    Alert myalert = new Alert(Alert.AlertType.WARNING);
+                    myalert.setTitle("Warning");
+                    myalert.setHeaderText("Your friend is no longer online");
+                    myalert.setContentText("This chat window will be closed; you can't chat with an offline user!");
+                    myalert.showAndWait();
+                    chatWindows.getTabs().remove(mytab);
+                }
+            }
         }
 
         // TODO if chat window is opend if so then pass to it the new status
