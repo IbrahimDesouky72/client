@@ -217,5 +217,40 @@ public class ClientSignUpController implements Initializable {
     void closeButton(MouseEvent event) {
            Platform.exit();
     }
-
+  @FXML
+    void signin(ActionEvent event) {
+        try {
+            //Load the sign in Page
+            Stage stage = (Stage)FnameValue.getScene().getWindow();
+            
+            FXMLLoader loader=new FXMLLoader(getClass().getResource("/fxml/ClientSignin.fxml"));
+            ClientSigninController signin=new ClientSigninController(handle);
+            loader.setController(signin);
+            Parent root;
+            
+            root = loader.load();
+            
+            //Add listener to move window with mouse press and hold
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = stage.getX() - event.getScreenX();
+                    yOffset = stage.getY() - event.getScreenY();
+                }
+            });
+            
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    stage.setX(event.getScreenX() + xOffset);
+                    stage.setY(event.getScreenY() + yOffset);
+                }
+            });
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSignUpController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

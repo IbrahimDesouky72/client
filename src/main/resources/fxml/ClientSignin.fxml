@@ -11,14 +11,19 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="459.0" prefWidth="847.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="629.0" style="-fx-background-color: #282828;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="-5.0" layoutY="-1.0" prefHeight="31.0" prefWidth="853.0" style="-fx-background-color: #C6194A;">
+      <Pane layoutX="-5.0" layoutY="-1.0" prefHeight="31.0" prefWidth="636.0" style="-fx-background-color: #C6194A;">
          <children>
-            <FontAwesomeIconView glyphName="CLOSE" layoutX="814.0" layoutY="27.0" onMouseClicked="#closeButton" size="30" wrappingWidth="24.000006675720215" />
+            <FontAwesomeIconView glyphName="CLOSE" layoutX="599.0" layoutY="27.0" onMouseClicked="#closeButton" size="30" wrappingWidth="24.000006675720215" />
          </children>
       </Pane>
-      <Pane layoutX="486.0" layoutY="77.0" prefHeight="340.0" prefWidth="332.0" style="-fx-background-color: #C6194A;">
+      <ImageView fitHeight="386.0" fitWidth="632.0" layoutX="-3.0" layoutY="30.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/Background.2e16d0ba.fill-1422x800.jpg" />
+         </image>
+      </ImageView>
+      <Pane layoutX="283.0" layoutY="53.0" prefHeight="340.0" prefWidth="332.0" style="-fx-background-color: #C6194A;">
          <children>
             <JFXTextField fx:id="user" focusColor="#f6f5f5" labelFloat="true" layoutX="68.0" layoutY="107.0" prefHeight="25.0" prefWidth="231.0" promptText="Email" unFocusColor="#f5f0f0">
                <font>
@@ -35,31 +40,26 @@
                   <Font name="Arial" size="23.0" />
                </font>
             </Label>
-            <JFXButton layoutX="58.0" layoutY="281.0" onAction="#login" prefHeight="25.0" prefWidth="231.0" style="-fx-background-color: #e6e7e8;" text="Sign In" textFill="#4a4c4d" />
+            <JFXButton layoutX="69.0" layoutY="281.0" onAction="#login" prefHeight="25.0" prefWidth="58.0" style="-fx-background-color: #e6e7e8;" text="Sign In" textFill="#4a4c4d" />
             <Label fx:id="refuseCheck" layoutX="69.0" layoutY="235.0" prefHeight="46.0" prefWidth="231.0" textFill="#87da44" />
-            <FontAwesomeIconView fill="#171717" glyphName="USER" layoutX="38.0" layoutY="132.0" size="25" wrappingWidth="31.0" />
+            <FontAwesomeIconView fill="#171717" glyphName="ENVELOPE" layoutX="38.0" layoutY="132.0" size="25" wrappingWidth="31.0" />
             <FontAwesomeIconView glyphName="UNLOCK_ALT" layoutX="38.0" layoutY="230.0" size="30" wrappingWidth="6.000001668930054" />
-            <FontAwesomeIconView fx:id="userCircle" glyphName="CLOSE" layoutX="299.0" layoutY="136.0"  size="20" visible="false" wrappingWidth="24.000006675720215" />
-            <FontAwesomeIconView fx:id="passcircle" glyphName="CLOSE" layoutX="299.0" layoutY="226.0"  size="20" visible="false" wrappingWidth="24.000006675720215" />
-            <JFXButton layoutX="254.0" layoutY="17.0" onAction="#signUp" style="-fx-background-color: #e6e7e8;" text="Sign Up" />
+            <FontAwesomeIconView fx:id="userCircle" glyphName="CLOSE" layoutX="284.0" layoutY="136.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
+            <FontAwesomeIconView fx:id="passcircle" glyphName="CLOSE" layoutX="284.0" layoutY="228.0" size="20" text="" visible="false" wrappingWidth="24.000005960464478" />
+            <JFXButton layoutX="209.0" layoutY="281.0" onAction="#signUp" style="-fx-background-color: #e6e7e8;" text="Sign Up" />
          </children>
       </Pane>
-      <ImageView fitHeight="347.0" fitWidth="402.0" layoutX="43.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="134.0" fitWidth="190.0" layoutX="81.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/Background.2e16d0ba.fill-1422x800.jpg" />
+            <Image url="@../images/Lets-Talk-Logo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="134.0" fitWidth="190.0" layoutX="149.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/Untitled.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="184.0" layoutY="275.0" prefHeight="46.0" prefWidth="60.0" text="talk" textFill="#c6194a">
+      <Label layoutX="103.0" layoutY="266.0" prefHeight="46.0" prefWidth="60.0" text="talk" textFill="#c6194a">
          <font>
             <Font name="Browallia New Italic" size="54.0" />
          </font>
       </Label>
-      <Label layoutX="244.0" layoutY="275.0" prefHeight="54.0" prefWidth="60.0" text="toki" textFill="#4d4d4d">
+      <Label layoutX="163.0" layoutY="266.0" prefHeight="54.0" prefWidth="60.0" text="toki" textFill="#4d4d4d">
          <font>
             <Font name="Browallia New Italic" size="54.0" />
          </font>
