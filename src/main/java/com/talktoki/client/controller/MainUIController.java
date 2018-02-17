@@ -15,6 +15,7 @@ import com.talktoki.client.model.HandleConnection;
 import com.talktoki.client.view.CustomContact;
 import com.talktoki.client.view.CustomRequest;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import java.awt.Font;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -34,20 +35,29 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.controlsfx.control.Notifications;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  *
@@ -72,8 +82,6 @@ public class MainUIController implements Initializable {
     // Labels
     @FXML
     private Label username;
-    @FXML
-    private Label status;
     // Buttons
     @FXML
     private Button closeBtn;
@@ -123,11 +131,41 @@ public class MainUIController implements Initializable {
             statusBox.getItems().add("offline");
             statusBox.getItems().add("away");
             statusBox.getItems().add("busy");
+            statusBox.getSelectionModel().selectFirst();
+            statusBox.setCellFactory(
+                    new Callback<ListView<String>, ListCell<String>>() {
+                        @Override
+                        public ListCell<String> call(ListView<String> param) {
+                            final ListCell<String> cell = new ListCell<String>() {
+                                @Override
+                                public void updateItem(String item,
+                                        boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (item == null && empty) {
+                                        setGraphic(null);
+                                    } else {
+                                        Label mytext = new Label(item);
+                                        mytext.setStyle("-fx-background-color: #52aafb");
+                                        mytext.setAlignment(Pos.CENTER);
+                                        mytext.setTextFill(Color.WHITE);
+                                        mytext.setPadding(new Insets(2, 2, 2, 2));
+                                        setGraphic(mytext);
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+                    });
             statusBox.valueProperty().addListener(new ChangeListener() {
-
                 @Override
                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    statusChanged();
+                    new Thread() {
+
+                        @Override
+                        public void run() {
+                            statusChanged();
+                        }
+                    }.start();
                 }
             });
 
@@ -155,7 +193,6 @@ public class MainUIController implements Initializable {
 
             //main.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
             username.setText(myclient.getUser().getUserName());
-            status.setText(myclient.getUser().getStatus());
             statusIcon.setFill(Color.GREEN);
 
             // Initialize Contact list 
@@ -163,6 +200,9 @@ public class MainUIController implements Initializable {
             contactsList.setAlignment(Pos.CENTER);
             //Add contact button
             addContactBtn = new JFXButton("Add");
+            FontIcon addFriend = new FontIcon("mdi-account-plus");
+            addFriend.setIconSize(30);
+            addContactBtn.setGraphic(addFriend);
             addContactBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -475,12 +515,16 @@ public class MainUIController implements Initializable {
             int statusNum = 0;
             if (statusStr.equals("offline")) {
                 statusNum = 0;
+                statusIcon.setFill(Color.GREY);
             } else if (statusStr.equals("online")) {
                 statusNum = 1;
+                statusIcon.setFill(Color.GREEN);
             } else if (statusStr.equals("away")) {
                 statusNum = 2;
+                statusIcon.setFill(Color.YELLOW);
             } else if (statusStr.equals("busy")) {
                 statusNum = 3;
+                statusIcon.setFill(Color.RED);
             }
             myServer.notifyStatus(myclient.getUser().getEmail(), statusNum);
         } catch (RemoteException ex) {
@@ -514,6 +558,6 @@ public class MainUIController implements Initializable {
             }
         });
 
-        // Check if chat window is opend if so then pass to it the new status
+        // TODO if chat window is opend if so then pass to it the new status
     }
 }

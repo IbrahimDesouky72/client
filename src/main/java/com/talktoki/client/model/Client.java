@@ -71,9 +71,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         return myController;
     }
 
-    public User getMyuser() {
-        return myuser;
-    }
 
     public ServerInterface getMyServer() {
         return myServer;
