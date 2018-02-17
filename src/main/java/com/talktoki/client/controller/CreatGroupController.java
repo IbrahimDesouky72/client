@@ -24,9 +24,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -55,7 +57,8 @@ public class CreatGroupController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        //Scene scene =CheckKLabel.getScene();
+          //    scene.getStylesheets().add("/styles/mainui.css");
         for (int i = 0; i < myFriends.size(); i++) {
             if (myFriends.get(i) != null) {
                 System.out.println("User " + i + "already Exist");
@@ -102,17 +105,17 @@ public class CreatGroupController implements Initializable {
             try {
                 String groupNam = GroupName.getText();
                 if (groupNam.trim().equals("")) {
-                    //groupNam="My Group";
                     CheckKLabel.setText("Enter Group Name");
                 } else {
                     Date currentDate = new Date();
                     System.out.println("Date : " + currentDate.toString());
-                    int Result = Server.createGroup(groupNam, GroupMember);
+                    String totalName=groupNam+"$"+currentDate.toString();
+                    int Result = Server.createGroup(totalName, GroupMember);
                     if (Result == 1) {
                         CheckKLabel.setText("The Group is Added ");
-                    } else if (Result == 2) {
+                    } else if (Result == -1) {
                         CheckKLabel.setText("This Group alreay Exist");
-                    } else {
+                    } else if(Result == 3) {
                         CheckKLabel.setText("Fatel Error Tray Again Later");
                     }
                 }
