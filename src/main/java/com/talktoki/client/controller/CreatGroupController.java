@@ -94,6 +94,7 @@ public class CreatGroupController implements Initializable {
 
     @FXML
     void AddGroup(ActionEvent event) {
+        GroupMember.clear();
         for (int i = 0; i < listOfUsers.size(); i++) {
             boolean checked = listOfUsers.get(i).CheckUserAdded();
             if (checked) {
