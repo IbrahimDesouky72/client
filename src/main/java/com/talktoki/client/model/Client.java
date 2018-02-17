@@ -84,4 +84,9 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         myController.showRequestNotification(sender_name, sender_email);
     }
 
+    @Override
+    public void notifyFriendStatusChanged(User friend, int status) {
+        myController.friendStatusChanged(friend, status);
+    }
+
 }
