@@ -45,6 +45,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputDialog;
@@ -75,6 +76,7 @@ public class MainUIController implements Initializable {
     private VBox contentPane;
     @FXML
     private TabPane chatWindows;
+    private ScrollPane scrollpane;
 
     // Icons
     @FXML
@@ -132,6 +134,7 @@ public class MainUIController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            initScrollPane();
             // TEST statusBox 
             statusBox.getItems().add("online");
             statusBox.getItems().add("offline");
@@ -179,24 +182,23 @@ public class MainUIController implements Initializable {
             // Initialize Friends list
             myfriends = myServer.getContactList(myclient.getUser().getEmail());
 
-            // Start a thread that refreshes contact list in background 
-            Thread contactsRefresher = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
-                        try {
-                            myfriends = myServer.getContactList(myclient.getUser().getEmail());
-                            Thread.sleep(3000);
-                        } catch (RemoteException ex) {
-                            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            });
-            contactsRefresher.start();
-
+//            // Start a thread that refreshes contact list in background 
+//            Thread contactsRefresher = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    while (true) {
+//                        try {
+//                            myfriends = myServer.getContactList(myclient.getUser().getEmail());
+//                            Thread.sleep(3000);
+//                        } catch (RemoteException ex) {
+//                            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
+//                }
+//            });
+//            contactsRefresher.start();
             // Start a thread that refreshes groups list in background 
             Thread groupsRefresher = new Thread(new Runnable() {
                 @Override
@@ -204,7 +206,7 @@ public class MainUIController implements Initializable {
                     while (true) {
                         try {
                             myGroups = myServer.getUserGroupsIDs(myclient.getUser().getEmail());
-                            Thread.sleep(3000);
+                            Thread.sleep(10000);
                         } catch (RemoteException ex) {
                             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (InterruptedException ex) {
@@ -222,7 +224,7 @@ public class MainUIController implements Initializable {
             // Initialize Groups list 
             groupsList.setSpacing(5);
             groupsList.setAlignment(Pos.CENTER);
-            
+
             // Initialize Contact list 
             contactsList.setSpacing(5);
             contactsList.setAlignment(Pos.CENTER);
@@ -247,11 +249,19 @@ public class MainUIController implements Initializable {
 
             //Initialize Requests 
             // Set content pane as contact list
-            contentPane.getChildren().setAll(contactsList);
+            setContactsAsContent();
             createGroupUI = initCreateGroup();
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void initScrollPane() {
+        scrollpane = new ScrollPane();
+        scrollpane.setPadding(new Insets(5));
+        scrollpane.setPrefViewportHeight(485.0);
+        scrollpane.setPrefViewportWidth(331.0);
+        scrollpane.setStyle("-fx-background-color: transparent;");
     }
 
     public ArrayList<User> getMyfriends() {
@@ -313,8 +323,16 @@ public class MainUIController implements Initializable {
     public ChatWindowController openChatWindow(String friendMail, String userName) {
         ChatWindowController myController = chatWindowsControllers.get(friendMail);
 
+        //Check if user is online
+        User myUsr = null;
+        for (User myfriend : myfriends) {
+            if (myfriend.getEmail().equals(friendMail) && myfriend.getStatus().equals("online")) {
+                myUsr = myfriend;
+            }
+        }
+
         // ChatWindow needs to be created
-        if (myController == null) {
+        if (myController == null && myUsr != null) {
             try {
 
                 // Load new Chat Window with its controller
@@ -570,15 +588,19 @@ public class MainUIController implements Initializable {
     }
 
     public void setContactsAsContent() {
+        initScrollPane();
         contactsList.getChildren().setAll(addContactBtn);
         myfriends.forEach((friend) -> {
             contactsList.getChildren().add(getNewContact(friend));
         });
+        contactsList.setAlignment(Pos.CENTER);
+        scrollpane.setContent(contactsList);
+
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
-                contentPane.getChildren().setAll(contactsList);
+                contentPane.getChildren().setAll(scrollpane);
 
             }
         });
@@ -586,26 +608,33 @@ public class MainUIController implements Initializable {
     }
 
     public void setRequestsAsContent() {
+        initScrollPane();
+        requestsList.setAlignment(Pos.CENTER);
+        scrollpane.setContent(requestsList);
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
-                contentPane.getChildren().setAll(requestsList);
+                contentPane.getChildren().setAll(scrollpane);
             }
         });
 
     }
 
     public void setGroupsAsContent() {
+        initScrollPane();
         groupsList.getChildren().setAll();
         myGroups.forEach((group_id) -> {
             groupsList.getChildren().add(getNewGroup(group_id));
         });
+        groupsList.setAlignment(Pos.CENTER);
+        scrollpane.setContent(groupsList);
+
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
-                contentPane.getChildren().setAll(groupsList);
+                contentPane.getChildren().setAll(scrollpane);
             }
         });
     }
@@ -629,6 +658,22 @@ public class MainUIController implements Initializable {
         createGroupController.notifyChange();
     }
 
+    public void updateGroupList() {
+        try {
+            myGroups = myServer.getUserGroupsIDs(myclient.getUser().getEmail());
+        } catch (RemoteException ex) {
+            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateFriendsList() {
+        try {
+            myfriends = myServer.getContactList(myclient.getUser().getEmail());
+        } catch (RemoteException ex) {
+            Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void statusChanged() {
         try {
             // (0) offline <br> (1) Online <br> (2) Away </b> (3) Busy
@@ -648,16 +693,20 @@ public class MainUIController implements Initializable {
                 statusIcon.setFill(Color.RED);
             }
             myServer.notifyStatus(myclient.getUser().getEmail(), statusNum);
+            updateFriendsList();
         } catch (RemoteException ex) {
             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void friendStatusChanged(User friend, int status) {
+        updateFriendsList();
+        boolean offline = false;
         //(0) offline <br> (1) Online <br> (2) Away </b> (3) Busy
         String tempStrStatus = null;
         if (status == 0) {
             tempStrStatus = "offline";
+            offline = true;
         } else if (status == 1) {
             tempStrStatus = "online";
         } else if (status == 2) {
@@ -678,6 +727,14 @@ public class MainUIController implements Initializable {
                         .showInformation();
             }
         });
+
+        // if chat window is opened and status is offline then close it.
+        if (offline) {
+            chatWindowsControllers.remove(friend.getEmail());
+            chatWindows.getTabs().forEach((tab) -> {
+                tab.getId().equals(friend.getEmail());
+            });
+        }
 
         // TODO if chat window is opend if so then pass to it the new status
     }

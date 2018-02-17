@@ -117,6 +117,7 @@ public class CreatGroupController implements Initializable {
                     int Result = Server.createGroup(totalName, GroupMember);
                     if (Result == 1) {
                         CheckKLabel.setText("The Group is Added ");
+                        ChatController.updateGroupList();
                     } else if (Result == -1) {
                         CheckKLabel.setText("This Group alreay Exist");
                     } else if(Result == 3) {
