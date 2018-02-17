@@ -495,7 +495,7 @@ public class MainUIController implements Initializable {
         Parent node = null;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/CreatGroup.fxml"));
-            createGroupController = new CreatGroupController(myServer, myfriends, this);
+            createGroupController = new CreatGroupController(myServer, this);
             fxmlLoader.setController(createGroupController);
             node = fxmlLoader.load();
         } catch (IOException ex) {

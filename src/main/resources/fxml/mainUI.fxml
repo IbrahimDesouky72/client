@@ -73,7 +73,7 @@
             <center>
                 <VBox prefHeight="753.0" prefWidth="221.0" style="-fx-background-color: #005b96;" BorderPane.alignment="CENTER">
                     <children>
-                        <VBox alignment="CENTER" prefHeight="215.0" prefWidth="282.0">
+                        <VBox alignment="CENTER" prefHeight="215.0" prefWidth="282.0" spacing="5.0">
                             <children>
                                 <FontAwesomeIconView fx:id="userIcon" fill="WHITE" glyphName="USER" size="120" />
                         <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
@@ -167,6 +167,9 @@
                </padding>
                 </VBox>
             </center>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
         </BorderPane>
     </left>
 </BorderPane>
