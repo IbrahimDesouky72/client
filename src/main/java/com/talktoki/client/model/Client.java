@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  *
@@ -87,8 +88,17 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     public void notifyFriendStatusChanged(User friend, int status) {
         myController.friendStatusChanged(friend, status);
     }
-    /**********Mahrous*********/
-    
+    /**********Mahrous*********/   
+    @Override
+    public void receiveServerAnnouncement(String announcement) throws RemoteException{
+        myController.appendToAnnouncements(announcement);
+    }
+    @Override
+    public void refreshContacts() throws RemoteException
+    {
+        myController.updateFriendsList();
+        myController.setContactsAsContent();
+    }
     /**********Mahrous*********/
 
     @Override

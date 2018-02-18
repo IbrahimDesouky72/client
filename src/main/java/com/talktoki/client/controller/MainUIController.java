@@ -48,6 +48,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.Background;
@@ -83,6 +84,10 @@ public class MainUIController implements Initializable {
     private FontAwesomeIconView userIcon;
     @FXML
     private FontAwesomeIconView statusIcon;
+
+    // Server Announcement area
+    @FXML
+    private TextArea announcementsArea;
 
     // Labels
     @FXML
@@ -753,5 +758,9 @@ public class MainUIController implements Initializable {
         }
 
         // TODO if chat window is opend if so then pass to it the new status
+    }
+
+    public void appendToAnnouncements(String announcement) {
+        announcementsArea.appendText(announcement + "/n");
     }
 }
