@@ -87,6 +87,9 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     public void notifyFriendStatusChanged(User friend, int status) {
         myController.friendStatusChanged(friend, status);
     }
+    /**********Mahrous*********/
+    
+    /**********Mahrous*********/
 
     @Override
     public void reciveFile(String filename, byte[] data, int dataLength) throws RemoteException{
