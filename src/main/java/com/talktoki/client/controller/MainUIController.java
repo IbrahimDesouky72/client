@@ -591,6 +591,7 @@ public class MainUIController implements Initializable {
     }
 
     public void setContactsAsContent() {
+        updateFriendsList();
         initScrollPane();
 
         Platform.runLater(new Runnable() {
@@ -657,6 +658,7 @@ public class MainUIController implements Initializable {
     }
 
     public void openCreateGroup() {
+        updateFriendsList();
         contentPane.getChildren().setAll(createGroupUI);
         createGroupController.notifyChange();
     }
@@ -725,7 +727,7 @@ public class MainUIController implements Initializable {
             @Override
             public void run() {
                 Notifications.create()
-                        .title("Friendship Request!")
+                        .title("Status Changed")
                         .text(friend.getUserName() + " Status changed to " + strStatus)
                         .darkStyle()
                         .showInformation();

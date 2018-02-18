@@ -64,10 +64,14 @@ public class CustomContact implements Initializable {
             }
         });
         setUsername(myUser.getUserName());
-        if (myUser.getStatus().equals("online")) {
+        String statusStr = myUser.getStatus();
+        if (statusStr.equals("offline")) {
+            setStatus(Color.GREY);
+        } else if (statusStr.equals("online")) {          
             setStatus(Color.GREEN);
-        } else // TODO SET COLOR UPON ALL STATES
-        {
+        } else if (statusStr.equals("away")) {
+            setStatus(Color.YELLOW);
+        } else if (statusStr.equals("busy")) {
             setStatus(Color.RED);
         }
         setIconGlyphName("USER");
