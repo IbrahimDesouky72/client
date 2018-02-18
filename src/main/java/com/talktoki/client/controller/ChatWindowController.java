@@ -258,6 +258,7 @@ public class ChatWindowController implements Initializable {
              File file = fileChooser.showOpenDialog(null);
              if(file!=null)
              {
+                 System.out.println("the file : "+file.getName());
                myserver.SendFile(myclient.getUser().getEmail(),otherUser.getEmail(),file);
              }
              else
