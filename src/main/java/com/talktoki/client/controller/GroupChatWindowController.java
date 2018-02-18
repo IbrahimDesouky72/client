@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 /**
@@ -33,10 +34,7 @@ import javafx.scene.text.TextFlow;
  */
 public class GroupChatWindowController implements Initializable{
     private String group_Id;
-    @FXML
-    Circle profileImage;
-    
-    @FXML
+   @FXML
     private VBox messageVBox;
 
     @FXML
@@ -47,9 +45,6 @@ public class GroupChatWindowController implements Initializable{
 
     @FXML
     private FontAwesomeIconView sendMessage;
-
-    @FXML
-    private ImageView onlineImage;
 
     @FXML
     private FontAwesomeIconView phoneCall;
@@ -67,16 +62,19 @@ public class GroupChatWindowController implements Initializable{
     private JFXButton saveButton;
 
     @FXML
-    private TextFlow usersName;
+    private TextFlow userName;
 
     @FXML
     private JFXComboBox<?> fontWeight;
 
     @FXML
-    private JFXTextField groupName;
+    private Text groupName;
+
+
+    
 
     @FXML
-    void attachFile(MouseEvent event) {
+    public void attachFile(MouseEvent event) {
 
     }
 
@@ -97,9 +95,7 @@ public class GroupChatWindowController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        profileImage.setStroke(Color.SEAGREEN);
-        Image im = new Image("F:\\ITI\\javaProject\\client\\src\\main\\resources\\images\\group.ico",false);
-        profileImage.setFill(new ImagePattern(im));
+        
         
     }
 }
