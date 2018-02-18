@@ -5,6 +5,7 @@
     <xs:sequence>
       <xs:element type="MessageType" name="Message" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
+    <xs:attribute name="owner" type="xs:string" use="required"/>
   </xs:complexType>
   <xs:complexType name="FontType">
     <xs:simpleContent>

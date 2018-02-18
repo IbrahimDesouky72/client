@@ -14,59 +14,60 @@
     <!-- TODO customize transformation rules 
          syntax recommendation http://www.w3.org/TR/xslt 
     -->
+    <xsl:variable name="owner" select="/Messages/@owner"/>
     <xsl:template match="/">
         <html>
             <head>
-                <title>Message</title>
+                <title>
+                    <xsl:value-of select="$owner"/>
+                </title>
             </head>
             <body>
-                
-                <table border="1">
-
-                    <tr>
-                        <td>Message From</td>
-                        <td>Message To</td>
-                        <td>Message Body</td>
-                        <td>Message Date</td>
-                        <td>Message Color</td>
-                        <td>Message FamilyFont</td>
-                        <td>Message FontSize</td>
-                        <td>Message FontType</td>
-                    </tr>
-
-                    <xsl:for-each select="Messages/Message">
-                        <xsl:sort/>
-                        <tr>
-                            <td>
-                                <xsl:value-of select="@From"/>
-                            </td>
-                            <td>
-                                <xsl:value-of select="@To"/>
-                            </td>
-                            <td>
-                                <xsl:value-of select="Body"/>
-                            </td>
-                            <td>
-                                <xsl:value-of select="Date"/>
-                            </td>
-                            <td>
-                                <xsl:value-of select="color"/>
-                            </td>
-                            <td>
-                                <xsl:value-of select="Font/@font-family"/>
-                            </td>
-                            <td>
-                                <xsl:value-of select="Font/@font-size"/>
-                            </td>
-                            <td>
-                                <xsl:value-of select="Font/@font-type"/>
-                            </td>
-                            
-                        </tr>
+                <div class="menu">
+                    <div class="back">
+                        <i class="fa fa-chevron-left"></i> 
+                        <img src="https://i.imgur.com/DY6gND0.png" draggable="false"/>
+                    </div>
+                    <div class="name">ChatName</div>
+                    <div class="last">18:09</div>
+                </div>
+                <ol class="chat">
+                    
+                    <xsl:for-each select="Message">
+                        <xsl:choose>
+                            <xsl:when test="@From = $owner">
+                                <li class="self">
+                                    <div class="avatar">
+                                        <img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/>
+                                    </div>
+                                    <div class="msg">
+                                        <p>
+                                            <xsl:value-of select="Body"/>
+                                        </p>
+                                        <time>
+                                            <xsl:value-of select="Date"/>
+                                        </time>
+                                    </div>
+                                </li>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <li class="other">
+                                    <div class="avatar">
+                                        <img src="https://i.imgur.com/DY6gND0.png" draggable="false"/>
+                                    </div>
+                                    <div class="msg">
+                                        <p>
+                                            <xsl:value-of select="Body"/>
+                                        </p>
+                                        <time>
+                                            <xsl:value-of select="Date"/>
+                                        </time>
+                                    </div>
+                                </li>
+                            </xsl:otherwise>
+                        </xsl:choose>   
                     </xsl:for-each>
-
-                </table>
-                
+                </ol>
             </body>
         </html>
     </xsl:template>
