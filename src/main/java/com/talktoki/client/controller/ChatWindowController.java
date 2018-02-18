@@ -250,22 +250,52 @@ public class ChatWindowController implements Initializable {
     
     @FXML
     void attachFile(MouseEvent event) {
-
+        
+//        Thread thread= new Thread(){
+//                    @Override
+//                    public void run() {
+                       boolean firstSend=true;
         try {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(null);
             if (file != null) {
+                
                 System.out.println("the file : " + file.getName());
                 FileInputStream input = new FileInputStream(file);
                 byte[] mydata = new byte[1024 * 1024];
                 int mylen = input.read(mydata);
-                System.out.println("length"+mylen);
+                long totalLength=file.length();
                 while (mylen > 0) {
-                   myserver.SendFile(myclient.getUser().getEmail(), otherUser.getEmail(),file.getName(),mydata, mylen); 
+                 int res=  myserver.SendFile(myclient.getUser().getUserName(), otherUser.getEmail(),file.getName(),mydata, mylen,firstSend); 
+                 if(res==2)
+                 {
+                   break;
+                 }
+                 else if(res==0)
+                 {
+                     System.out.println("error");
+                 }
+                 else if(res==-1)
+                 {
+                   Alert alert = new Alert(AlertType.INFORMATION);
+                   alert.setTitle("SendFile Dialog");
+                   alert.setHeaderText("The file send interept");
+                   alert.setContentText("the "+otherUser.getUserName()+"is offline Now");
+                   alert.showAndWait(); 
+                   break;
+                 }
+                 totalLength-=mylen;
+                 if(totalLength<=0)
+                 {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("SendFile Dialog");
+                alert.setHeaderText("The file download finished");
+                alert.setContentText("the sourcre in : C:\\Users\\Public\\Downloads");
+                alert.showAndWait();  
+                 }
                    mylen = input.read(mydata);
-                    
+                  firstSend=false;
                 }
-                
             } else {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("SendFile Dialog");
@@ -279,8 +309,13 @@ public class ChatWindowController implements Initializable {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+        }  
+                    
+                 //   }
+                
+             //   };
+       
+   }
 
     /************Bodour*////////////
     @FXML

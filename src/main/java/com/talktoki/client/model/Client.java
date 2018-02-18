@@ -12,9 +12,17 @@ import com.talktoki.chatinterfaces.server.ServerInterface;
 import com.talktoki.client.controller.MainUIController;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 /**
  *
@@ -103,21 +111,60 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     
 /************Bodour*////////////
     @Override
-    public void reciveFile(String SenderEmail,String filename, byte[] data, int dataLength) throws RemoteException{
+    public boolean reciveFile(String Senderusername,String filename, byte[] data, int dataLength,boolean firstSend) throws RemoteException{
         try {
-            String pathDefault = "C:\\Users\\Public\\Downloads\\";
-            File f = new File(pathDefault + filename);
-            f.createNewFile();
-            FileOutputStream out = new FileOutputStream(f, true);
-            out.write(data, 0, dataLength);
-            out.flush();
-            out.close();
-            System.out.println("Done writing data...");
+            if(firstSend)
+            {
+                System.out.println("firsrTimeeeeeeeee");
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                     Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("confirm send file");
+                alert.setContentText(myuser.getUserName()+" : Do you want recieve file : "+filename+"From : "+Senderusername);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                         try {
+                             // ... user chose OK
+                             String pathDefault = "C:\\Users\\Public\\Downloads\\";
+                             File f = new File(pathDefault + filename);
+                             f.createNewFile();
+                             FileOutputStream out = new FileOutputStream(f, true);
+                             out.write(data, 0, dataLength);
+                             out.flush();
+                             out.close();
+        
+                         } catch (IOException ex) {
+                             System.out.println("Error in file Write");
+                         }
+                } else {
+                }
+                    
+                    }
+                });
+               
+            }
+            else
+            {
+                    String pathDefault = "C:\\Users\\Public\\Downloads\\";
+                    File f = new File(pathDefault + filename);
+                    f.createNewFile();
+                    FileOutputStream out = new FileOutputStream(f, true);
+                    out.write(data, 0, dataLength);
+                    out.flush();
+                    out.close();
+                    System.out.println("Done writing data...");
+               return true;
+            }
+                
+            
 
         } catch (Exception e) {
-            e.printStackTrace();
+           return false;
         }
-
+  return true;
     }
     /************Bodour*////////////
 
