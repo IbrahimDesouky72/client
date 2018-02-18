@@ -53,13 +53,13 @@ public class ClientSigninController implements Initializable {
         handle = h;
     }
     //Regular Expression of username Address
-    private static final String Email_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+    private static final String Email_PATTERN = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$";
     //Regular Expression of password Address
     //Password expression : Password must be between 4 and 8 digits long and include at least one numeric digit.
     //Matches	1234 | asdf1234 | asp123
     //Non-Matches	asdf | asdf12345 | password
     //this regular rated as 5 star
-    private static final String PASSWORD_PATTERN = "^(?=.*\\d).{4,8}$";
+    //private static final String PASSWORD_PATTERN = "^(?=.*\\d).{4,8}$";
     boolean usernameFlagCheck = false;
     boolean passwordFlagCheck = false;
 
@@ -78,14 +78,25 @@ public class ClientSigninController implements Initializable {
             usernameFlagCheck = false;
             userCircle.setVisible(true);
         }
+        if(pass.getText().trim().isEmpty())
+        {
+          passwordFlagCheck = false;
+            passcircle.setVisible(true);
+        }
+        else
+        {
+           passwordFlagCheck = true;
+            passcircle.setVisible(false);
+        }
+            
         //check valud format port >>if false there is a circle red point appear
-        if (checkpassword(pass.getText())) {
+        /*if (checkpassword(pass.getText())) {
             passwordFlagCheck = true;
             passcircle.setVisible(false);
         } else {
             passwordFlagCheck = false;
             passcircle.setVisible(true);
-        }
+        }*/
         if (usernameFlagCheck && passwordFlagCheck) {
 
             User resultSignIn = handle.signin(user.getText(), pass.getText());
@@ -152,12 +163,12 @@ public class ClientSigninController implements Initializable {
         return resultFlagCheck;
     }
 
-    public boolean checkpassword(String password) {
+    /*public boolean checkpassword(String password) {
         Pattern ipPatern = Pattern.compile(PASSWORD_PATTERN);
         Matcher resultMatcher = ipPatern.matcher(password);
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
-    }
+    }*/
       @FXML
     void closeButton(MouseEvent event) {
        Platform.exit();

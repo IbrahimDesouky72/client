@@ -60,6 +60,7 @@
             <FontAwesomeIconView glyphName="UNLOCK_ALT" layoutX="35.0" layoutY="233.0" size="30" wrappingWidth="6.000001668930054" />
             <FontAwesomeIconView fx:id="IpCheck" glyphName="CLOSE" layoutX="285.0" layoutY="134.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
             <FontAwesomeIconView fx:id="portCheck" glyphName="CLOSE" layoutX="285.0" layoutY="220.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
+            <FontAwesomeIconView fx:id="Load" glyphName="SPINNER" layoutX="308.0" layoutY="307.0" size="25" visible="false" wrappingWidth="24.00000023841858" />
          </children>
       </Pane>
    </children>
