@@ -92,7 +92,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     /**********Mahrous*********/
 
     @Override
-    public void reciveFile(String filename, byte[] data, int dataLength) throws RemoteException{
+    public void reciveFile(String SenderEmail,String filename, byte[] data, int dataLength) throws RemoteException{
         try {
             String pathDefault = "C:\\Users\\Public\\Downloads\\";
             File f = new File(pathDefault + filename);

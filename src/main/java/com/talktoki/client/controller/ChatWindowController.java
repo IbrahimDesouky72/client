@@ -261,7 +261,7 @@ public class ChatWindowController implements Initializable {
                 System.out.println("length"+mylen);
                 while (mylen > 0) {
                    // recieveClient.reciveFile(file.getName(), mydata, mylen);
-                  // myserver.SendFile(myclient.getUser().getEmail(), otherUser.getEmail(),file.getName(),mydata, mylen); 
+                   myserver.SendFile(myclient.getUser().getEmail(), otherUser.getEmail(),file.getName(),mydata, mylen); 
                    mylen = input.read(mydata);
                     
                 }
