@@ -239,9 +239,10 @@ public class MainUIController implements Initializable {
             contactsList.setAlignment(Pos.CENTER);
             //Add contact button
             addContactBtn = new JFXButton("Add Friend");
+            addContactBtn.setTextFill(Color.WHITE);
             addContactBtn.setFont(Font.font("", FontWeight.BOLD, FontPosture.REGULAR, 20));
-            addContactBtn.getStyleClass().add("btnHover");
             FontIcon addFriend = new FontIcon("mdi-account-plus");
+            addFriend.setFill(Color.WHITE);
             addFriend.setIconSize(30);
             addContactBtn.setGraphic(addFriend);
             addContactBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -250,7 +251,6 @@ public class MainUIController implements Initializable {
                     showAddContactDialog();
                 }
             });
-            contactsList.getChildren().add(addContactBtn);
             // Initialize contacts
             myfriends.forEach((friend) -> {
                 contactsList.getChildren().add(getNewContact(friend));
@@ -606,6 +606,9 @@ public class MainUIController implements Initializable {
 
             @Override
             public void run() {
+                if (myfriends.size() == 0) {
+                    contactsList.setPrefWidth(300);
+                }
                 contactsList.getChildren().setAll(addContactBtn);
                 myfriends.forEach((friend) -> {
                     contactsList.getChildren().add(getNewContact(friend));
@@ -634,6 +637,7 @@ public class MainUIController implements Initializable {
     }
 
     public void setGroupsAsContent() {
+        updateFriendsList();
         initScrollPane();
 
         Platform.runLater(new Runnable() {
