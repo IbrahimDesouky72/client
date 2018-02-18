@@ -48,6 +48,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.Background;
@@ -83,6 +84,10 @@ public class MainUIController implements Initializable {
     private FontAwesomeIconView userIcon;
     @FXML
     private FontAwesomeIconView statusIcon;
+
+    // Server Announcement area
+    @FXML
+    private TextArea announcementsArea;
 
     // Labels
     @FXML
@@ -125,6 +130,8 @@ public class MainUIController implements Initializable {
     private HashMap<String, GroupChatWindowController> groupChatWindowsControllers = new HashMap<>();
 
     private CreatGroupController createGroupController;
+
+    private boolean running = true;
 
     public MainUIController(HandleConnection myHandler, User myUser) {
         this.myServer = myHandler.getMyServerAuthInt();
@@ -205,7 +212,7 @@ public class MainUIController implements Initializable {
             Thread groupsRefresher = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (true) {
+                    while (running) {
                         try {
                             myGroups = myServer.getUserGroupsIDs(myclient.getUser().getEmail());
                             Thread.sleep(10000);
@@ -451,6 +458,7 @@ public class MainUIController implements Initializable {
         Optional result = myalert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
+                running = false;
                 myServer.notifyStatus(myclient.getUser().getEmail(), 0);
                 myServer.signOut(myclient);
             } catch (RemoteException ex) {
@@ -750,5 +758,9 @@ public class MainUIController implements Initializable {
         }
 
         // TODO if chat window is opend if so then pass to it the new status
+    }
+
+    public void appendToAnnouncements(String announcement) {
+        announcementsArea.appendText(announcement + "/n");
     }
 }
