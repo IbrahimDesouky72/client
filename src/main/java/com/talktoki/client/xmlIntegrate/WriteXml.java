@@ -5,6 +5,7 @@
  */
 package com.talktoki.client.xmlIntegrate;
 
+import com.talktoki.chatinterfaces.commans.Message;
 import com.talktoki.client.generatedXmlClasses.MessagesType;
 import com.talktoki.client.generatedXmlClasses.FontType;
 import com.talktoki.client.generatedXmlClasses.MessageType;
@@ -14,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
@@ -44,66 +46,101 @@ import org.xml.sax.SAXException;
  */
 public class WriteXml {
 
-    public static void Write(List<MessageType> msgsList , File outputFile) {
+    public void Write(List<Message> msgsList, File outputFile, String chatOwner) {
         try {
             JAXBContext context = JAXBContext.newInstance("com.talktoki.client.generatedXmlClasses");
-            
+
             ObjectFactory factory = new ObjectFactory();
             MessagesType fullMsgNode = factory.createMessagesType();
-           for(MessageType saveMsg: msgsList)
-           {
-               MessageType newMessage = factory.createMessageType();
-               newMessage.setFrom(saveMsg.getFrom());
-               newMessage.setTo(saveMsg.getTo());
-               newMessage.setBody(saveMsg.getBody());
-               newMessage.setDate(saveMsg.getDate());
-               newMessage.setColor(saveMsg.getColor());
-               newMessage.setFont(saveMsg.getFont());
-               fullMsgNode.getMessage().add(newMessage);
-           }
-            
+            fullMsgNode.setOwner(chatOwner);
+            for (Message saveMsg : msgsList) {
+                MessageType newMessage = factory.createMessageType();
+                newMessage.setFrom(saveMsg.getFrom());
+                newMessage.setTo(saveMsg.getTo());
+                newMessage.setBody(saveMsg.getText());
+                newMessage.setDate(saveMsg.getDate());
+                newMessage.setColor(saveMsg.getTextColor());
+                FontType msgFont = new FontType();
+                msgFont.setFontFamily(saveMsg.getFontFamily());
+                msgFont.setFontSize(saveMsg.getFontSize());
+                msgFont.setFontType(saveMsg.getFontWeight());
+                newMessage.setFont(msgFont);
+                fullMsgNode.getMessage().add(newMessage);
+            }
+
             JAXBElement msgElement = factory.createMessages(fullMsgNode);
             Marshaller marsh = context.createMarshaller();
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marsh.setProperty("com.sun.xml.internal.bind.xmlHeaders", "<?xml-stylesheet type='text/xsl' href='"+outputFile.getParent()+"/MessageXsltDesign.xsl' ?>");
+            marsh.setProperty("com.sun.xml.internal.bind.xmlHeaders", "<?xml-stylesheet type='text/xsl' href='" + outputFile.getParent() + "/MessageXsltDesign.xsl' ?>");
             marsh.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, outputFile.getParent() + "/MessageSchema.xsd");
-            FileOutputStream outputXml  = new FileOutputStream(outputFile);
+            FileOutputStream outputXml = new FileOutputStream(outputFile);
+            saveFileInternal(getClass().getResource("/xmlResources/MessageXsltDesign.xsl").openStream(), outputFile.getParent() + "/MessageXsltDesign.xsl");
+            saveFileInternal(getClass().getResource("/xmlResources/MessageSchema.xsd").openStream(), outputFile.getParent() + "/MessageSchema.xsd");
             marsh.marshal(msgElement, outputXml);
-            
-            //transformToHtml(locationUrl,fileName, xmlFileName);
 
+            //transformToHtml(locationUrl,fileName, xmlFileName);
         } catch (JAXBException ex) {
             Logger.getLogger(WriteXml.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
+            Logger.getLogger(WriteXml.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(WriteXml.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    private static void transformToHtml(String LocationUrl , String fileName , String xmlFile)
-    {
-        
+    public static void saveFileInternal(InputStream is, String path) {
+        Thread threadOne = new Thread(() -> {
+
+            FileOutputStream os = null;
+            try {
+                File newFile = new File(path);
+                os = new FileOutputStream(newFile);
+                int readByte;
+                while ((readByte = is.read()) != -1) {
+                    os.write(readByte);
+                }
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                try {
+                    os.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        });
+
+        threadOne.start();
+
+    }
+
+    private static void transformToHtml(String LocationUrl, String fileName, String xmlFile) {
+
         try {
             DocumentBuilderFactory docBuildfactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuildfactory.newDocumentBuilder();
-            Document document = docBuilder.parse(new InputSource(new InputStreamReader(new FileInputStream(LocationUrl+"/"+fileName+".xml"))));
+            Document document = docBuilder.parse(new InputSource(new InputStreamReader(new FileInputStream(LocationUrl + "/" + fileName + ".xml"))));
             TransformerFactory xformer = TransformerFactory.newInstance();
-            
-            Source xslDoc=new StreamSource("src/main/resources/xmlResources/MessageXsltDesign.xsl");
+
+            Source xslDoc = new StreamSource("src/main/resources/xmlResources/MessageXsltDesign.xsl");
             //Read From Old File That we created
             //Source xmlDoc=new StreamSource("src/main/java/com/itico/xmlchat/MessageXml.xml");
             //Read From New file the app create
             Source xmlDoc = new StreamSource(xmlFile);
-            String outputFileName = LocationUrl+"/"+fileName +".html";
-            
-            OutputStream htmlFile=new FileOutputStream(outputFileName);
-            Transformer trasform=xformer.newTransformer(xslDoc);
+            String outputFileName = LocationUrl + "/" + fileName + ".html";
+
+            OutputStream htmlFile = new FileOutputStream(outputFileName);
+            Transformer trasform = xformer.newTransformer(xslDoc);
             trasform.transform(xmlDoc, new StreamResult(htmlFile));
         } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
             Logger.getLogger(WriteXml.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
+
     }
 
 }
