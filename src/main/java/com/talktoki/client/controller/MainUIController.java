@@ -126,6 +126,8 @@ public class MainUIController implements Initializable {
 
     private CreatGroupController createGroupController;
 
+    private boolean running = true;
+
     public MainUIController(HandleConnection myHandler, User myUser) {
         this.myServer = myHandler.getMyServerAuthInt();
         myclient = Client.getInstance(this, myUser, myServer);
@@ -205,7 +207,7 @@ public class MainUIController implements Initializable {
             Thread groupsRefresher = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (true) {
+                    while (running) {
                         try {
                             myGroups = myServer.getUserGroupsIDs(myclient.getUser().getEmail());
                             Thread.sleep(10000);
@@ -451,6 +453,7 @@ public class MainUIController implements Initializable {
         Optional result = myalert.showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
+                running = false;
                 myServer.notifyStatus(myclient.getUser().getEmail(), 0);
                 myServer.signOut(myclient);
             } catch (RemoteException ex) {
