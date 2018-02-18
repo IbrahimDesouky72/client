@@ -246,7 +246,8 @@ public class ChatWindowController implements Initializable {
         });
 
     }
-
+/************Bodour*////////////
+    
     @FXML
     void attachFile(MouseEvent event) {
 
@@ -260,7 +261,6 @@ public class ChatWindowController implements Initializable {
                 int mylen = input.read(mydata);
                 System.out.println("length"+mylen);
                 while (mylen > 0) {
-                   // recieveClient.reciveFile(file.getName(), mydata, mylen);
                    myserver.SendFile(myclient.getUser().getEmail(), otherUser.getEmail(),file.getName(),mydata, mylen); 
                    mylen = input.read(mydata);
                     
@@ -282,6 +282,7 @@ public class ChatWindowController implements Initializable {
         }
     }
 
+    /************Bodour*////////////
     @FXML
     void saveMessages(ActionEvent event) {
 

@@ -100,7 +100,8 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         myController.setContactsAsContent();
     }
     /**********Mahrous*********/
-
+    
+/************Bodour*////////////
     @Override
     public void reciveFile(String SenderEmail,String filename, byte[] data, int dataLength) throws RemoteException{
         try {
@@ -118,5 +119,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         }
 
     }
+    /************Bodour*////////////
 
 }

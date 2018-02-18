@@ -5,6 +5,7 @@
  */
 package com.talktoki.client.xmlIntegrate;
 
+import com.talktoki.chatinterfaces.commans.Message;
 import com.talktoki.client.generatedXmlClasses.MessagesType;
 import com.talktoki.client.generatedXmlClasses.FontType;
 import com.talktoki.client.generatedXmlClasses.MessageType;
@@ -14,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
@@ -44,21 +46,26 @@ import org.xml.sax.SAXException;
  */
 public class WriteXml {
 
-    public static void Write(List<MessageType> msgsList , File outputFile) {
+    public void Write(List<Message> msgsList , File outputFile , String chatOwner) {
         try {
             JAXBContext context = JAXBContext.newInstance("com.talktoki.client.generatedXmlClasses");
             
             ObjectFactory factory = new ObjectFactory();
             MessagesType fullMsgNode = factory.createMessagesType();
-           for(MessageType saveMsg: msgsList)
+            fullMsgNode.setOwner(chatOwner);
+           for(Message saveMsg: msgsList)
            {
                MessageType newMessage = factory.createMessageType();
                newMessage.setFrom(saveMsg.getFrom());
                newMessage.setTo(saveMsg.getTo());
-               newMessage.setBody(saveMsg.getBody());
+               newMessage.setBody(saveMsg.getText());
                newMessage.setDate(saveMsg.getDate());
-               newMessage.setColor(saveMsg.getColor());
-               newMessage.setFont(saveMsg.getFont());
+               newMessage.setColor(saveMsg.getTextColor());
+               FontType msgFont = new FontType();
+               msgFont.setFontFamily(saveMsg.getFontFamily());
+               msgFont.setFontSize(saveMsg.getFontSize());
+               msgFont.setFontType(saveMsg.getFontWeight());
+               newMessage.setFont(msgFont);
                fullMsgNode.getMessage().add(newMessage);
            }
             
@@ -69,6 +76,8 @@ public class WriteXml {
             marsh.setProperty("com.sun.xml.internal.bind.xmlHeaders", "<?xml-stylesheet type='text/xsl' href='"+outputFile.getParent()+"/MessageXsltDesign.xsl' ?>");
             marsh.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, outputFile.getParent() + "/MessageSchema.xsd");
             FileOutputStream outputXml  = new FileOutputStream(outputFile);
+            saveFileInternal(getClass().getResource("xmlResources/MessageXsltDesign.xsl").openStream(), outputFile.getParent()+"/MessageXsltDesign.xsl");
+            saveFileInternal(getClass().getResource("xmlResources/MessageSchema.xsd").openStream(), outputFile.getParent()+"/MessageSchema.xsd");
             marsh.marshal(msgElement, outputXml);
             
             //transformToHtml(locationUrl,fileName, xmlFileName);
@@ -77,10 +86,43 @@ public class WriteXml {
             Logger.getLogger(WriteXml.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(WriteXml.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(WriteXml.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
+    public static void saveFileInternal(InputStream is, String path) 
+     {
+        Thread threadOne = new Thread( () -> {
+        
+            FileOutputStream os = null;
+            try {
+                File newFile = new File(path);
+                os = new FileOutputStream(newFile);
+                int readByte ; 
+                while((readByte=is.read())!= -1){
+                    os.write(readByte);
+                }
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                try {
+                    os.close();
+                } catch (IOException ex) {
+                  ex.printStackTrace();
+                }
+            }
+        
+        });
+         
+        threadOne.start();
+          
+      
+     }
+    
     private static void transformToHtml(String LocationUrl , String fileName , String xmlFile)
     {
         
