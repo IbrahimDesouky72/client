@@ -254,10 +254,11 @@ public class ChatWindowController implements Initializable {
     void attachFile(MouseEvent event) {
         
         try {
-            final FileChooser fileChooser = new FileChooser();
+            FileChooser fileChooser = new FileChooser();
              File file = fileChooser.showOpenDialog(null);
              if(file!=null)
              {
+                 System.out.println("the file : "+file.getName());
                myserver.SendFile(myclient.getUser().getEmail(),otherUser.getEmail(),file);
              }
              else

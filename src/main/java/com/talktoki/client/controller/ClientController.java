@@ -56,6 +56,10 @@ public class ClientController implements Initializable {
     private Label refuseCheck;
     
     private double xOffset,yOffset;
+    
+    @FXML
+    private FontAwesomeIconView Load;
+
 
     //Regular Expression of IP Address
     private static final String IPADDRESS_PATTERN
@@ -76,6 +80,7 @@ public class ClientController implements Initializable {
 
     @FXML
     public void Connect(ActionEvent event) {
+        
         refuseCheck.setText(" ");
         //check valud format Ip >>if false there is a circle red point appear
         if (checkIp(IpAdd.getText())) {
@@ -94,6 +99,7 @@ public class ClientController implements Initializable {
             portCheck.setVisible(true);
         }
         if (ipFlagCheck && portFlagCheck) {
+            Load.setVisible(true);
             HandleConnection handleConnection = new HandleConnection();
             boolean checkrResult = handleConnection.checkRegistry(IpAdd.getText(), Integer.parseInt(PortNum.getText()));
             if (!checkrResult) {
