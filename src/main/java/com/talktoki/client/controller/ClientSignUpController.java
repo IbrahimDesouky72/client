@@ -80,14 +80,14 @@ public class ClientSignUpController implements Initializable {
     String userGender = "";
     String Country = "";
     //Regular Expression of username Address
-    private static final String USERNAME_PATTERN = "^[a-z0-9_-]{3,15}$";
-    private static final String Email_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";    
+    private static final String USERNAME_PATTERN = "^[a-zA-Z\\s]+";
+    private static final String Email_PATTERN = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$";    
     //Regular Expression of password Address
     //Password expression : Password must be between 4 and 8 digits long and include at least one numeric digit.
     //Matches	1234 | asdf1234 | asp123
     //Non-Matches	asdf | asdf12345 | password
     //this regular rated as 5 star
-    private static final String PASSWORD_PATTERN = "^(?=.*\\d).{4,8}$";
+   // private static final String PASSWORD_PATTERN = "^(?=.*\\d).{4,8}$";
     boolean fnameFlagCheck = false;
     boolean lnameFlagCheck = false;
     boolean EmailFlagCheck = false;
@@ -122,18 +122,22 @@ public class ClientSignUpController implements Initializable {
           lastCheck.setVisible(true);
         }
         if (checkEmail(EmailValue.getText())) {
-            lnameFlagCheck = true;
+            EmailFlagCheck= true;
             Emailcheck.setVisible(false);
         } else {
-            lnameFlagCheck = false;
+            EmailFlagCheck = false;
             Emailcheck.setVisible(true);
         }
-        if (checkpassword(passwordValue.getText())) {
-            lnameFlagCheck = true;
-           passcheck.setVisible(false);
-        } else {
-            lnameFlagCheck = false;
-           passcheck.setVisible(true);
+        
+        if(passwordValue.getText().trim().isEmpty())
+        {
+          passwordFlagCheck = false;
+            passcheck.setVisible(true);
+        }
+        else
+        {
+           passwordFlagCheck = true;
+            passcheck.setVisible(false);
         }
         if(fnameFlagCheck&&lnameFlagCheck&&passwordFlagCheck&&EmailFlagCheck)
         {
@@ -207,12 +211,12 @@ public class ClientSignUpController implements Initializable {
         return resultFlagCheck;
     }
 
-    public boolean checkpassword(String password) {
+   /* public boolean checkpassword(String password) {
         Pattern ipPatern = Pattern.compile(PASSWORD_PATTERN);
         Matcher resultMatcher = ipPatern.matcher(password);
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
-    }
+    }*/
     @FXML
     void closeButton(MouseEvent event) {
            Platform.exit();
