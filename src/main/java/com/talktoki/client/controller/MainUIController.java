@@ -691,6 +691,24 @@ public class MainUIController implements Initializable {
         }
     }
 
+    private boolean checkUserStatus(String email) {
+        boolean isOnline = false;
+        updateFriendsList();
+        User friend = null;
+        for (User myfriend : myfriends) {
+            if (myfriend.getEmail().equals(email)) {
+                friend = myfriend;
+                break;
+            }
+        }
+        if (friend != null) {
+            if (friend.getStatus().equals("online")) {
+                isOnline = true;
+            }
+        }
+        return isOnline;
+    }
+
     public void statusChanged() {
         try {
             // (0) offline <br> (1) Online <br> (2) Away </b> (3) Busy
