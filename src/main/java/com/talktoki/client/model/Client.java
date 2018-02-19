@@ -107,6 +107,10 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         myController.updateFriendsList();
         myController.setContactsAsContent();
     }
+    @Override
+    public void serverExit() throws RemoteException {
+    myController.exit();
+    }
     /**********Mahrous*********/
     
 /************Bodour*////////////

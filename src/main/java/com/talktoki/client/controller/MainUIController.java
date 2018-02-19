@@ -278,12 +278,19 @@ public class MainUIController implements Initializable {
     }
 
     public void exit() {
-        Alert mylert = new Alert(Alert.AlertType.ERROR);
-        mylert.setTitle("ERROR");
-        mylert.setHeaderText("Unexcpected ERROR!");
-        mylert.setContentText("SERVER FAILED UNEXPECTEDLY, EXITING.....");
-        mylert.showAndWait();
-        System.exit(0);
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                Alert mylert = new Alert(Alert.AlertType.ERROR);
+                mylert.setTitle("ERROR");
+                mylert.setHeaderText("Unexcpected ERROR!");
+                mylert.setContentText("SERVER FAILED UNEXPECTEDLY, EXITING.....");
+                mylert.showAndWait();
+                running = false;
+                System.exit(0);
+            }
+        });
     }
 
     public void showRequestNotification(String sender_name, String sender_email) {
@@ -351,7 +358,7 @@ public class MainUIController implements Initializable {
                 User myuser = myfriends.stream().filter((user) -> {
                     return user.getEmail().equals(friendMail);
                 }).findFirst().get();
-                myController = new ChatWindowController(myuser,this);
+                myController = new ChatWindowController(myuser, this);
                 // Add controller to hashmap
                 chatWindowsControllers.put(friendMail, myController);
 
