@@ -203,8 +203,11 @@ public class ChatWindowController implements Initializable {
             public void changed(ObservableValue<? extends Color> observable, Color oldValue, Color newValue) {
                 messageColor = colorPallet.getValue();
                 hex1 = Integer.toHexString(messageColor.hashCode());
-                System.out.println(hex1);
-                message.setTextColor(hex1);
+                String mColor=hex1.substring(0, 6);
+                System.out.println("#"+mColor);
+                System.out.println("hexa"+hex1);
+                
+                message.setTextColor("#"+mColor);
                 messageTextField.setStyle("-fx-text-fill:#" + hex1);
                 isChanged = true;
             }
