@@ -691,7 +691,7 @@ public class MainUIController implements Initializable {
         }
     }
 
-    private boolean getFriendByEmail(String email) {
+    private boolean checkUserStatus(String email) {
         boolean isOnline = false;
         updateFriendsList();
         User friend = null;
