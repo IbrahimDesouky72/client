@@ -120,6 +120,7 @@ public class ChatWindowController implements Initializable {
 
     ObservableList<FontWeight> fontWeightStrings = FXCollections.observableArrayList(FontWeight.BOLD,
             FontWeight.NORMAL);
+    boolean isChanged=false;
 
     /**
      * Initializes the controller class.
@@ -132,6 +133,8 @@ public class ChatWindowController implements Initializable {
         myclient = Client.getInstance();
         myserver = myclient.getMyServer();
         messages = new ArrayList<Message>();
+        messageVBox.setSpacing(5);
+        messageVBox.setPadding(new Insets(10, 10, 10, 10));
         fontFamily.getItems().addAll(fontFamilyStrings);
         fontFamily.setValue("serif");
         fontSize.getItems().addAll(fontSizeStrings);
@@ -199,6 +202,7 @@ public class ChatWindowController implements Initializable {
                 System.out.println(hex1);
                 message.setTextColor(hex1);
                 messageTextField.setStyle("-fx-text-fill:#" + hex1);
+                isChanged=true;
             }
         });
 
@@ -230,7 +234,12 @@ public class ChatWindowController implements Initializable {
         textFlow.setStyle("-fx-background-color:#f4f2e2;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
         textFlow.setPadding(new Insets(5, 5, 5, 5));
         if (messageVBox.getChildren().size() > 0) {
-            ((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().get(0).setVisible(false);
+            if(((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().size()>1){
+                ((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().get(0).setVisible(false);
+
+            }
+            
+            //((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().get(0).setVisible(false);
             hBox.getChildren().addAll(userIcon, textFlow);
             hBox.setAlignment(Pos.BASELINE_LEFT);
         } else {
@@ -326,57 +335,56 @@ public class ChatWindowController implements Initializable {
     @FXML
     void sendMessage(MouseEvent event) {
 
-        try {
+         try {
             //
-
-            if (!(messageTextField.getText().trim().equals("") || messageTextField == null)) {
+                    
+            if(!(messageTextField.getText().trim().equals("")||messageTextField==null)){
                 message.setText(messageTextField.getText());
                 messages.add(message);
-                myserver.sendToOne(myclient.getUser().getEmail(), otherUser.getEmail(), message);
-                //draw message
-
-                Text text = new Text();
+                myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , message);
+  
+                
+                Text text=new Text();
                 text.setText(message.getText());
                 text.setFont(font);
-
-                text.setFill(messageColor);
-                System.out.println(message.getTextColor());
-
-                HBox hBox = new HBox();
-
-                //Text sentMessage=new Text(message.getText());
-                TextFlow textFlow = new TextFlow(text);
-                messageTextFlow = textFlow;
-//        Circle picCircle=new Circle();
-//        userIcon.setGlyphName("USER");
-//        userIcon.setSize("25");
-//        picCircle.setId("pcId");
-//        picCircle.setRadius(10);
-//        picCircle.setStroke(Color.LIGHTCYAN);
-
-//        FileInputStream is=new FileInputStream("C:/Users/IbrahimDesouky/Documents/NetBeansProjects/ChatWithFx3/src/Male.png");
-//        Image im=new Image(is);
-                textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
-                textFlow.setPadding(new Insets(5, 5, 5, 5));
-                //hBox.getChildren().add(im);
-
-                hBox.getChildren().addAll(textFlow);
-                hBox.setAlignment(Pos.BASELINE_RIGHT);
+               
+                if(isChanged){
+                    text.setFill(messageColor);
+                }else{
+                    text.setFill(Color.WHITE);
+                }
+                
+                
+                HBox hBox=new HBox();
+                hBox.setSpacing(4);
+        TextFlow textFlow=new TextFlow(text);
+        messageTextFlow=textFlow;
+        textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+        
+        textFlow.setPadding(new Insets(5, 5, 5, 5));
+        
+        hBox.getChildren().addAll(textFlow);
+        hBox.setAlignment(Pos.BASELINE_RIGHT);
                 //Parent node=getMessageController();
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-
+                        
+                        
                         messageVBox.getChildren().add(hBox);
+                        messageTextField.setText("");
                     }
                 });
-
+                 
             }
+            
 
+            
         } catch (RemoteException ex) {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
     public Parent getMessageController() {
         Parent node = null;
