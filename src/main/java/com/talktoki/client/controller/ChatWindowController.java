@@ -354,6 +354,7 @@ public class ChatWindowController implements Initializable {
                 //
 
                 if (!(messageTextField.getText().trim().equals("") || messageTextField == null)) {
+                    System.out.println(messageColor.toString()+"  "+messageColor);
                     String date = LocalDate.now().toString();
                     String time = LocalTime.now().toString();
                     message.setDate(date);
