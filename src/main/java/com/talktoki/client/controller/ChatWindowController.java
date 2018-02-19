@@ -20,6 +20,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -214,6 +216,7 @@ public class ChatWindowController implements Initializable {
 
     public void receiveFromOne(String sender_email, Message receivedMessage) {
         //draw messsage
+        messages.add(receivedMessage);
         Text text = new Text();
         FontWeight fw = FontWeight.findByName(receivedMessage.getFontWeight());
         Font receivedMessageFont = Font.font(receivedMessage.getFontFamily(), fw, Double.parseDouble(receivedMessage.getFontSize()));
@@ -339,9 +342,17 @@ public class ChatWindowController implements Initializable {
             //
                     
             if(!(messageTextField.getText().trim().equals("")||messageTextField==null)){
+                String date=LocalDate.now().toString();
+                String time=LocalTime.now().toString();
+                message.setDate(date);
+                message.setTime(time);
                 message.setText(messageTextField.getText());
-                messages.add(message);
+               
+                message.setFrom(myclient.getUser().getEmail());
+                message.setTo(otherUser.getEmail());
                 myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , message);
+                 messages.add(message);
+                
   
                 
                 Text text=new Text();
@@ -357,14 +368,14 @@ public class ChatWindowController implements Initializable {
                 
                 HBox hBox=new HBox();
                 hBox.setSpacing(4);
-        TextFlow textFlow=new TextFlow(text);
-        messageTextFlow=textFlow;
-        textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
-        
-        textFlow.setPadding(new Insets(5, 5, 5, 5));
-        
-        hBox.getChildren().addAll(textFlow);
-        hBox.setAlignment(Pos.BASELINE_RIGHT);
+                TextFlow textFlow=new TextFlow(text);
+                messageTextFlow=textFlow;
+                textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+
+                textFlow.setPadding(new Insets(5, 5, 5, 5));
+
+                hBox.getChildren().addAll(textFlow);
+                hBox.setAlignment(Pos.BASELINE_RIGHT);
                 //Parent node=getMessageController();
                 Platform.runLater(new Runnable() {
                     @Override
