@@ -351,7 +351,7 @@ public class MainUIController implements Initializable {
                 User myuser = myfriends.stream().filter((user) -> {
                     return user.getEmail().equals(friendMail);
                 }).findFirst().get();
-                myController = new ChatWindowController(myuser);
+                myController = new ChatWindowController(myuser,this);
                 // Add controller to hashmap
                 chatWindowsControllers.put(friendMail, myController);
 
@@ -691,7 +691,7 @@ public class MainUIController implements Initializable {
         }
     }
 
-    private boolean checkUserStatus(String email) {
+    public boolean checkUserStatus(String email) {
         boolean isOnline = false;
         updateFriendsList();
         User friend = null;

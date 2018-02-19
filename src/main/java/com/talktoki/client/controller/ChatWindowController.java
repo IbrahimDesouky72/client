@@ -13,6 +13,7 @@ import com.talktoki.chatinterfaces.commans.User;
 import com.talktoki.chatinterfaces.commans.XmlFont;
 import com.talktoki.chatinterfaces.server.ServerInterface;
 import com.talktoki.client.model.Client;
+import com.talktoki.client.xmlIntegrate.WriteXml;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,6 +66,7 @@ public class ChatWindowController implements Initializable {
 
     private Client myclient;
     private ServerInterface myserver;
+    private MainUIController mycontoller;
     private User otherUser;
     ArrayList<Message> messages;
     TextFlow messageTextFlow;
@@ -122,7 +124,7 @@ public class ChatWindowController implements Initializable {
 
     ObservableList<FontWeight> fontWeightStrings = FXCollections.observableArrayList(FontWeight.BOLD,
             FontWeight.NORMAL);
-    boolean isChanged=false;
+    boolean isChanged = false;
 
     /**
      * Initializes the controller class.
@@ -204,14 +206,15 @@ public class ChatWindowController implements Initializable {
                 System.out.println(hex1);
                 message.setTextColor(hex1);
                 messageTextField.setStyle("-fx-text-fill:#" + hex1);
-                isChanged=true;
+                isChanged = true;
             }
         });
 
     }
 
-    public ChatWindowController(User otherUser) {
+    public ChatWindowController(User otherUser, MainUIController mycontoller) {
         this.otherUser = otherUser;
+        this.mycontoller = mycontoller;
     }
 
     public void receiveFromOne(String sender_email, Message receivedMessage) {
@@ -237,11 +240,11 @@ public class ChatWindowController implements Initializable {
         textFlow.setStyle("-fx-background-color:#f4f2e2;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
         textFlow.setPadding(new Insets(5, 5, 5, 5));
         if (messageVBox.getChildren().size() > 0) {
-            if(((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().size()>1){
+            if (((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().size() > 1) {
                 ((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().get(0).setVisible(false);
 
             }
-            
+
             //((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().get(0).setVisible(false);
             hBox.getChildren().addAll(userIcon, textFlow);
             hBox.setAlignment(Pos.BASELINE_LEFT);
@@ -258,55 +261,51 @@ public class ChatWindowController implements Initializable {
         });
 
     }
-/************Bodour*////////////
-    
+
+    /**
+     * **********Bodour
+     *////////////
     @FXML
     void attachFile(MouseEvent event) {
-        
+
 //        Thread thread= new Thread(){
 //                    @Override
 //                    public void run() {
-                       boolean firstSend=true;
+        boolean firstSend = true;
         try {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(null);
             if (file != null) {
-                
+
                 System.out.println("the file : " + file.getName());
                 FileInputStream input = new FileInputStream(file);
                 byte[] mydata = new byte[1024 * 1024];
                 int mylen = input.read(mydata);
-                long totalLength=file.length();
+                long totalLength = file.length();
                 while (mylen > 0) {
-                 int res=  myserver.SendFile(myclient.getUser().getUserName(), otherUser.getEmail(),file.getName(),mydata, mylen,firstSend); 
-                 if(res==2)
-                 {
-                   break;
-                 }
-                 else if(res==0)
-                 {
-                     System.out.println("error");
-                 }
-                 else if(res==-1)
-                 {
-                   Alert alert = new Alert(AlertType.INFORMATION);
-                   alert.setTitle("SendFile Dialog");
-                   alert.setHeaderText("The file send interept");
-                   alert.setContentText("the "+otherUser.getUserName()+"is offline Now");
-                   alert.showAndWait(); 
-                   break;
-                 }
-                 totalLength-=mylen;
-                 if(totalLength<=0)
-                 {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("SendFile Dialog");
-                alert.setHeaderText("The file download finished");
-                alert.setContentText("the sourcre in : C:\\Users\\Public\\Downloads");
-                alert.showAndWait();  
-                 }
-                   mylen = input.read(mydata);
-                  firstSend=false;
+                    int res = myserver.SendFile(myclient.getUser().getUserName(), otherUser.getEmail(), file.getName(), mydata, mylen, firstSend);
+                    if (res == 2) {
+                        break;
+                    } else if (res == 0) {
+                        System.out.println("error");
+                    } else if (res == -1) {
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("SendFile Dialog");
+                        alert.setHeaderText("The file send interept");
+                        alert.setContentText("the " + otherUser.getUserName() + "is offline Now");
+                        alert.showAndWait();
+                        break;
+                    }
+                    totalLength -= mylen;
+                    if (totalLength <= 0) {
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("SendFile Dialog");
+                        alert.setHeaderText("The file download finished");
+                        alert.setContentText("the sourcre in : C:\\Users\\Public\\Downloads");
+                        alert.showAndWait();
+                    }
+                    mylen = input.read(mydata);
+                    firstSend = false;
                 }
             } else {
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -321,81 +320,93 @@ public class ChatWindowController implements Initializable {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
-        }  
-                    
-                 //   }
-                
-             //   };
-       
-   }
+        }
 
-    /************Bodour*////////////
-    @FXML
-    void saveMessages(ActionEvent event) {
-
+        //   }
+        //   };
     }
 
+    /**
+     * **********Bodour
+     *////////////
     @FXML
-    void sendMessage(MouseEvent event) {
-
-         try {
-            //
-                    
-            if(!(messageTextField.getText().trim().equals("")||messageTextField==null)){
-                String date=LocalDate.now().toString();
-                String time=LocalTime.now().toString();
-                message.setDate(date);
-                message.setTime(time);
-                message.setText(messageTextField.getText());
-               
-                message.setFrom(myclient.getUser().getEmail());
-                message.setTo(otherUser.getEmail());
-                myserver.sendToOne(myclient.getUser().getEmail(),otherUser.getEmail() , message);
-                 messages.add(message);
-                
-  
-                
-                Text text=new Text();
-                text.setText(message.getText());
-                text.setFont(font);
-               
-                if(isChanged){
-                    text.setFill(messageColor);
-                }else{
-                    text.setFill(Color.WHITE);
-                }
-                
-                
-                HBox hBox=new HBox();
-                hBox.setSpacing(4);
-                TextFlow textFlow=new TextFlow(text);
-                messageTextFlow=textFlow;
-                textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
-
-                textFlow.setPadding(new Insets(5, 5, 5, 5));
-
-                hBox.getChildren().addAll(textFlow);
-                hBox.setAlignment(Pos.BASELINE_RIGHT);
-                //Parent node=getMessageController();
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        
-                        
-                        messageVBox.getChildren().add(hBox);
-                        messageTextField.setText("");
-                    }
-                });
-                 
+    void saveMessages(ActionEvent event) {
+        try {
+            WriteXml mywrite = new WriteXml();
+            FileChooser mychooser = new FileChooser();
+            FileChooser.ExtensionFilter xmlFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+            mychooser.getExtensionFilters().add(xmlFilter);
+            File myfile = mychooser.showSaveDialog(profileImage.getScene().getWindow());
+            if (myfile != null) {
+                mywrite.Write(messages, myfile, Client.getInstance().getUser().getEmail());
             }
-            
-
-            
         } catch (RemoteException ex) {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    @FXML
+    void sendMessage(MouseEvent event) {
+        boolean isOnline = mycontoller.checkUserStatus(otherUser.getEmail());
+
+        if (isOnline) {
+            try {
+                //
+
+                if (!(messageTextField.getText().trim().equals("") || messageTextField == null)) {
+                    String date = LocalDate.now().toString();
+                    String time = LocalTime.now().toString();
+                    message.setDate(date);
+                    message.setTime(time);
+                    message.setText(messageTextField.getText());
+
+                    message.setFrom(myclient.getUser().getEmail());
+                    message.setTo(otherUser.getEmail());
+                    myserver.sendToOne(myclient.getUser().getEmail(), otherUser.getEmail(), message);
+                    messages.add(message);
+
+                    Text text = new Text();
+                    text.setText(message.getText());
+                    text.setFont(font);
+
+                    if (isChanged) {
+                        text.setFill(messageColor);
+                    } else {
+                        text.setFill(Color.WHITE);
+                    }
+
+                    HBox hBox = new HBox();
+                    hBox.setSpacing(4);
+                    TextFlow textFlow = new TextFlow(text);
+                    messageTextFlow = textFlow;
+                    textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+
+                    textFlow.setPadding(new Insets(5, 5, 5, 5));
+
+                    hBox.getChildren().addAll(textFlow);
+                    hBox.setAlignment(Pos.BASELINE_RIGHT);
+                    //Parent node=getMessageController();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            messageVBox.getChildren().add(hBox);
+                            messageTextField.setText("");
+                        }
+                    });
+
+                }
+
+            } catch (RemoteException ex) {
+                Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            messageTextField.setDisable(true);
+            messageTextField.setText("Sorry, your friend is now offline!!");
+            messageTextField.setStyle("-fx-text-fill:#E50000");
+
+        }
+    }
 
     public Parent getMessageController() {
         Parent node = null;
