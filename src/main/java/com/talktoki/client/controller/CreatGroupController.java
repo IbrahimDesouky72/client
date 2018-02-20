@@ -28,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 /**
@@ -63,10 +64,8 @@ public class CreatGroupController implements Initializable {
           //    scene.getStylesheets().add("/styles/mainui.css");
         for (int i = 0; i < myFriends.size(); i++) {
             if (myFriends.get(i) != null) {
-                System.out.println("User " + i + "already Exist");
                 Parent node = getNode(myFriends.get(i));
                 if (node != null) {
-                    System.out.println("Add Succees");
                     GroupsVBOx.getChildren().add(node);
                 }
             } else {
@@ -105,11 +104,12 @@ public class CreatGroupController implements Initializable {
             }
         }
         //Check if group more than 2 person so it’s agroup
-        if (GroupMember.size() > 1) {
+        if (GroupMember.size() > 2) {
             try {
                 String groupNam = GroupName.getText();
                 if (groupNam.trim().equals("")) {
                     CheckKLabel.setText("Enter Group Name");
+                    
                 } else {
                     Date currentDate = new Date();
                     System.out.println("Date : " + currentDate.toString());
@@ -117,10 +117,10 @@ public class CreatGroupController implements Initializable {
                     int Result = Server.createGroup(totalName, GroupMember);
                     if (Result == 1) {
                         CheckKLabel.setText("The Group is Added ");
+                        CheckKLabel.setTextFill(Paint.valueOf("#1aff1a"));
                         ChatController.updateGroupList();
-                    } else if (Result == -1) {
-                        CheckKLabel.setText("This Group alreay Exist");
-                    } else if(Result == 3) {
+                    } 
+                    else if(Result == 3) {
                         CheckKLabel.setText("Fatel Error Tray Again Later");
                     }
                 }
