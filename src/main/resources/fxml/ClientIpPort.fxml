@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -62,7 +61,6 @@
             <FontAwesomeIconView fx:id="IpCheck" glyphName="CLOSE" layoutX="285.0" layoutY="134.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
             <FontAwesomeIconView fx:id="portCheck" glyphName="CLOSE" layoutX="285.0" layoutY="220.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
             <FontAwesomeIconView fx:id="Load" glyphName="SPINNER" layoutX="308.0" layoutY="307.0" size="25" visible="false" wrappingWidth="24.00000023841858" />
-            <ProgressIndicator layoutX="6.0" layoutY="247.0" progress="0.0" />
          </children>
       </Pane>
    </children>
