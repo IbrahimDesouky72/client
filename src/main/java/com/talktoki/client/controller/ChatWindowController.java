@@ -33,6 +33,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,6 +47,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -83,11 +85,7 @@ public class ChatWindowController implements Initializable {
     @FXML
     private FontAwesomeIconView sendMessage;
 
-    @FXML
-    private Circle profileImage;
-
-    @FXML
-    private ImageView onlineImage;
+    
 
     @FXML
     private FontAwesomeIconView phoneCall;
@@ -210,6 +208,20 @@ public class ChatWindowController implements Initializable {
                 message.setTextColor("#"+mColor);
                 messageTextField.setStyle("-fx-text-fill:#" + hex1);
                 isChanged = true;
+            }
+        });
+        
+        messageTextField.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() {
+            @Override
+            public void handle(javafx.scene.input.KeyEvent event) {
+              if(event.getCode()==KeyCode.ENTER){
+                  
+              
+              }
+                   
+                        
+                
+               
             }
         });
 
@@ -335,7 +347,7 @@ public class ChatWindowController implements Initializable {
             FileChooser mychooser = new FileChooser();
             FileChooser.ExtensionFilter xmlFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
             mychooser.getExtensionFilters().add(xmlFilter);
-            File myfile = mychooser.showSaveDialog(profileImage.getScene().getWindow());
+            File myfile = mychooser.showSaveDialog(messageTextField.getScene().getWindow());
             if (myfile != null) {
                 mywrite.Write(messages, myfile, Client.getInstance().getUser().getEmail());
             }
