@@ -232,3 +232,6 @@
 .scroll-pane > .viewport {
    -fx-background-color: transparent;
 }	
+.contact:hover {
+    -fx-background-color:#477daa;
+}
