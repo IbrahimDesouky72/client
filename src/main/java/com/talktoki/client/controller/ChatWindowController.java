@@ -271,9 +271,9 @@ public class ChatWindowController implements Initializable {
     @FXML
     void attachFile(MouseEvent event) {
 
-//        Thread thread= new Thread(){
-//                    @Override
-//                    public void run() {
+        Thread thread= new Thread(){
+                    @Override
+                    public void run() {
         boolean firstSend = true;
         try {
             FileChooser fileChooser = new FileChooser();
@@ -301,11 +301,7 @@ public class ChatWindowController implements Initializable {
                     }
                     totalLength -= mylen;
                     if (totalLength <= 0) {
-                        Alert alert = new Alert(AlertType.INFORMATION);
-                        alert.setTitle("SendFile Dialog");
-                        alert.setHeaderText("The file download finished");
-                        alert.setContentText("the sourcre in : C:\\Users\\Public\\Downloads");
-                        alert.showAndWait();
+                        
                     }
                     mylen = input.read(mydata);
                     firstSend = false;
@@ -325,8 +321,8 @@ public class ChatWindowController implements Initializable {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //   }
-        //   };
+           }
+           };
     }
 
     /**

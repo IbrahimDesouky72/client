@@ -7,7 +7,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -18,7 +20,7 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/ClientIpPort.fxml"));
-        root.setId("rootPane");
+        
         Scene scene = new Scene(root);
                                   //Add listener to move window with mouse press and hold
                     root.setOnMousePressed(new EventHandler<MouseEvent>() {
