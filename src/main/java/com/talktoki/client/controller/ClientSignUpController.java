@@ -28,6 +28,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -104,7 +106,7 @@ public class ClientSignUpController implements Initializable {
     }
 
     @FXML
-    void signup(ActionEvent event) {
+    void signup() {
         excist.setText(" ");
         if (checkUserName(FnameValue.getText())) {
             fnameFlagCheck = true;
@@ -221,8 +223,21 @@ public class ClientSignUpController implements Initializable {
     void closeButton(MouseEvent event) {
            Platform.exit();
     }
+     @FXML
+    void EnterSignup(KeyEvent event) {
+      if (event.getCode()==KeyCode.ENTER){
+         signup();   
+        }
+    }
+     @FXML
+    void EnterSignin(KeyEvent event) {
+     if (event.getCode()==KeyCode.ENTER){
+         signin();   
+        }
+    }
+
   @FXML
-    void signin(ActionEvent event) {
+    void signin() {
         try {
             //Load the sign in Page
             Stage stage = (Stage)FnameValue.getScene().getWindow();

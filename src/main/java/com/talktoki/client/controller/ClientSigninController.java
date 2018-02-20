@@ -23,6 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -69,7 +71,7 @@ public class ClientSigninController implements Initializable {
     }
 
     @FXML
-    void login(ActionEvent event) {
+    void login() {
        refuseCheck.setText(" ");
         if (checkEmail(user.getText())) {
             usernameFlagCheck = true;
@@ -88,15 +90,6 @@ public class ClientSigninController implements Initializable {
            passwordFlagCheck = true;
             passcircle.setVisible(false);
         }
-            
-        //check valud format port >>if false there is a circle red point appear
-        /*if (checkpassword(pass.getText())) {
-            passwordFlagCheck = true;
-            passcircle.setVisible(false);
-        } else {
-            passwordFlagCheck = false;
-            passcircle.setVisible(true);
-        }*/
         if (usernameFlagCheck && passwordFlagCheck) {
 
             User resultSignIn = handle.signin(user.getText(), pass.getText());
@@ -162,20 +155,25 @@ public class ClientSigninController implements Initializable {
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
     }
-
-    /*public boolean checkpassword(String password) {
-        Pattern ipPatern = Pattern.compile(PASSWORD_PATTERN);
-        Matcher resultMatcher = ipPatern.matcher(password);
-        boolean resultFlagCheck = resultMatcher.matches();
-        return resultFlagCheck;
-    }*/
       @FXML
     void closeButton(MouseEvent event) {
        Platform.exit();
     }
+    @FXML
+    void Entersignin(KeyEvent event) {
+        if (event.getCode()==KeyCode.ENTER){
+         login();   
+        }
+    }
+     @FXML
+    void EnterSignup(KeyEvent event) {
+       if (event.getCode()==KeyCode.ENTER){
+         signUp();   
+        }
+    }
 
     @FXML
-    void signUp(ActionEvent event) {
+    void signUp() {
         Stage stage = (Stage) user.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientSignUp.fxml"));
         ClientSignUpController signin = new ClientSignUpController(handle);
