@@ -10,7 +10,6 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -22,7 +21,7 @@
 
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="753.0" prefWidth="1046.0" style="-fx-border-width: 1;" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-border-width: 1;" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <HBox alignment="TOP_RIGHT" minHeight="-Infinity" prefHeight="30.0" prefWidth="888.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
@@ -61,14 +60,10 @@
                         <ImageView fitHeight="716.0" fitWidth="687.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fitHeight="316.0" fitWidth="402.0" layoutX="142.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/TalkToki-Logo.png" />
+                              <Image url="@../images/talk.png" />
                            </image>
                            <effect>
-                              <Reflection fraction="0.61" topOpacity="0.38">
-                                 <input>
-                                    <Glow level="0.39" />
-                                 </input>
-                              </Reflection>
+                              <Reflection fraction="0.61" topOpacity="0.38" />
                            </effect>
                         </ImageView>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="226.0" text="Server Announcements" textAlignment="CENTER" textFill="#03396c" wrapText="true">
@@ -76,7 +71,7 @@
                               <Font name="System Bold Italic" size="29.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="announcementsArea" editable="false" layoutX="14.0" layoutY="269.0" prefHeight="395.0" prefWidth="659.0" promptText="Nothing to show....." style="-fx-background-color: #03396c;" wrapText="true">
+                        <TextArea fx:id="announcementsArea" editable="false" layoutX="14.0" layoutY="269.0" opacity="0.0" prefHeight="395.0" prefWidth="659.0" promptText="Nothing to show....." style="-fx-background-color: #03396c;" wrapText="true">
                            <font>
                               <Font name="Consolas" size="17.0" />
                            </font>
@@ -97,16 +92,20 @@
     <left>
         <BorderPane prefHeight="753.0" prefWidth="351.0" BorderPane.alignment="CENTER">
             <center>
-                <VBox prefHeight="753.0" prefWidth="221.0" style="-fx-background-color: #03396c;" BorderPane.alignment="CENTER">
+                <VBox prefHeight="753.0" prefWidth="221.0" style="-fx-background-color: linear-gradient(#4a83b2 40%, #2a4e6a);" BorderPane.alignment="CENTER">
                     <children>
                         <VBox alignment="CENTER" prefHeight="215.0" prefWidth="282.0" spacing="5.0">
                             <children>
-                                <FontAwesomeIconView fx:id="userIcon" fill="WHITE" glyphName="USER" size="120" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/user.png" />
+                           </image>
+                        </ImageView>
                                 <HBox alignment="CENTER" prefWidth="200.0" spacing="10.0">
                                     <children>
-                                        <Label fx:id="username" text="Mahrous" textAlignment="CENTER" textFill="WHITE">
+                                        <Label fx:id="username" text="Muhammed Mahrous" textAlignment="CENTER" textFill="WHITE">
                                             <font>
-                                                <Font name="FontAwesome Regular" size="22.0" />
+                                                <Font name="Century Gothic" size="23.0" />
                                             </font>
                                         </Label>
                                         <FontAwesomeIconView fx:id="statusIcon" fill="#3dff02" glyphName="CIRCLE" size="15">
@@ -116,7 +115,7 @@
                                         </FontAwesomeIconView>
                                     </children>
                                 </HBox>
-                                <JFXComboBox fx:id="statusBox" prefHeight="37.0" prefWidth="118.0" promptText="Status" style="-fx-background-color: #e7eff6;" styleClass="btnHover" unFocusColor="#026eb2">
+                                <JFXComboBox fx:id="statusBox" focusColor="#405aa800" prefHeight="37.0" prefWidth="118.0" promptText="Status" style="-fx-background-color: #477daa;" styleClass="btnHover" unFocusColor="#046eb000">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -137,9 +136,9 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="540.0" prefWidth="201.0" spacing="5.0">
                             <children>
-                                <HBox alignment="CENTER" prefWidth="351.0" spacing="10.0" style="-fx-background-color: #b3cde0; -fx-background-radius: 0 0 0 0;"> 
+                                <HBox alignment="CENTER" prefWidth="351.0" spacing="5.0" style="-fx-background-color: rgba(137,203,227,0.4); -fx-background-radius: 50;"> 
                                     <children>
-                                        <JFXButton fx:id="contactsBtn" onAction="#setContactsAsContent" styleClass="btnHover">
+                                        <JFXButton fx:id="contactsBtn" onAction="#setContactsAsContent" style="-fx-background-radius: 50 0 0 50;" styleClass="btnHover">
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
@@ -196,9 +195,9 @@
                             </padding>
                         </VBox>
                     </children>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
                 </VBox>
             </center>
             <BorderPane.margin>
@@ -207,9 +206,6 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
-         <padding>
-            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-         </padding>
         </BorderPane>
     </left>
 </BorderPane>

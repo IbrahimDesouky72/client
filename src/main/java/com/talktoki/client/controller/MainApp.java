@@ -38,7 +38,7 @@ public class MainApp extends Application {
                         }
                     });
         scene.getStylesheets().add("/styles/style.css");
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("TalkToki Messenger");
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
