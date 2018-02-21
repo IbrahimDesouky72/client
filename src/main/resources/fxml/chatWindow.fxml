@@ -8,28 +8,27 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="Main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="687.0" style="-fx-background-color: #e7eff6;" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="Main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="695.0" style="-fx-background-color: linear-gradient(#e7eff6,#adcbe3);" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane layoutX="5.0" layoutY="130.0" prefHeight="352.0" prefWidth="677.0">
+      <ScrollPane layoutX="5.0" layoutY="89.0" prefHeight="393.0" prefWidth="677.0" style="-fx-background-color: #e7eff6;">
          <content>
-            <VBox fx:id="messageVBox" prefHeight="342.0" prefWidth="668.0" style="-fx-background-color: #ffffff;" styleClass="groupChat" />
+            <VBox fx:id="messageVBox" prefHeight="388.0" prefWidth="668.0" styleClass="groupChat" />
          </content></ScrollPane>
       <TextField fx:id="messageTextField" layoutX="10.0" layoutY="568.0" prefHeight="46.0" prefWidth="567.0" promptText="Type Your Message" style="-fx-background-radius: 20;" />
-      <FontAwesomeIconView id="attachFile" fx:id="fileAttachment" fill="#2a4d69" glyphName="PAPERCLIP" glyphStyle="SOLID" layoutX="627.0" layoutY="57.0" onMouseClicked="#attachFile" size="30" />
+      <FontAwesomeIconView id="attachFile" fx:id="fileAttachment" fill="#2a4d69" glyphName="PAPERCLIP" glyphStyle="SOLID" layoutX="649.0" layoutY="56.0" onMouseClicked="#attachFile" size="30" />
       <JFXButton fx:id="sendMessage" defaultButton="true" layoutX="605.0" layoutY="567.0" onAction="#sendMessage" prefHeight="25.0" prefWidth="71.0">
          <graphic>
             <FontAwesomeIconView fill="#103de3" glyphName="LOCATION_ARROW" onMouseClicked="#sendMessage" rotate="45.0" size="40" wrappingWidth="42.85715173184872" />
          </graphic>
       </JFXButton>
-      <JFXComboBox fx:id="fontFamily" labelFloat="true" layoutX="26.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" unFocusColor="#d70202" />
-      <JFXComboBox fx:id="fontSize" focusColor="#0e6aeb" labelFloat="true" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" unFocusColor="#f20b0b" />
+      <JFXComboBox fx:id="fontFamily" labelFloat="true" layoutX="26.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" unFocusColor="#3e0bbc" />
+      <JFXComboBox fx:id="fontSize" focusColor="#0e6aeb" labelFloat="true" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" unFocusColor="#3e0bbc" />
       <JFXColorPicker fx:id="colorPallet" layoutX="429.0" layoutY="525.0" prefHeight="25.0" prefWidth="17.0" />
-      <TextFlow fx:id="userName" layoutX="111.0" layoutY="67.0" prefHeight="41.0" prefWidth="226.0" />
-      <JFXComboBox fx:id="fontWeight" focusColor="#0c3dd0" labelFloat="true" layoutX="277.0" layoutY="525.0" prefHeight="25.0" prefWidth="124.0" promptText="fontType" unFocusColor="#bf0a0a" />
-      <FontAwesomeIconView fill="#2a4d69" glyphName="USER" layoutX="14.0" layoutY="74.0" size="80" />
-      <TextFlow layoutX="111.0" layoutY="24.0" prefHeight="46.0" prefWidth="200.0" />
-      <FontAwesomeIconView fill="#2a4d69" glyphName="DOWNLOAD" layoutX="577.0" layoutY="56.0" onMouseClicked="#saveMessages" size="30" styleClass="groupChat" />
+      <JFXComboBox fx:id="fontWeight" focusColor="#0c3dd0" labelFloat="true" layoutX="277.0" layoutY="525.0" prefHeight="25.0" prefWidth="124.0" promptText="fontType" unFocusColor="#3e0bbc" />
+      <FontAwesomeIconView fill="#4b86b4" glyphName="USER" layoutX="14.0" layoutY="74.0" size="80" />
+      <FontAwesomeIconView fill="#4b86b4" glyphName="DOWNLOAD" layoutX="613.0" layoutY="56.0" onMouseClicked="#saveMessages" size="30" styleClass="groupChat" />
+      <Text fx:id="userName" layoutX="86.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="123.99999940395355" />
    </children>
 </AnchorPane>

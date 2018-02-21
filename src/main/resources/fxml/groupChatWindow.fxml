@@ -13,16 +13,16 @@
 
 <!--<?import org.kordamp.ikonli.javafx.FontIcon?>-->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="687.0" style="-fx-background-color: #e7eff6;" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="695.0" style="-fx-background-color: linear-gradient(#e7eff6,#adcbe3);" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <JFXButton fx:id="sendMessage" defaultButton="true" layoutX="602.0" layoutY="567.0" onAction="#sendMessage" prefHeight="49.0" prefWidth="65.0">
          <graphic>
             <FontAwesomeIconView fill="#103de3" glyphName="LOCATION_ARROW" rotate="45.0" size="40" wrappingWidth="42.85715173184872" />
          </graphic>
       </JFXButton>
-      <ScrollPane layoutX="5.0" layoutY="122.0" prefHeight="360.0" prefWidth="677.0">
+      <ScrollPane layoutX="5.0" layoutY="102.0" prefHeight="380.0" prefWidth="677.0" style="-fx-background-color: #e7eff6;">
          <content>
-            <VBox fx:id="messageVBox" prefHeight="350.0" prefWidth="668.0" style="-fx-background-color: #ffffff;" styleClass="groupChat" />
+            <VBox fx:id="messageVBox" prefHeight="373.0" prefWidth="674.0" styleClass="groupChat" />
          </content></ScrollPane>
       <TextField fx:id="messageTextField" layoutX="10.0" layoutY="568.0" prefHeight="46.0" prefWidth="567.0" promptText="Type Your Message" style="-fx-background-radius: 20;" />
       <JFXComboBox fx:id="fontFamily" labelFloat="true" layoutX="14.0" layoutY="513.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" unFocusColor="#4059a9" />
@@ -31,7 +31,7 @@
       <TextFlow fx:id="userName" layoutX="129.0" layoutY="45.0" prefHeight="31.0" prefWidth="226.0" />
       <JFXComboBox fx:id="fontWeight" focusColor="#0c3dd0" labelFloat="true" layoutX="271.0" layoutY="513.0" prefHeight="25.0" prefWidth="124.0" promptText="fontType" unFocusColor="#4059a9" />
       <Text fx:id="groupName" layoutX="137.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="123.99999940395355" />
-      <FontAwesomeIconView fill="#2a4d69" glyphName="USERS" layoutX="17.0" layoutY="86.0" size="85" />
-      <FontAwesomeIconView fx:id="saveButton" fill="#2a4d69" glyphName="DOWNLOAD" layoutX="545.0" layoutY="73.0" onMouseClicked="#saveMessages" size="35" styleClass="groupChat" />
+      <FontAwesomeIconView fill="#4b86b4" glyphName="USERS" layoutX="17.0" layoutY="86.0" size="85" />
+      <FontAwesomeIconView fx:id="saveButton" fill="#4b86b4" glyphName="DOWNLOAD" layoutX="638.0" layoutY="57.0" onMouseClicked="#saveMessages" size="35" styleClass="groupChat" />
    </children>
 </AnchorPane>

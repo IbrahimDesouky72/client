@@ -124,7 +124,7 @@ public class GroupChatWindowController implements Initializable{
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        groupName.setText(group_Id.split("\\$")[0]);
         myclient = Client.getInstance();
         myserver = myclient.getMyServer();
         messages=new ArrayList<Message>();
