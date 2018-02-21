@@ -678,8 +678,6 @@ public class MainUIController implements Initializable {
     public void openCreateGroup() {
         updateFriendsList();
         contentPane.getChildren().setAll(createGroupUI);
-        System.out.println("Content GROUP SIZE "+contentPane.getWidth());
-        System.out.println("Content GROUP SIZE "+contentPane.getHeight());
         createGroupController.notifyChange();
     }
 
