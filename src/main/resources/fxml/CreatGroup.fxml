@@ -27,6 +27,6 @@
          </children>
       </VBox>
       <JFXButton layoutX="8.0" layoutY="324.0" onAction="#AddGroup" prefHeight="32.0" prefWidth="305.0" style="-fx-background-color: #4da6ff; -fx-background-radius: 20;" text="Add Group" />
-      <Label fx:id="CheckKLabel" layoutX="14.0" layoutY="300.0" prefWidth="242.0" text="gfg" textFill="#477daa" />
+      <Label fx:id="CheckKLabel" layoutX="14.0" layoutY="300.0" prefWidth="242.0" textFill="#477daa" />
    </children>
 </AnchorPane>

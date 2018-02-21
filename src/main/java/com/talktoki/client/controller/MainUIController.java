@@ -316,7 +316,7 @@ public class MainUIController implements Initializable {
     public void friendshipRequestResponse(String sender_email, boolean accepted) {
         try {
             myServer.friendshipRequestResponse(myclient.getUser().getEmail(), sender_email, accepted);
-            // RELOAD FRIENDS AND GOTO IT
+            
         } catch (RemoteException ex) {
             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -643,9 +643,11 @@ public class MainUIController implements Initializable {
     }
 
     public void setGroupsAsContent() {
+        System.out.println("UPDATING friends list "+myfriends.toString());
         updateFriendsList();
+        System.out.println("DONE UPDATING friends list "+myfriends.toString());
         initScrollPane();
-
+        
         Platform.runLater(new Runnable() {
 
             @Override
@@ -677,8 +679,8 @@ public class MainUIController implements Initializable {
 
     public void openCreateGroup() {
         updateFriendsList();
-        contentPane.getChildren().setAll(createGroupUI);
         createGroupController.notifyChange();
+        contentPane.getChildren().setAll(createGroupUI);        
     }
 
     public void updateGroupList() {

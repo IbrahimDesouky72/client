@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<!--<?import org.kordamp.ikonli.javafx.FontIcon?>-->
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1050.0" style="-fx-border-width: 1;" stylesheets="@../styles/mainui.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <top>
@@ -137,12 +137,12 @@
                                                 <Cursor fx:constant="HAND" />
                                             </cursor>
                                             <graphic>
-<!--                                                <FontIcon iconLiteral="fas-address-book" iconSize="30" iconColor="white" />-->
+                                                <FontIcon iconLiteral="fas-address-book" iconSize="30" iconColor="white" />
                                             </graphic>
                                         </JFXButton>
                                         <JFXButton fx:id="groupsBtn" onAction="#setGroupsAsContent" styleClass="btnHover">
                                             <graphic>
-<!--                                                <FontIcon iconLiteral="fas-users" iconSize="30" iconColor="white" />                     -->
+                                                <FontIcon iconLiteral="fas-users" iconSize="30" iconColor="white" />                     
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
@@ -150,7 +150,7 @@
                                         </JFXButton>
                                         <JFXButton fx:id="requestsBtn" onAction="#setRequestsAsContent" styleClass="btnHover">
                                             <graphic>
-<!--                                                <FontIcon iconLiteral="mdi-account-alert" iconSize="30" iconColor="white" />                            -->
+                                                <FontIcon iconLiteral="mdi-account-alert" iconSize="30" iconColor="white" />                            
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
@@ -158,7 +158,7 @@
                                         </JFXButton>
                                         <JFXButton fx:id="groupCreationBtn" onAction="#openCreateGroup" styleClass="btnHover">
                                             <graphic>
-<!--                                                <FontIcon iconLiteral="mdi-account-multiple-plus" iconSize="35" iconColor="white" /> -->
+                                                <FontIcon iconLiteral="mdi-account-multiple-plus" iconSize="35" iconColor="white" /> 
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
@@ -166,7 +166,7 @@
                                         </JFXButton>
                                         <JFXButton fx:id="logOut" onAction="#logoutConfirmation" styleClass="btnHover">
                                             <graphic>
-<!--                                                <FontIcon iconColor="#4b86b4" iconLiteral="fas-sign-out-alt" iconSize="30" /> -->
+                                                <FontIcon iconColor="#4b86b4" iconLiteral="fas-sign-out-alt" iconSize="30" /> 
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />
