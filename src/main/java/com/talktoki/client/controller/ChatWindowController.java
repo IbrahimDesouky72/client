@@ -86,7 +86,8 @@ public class ChatWindowController implements Initializable {
 
     @FXML
     private JFXButton sendMessage;
-
+    @FXML 
+    private Text userName;
     
 
     @FXML
@@ -133,7 +134,7 @@ public class ChatWindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        userName.setText(otherUser.getUserName());
         myclient = Client.getInstance();
         myserver = myclient.getMyServer();
         messages = new ArrayList<Message>();
