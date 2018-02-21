@@ -9,9 +9,8 @@
     -fx-fill:#28aad8;
 }
 
-#groupChat:hover{
-    -fx-fill:#28aad8;
-    
+.groupChat:hover{
+    -fx-fill:#28aad8;  
 }
 #attachFile:hover{
     -fx-fill:#28aad8;

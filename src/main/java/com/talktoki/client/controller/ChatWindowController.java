@@ -252,7 +252,8 @@ public class ChatWindowController implements Initializable {
         messageTextFlow = textFlow;
         userIcon.setGlyphName("USER");
         userIcon.setSize("25");
-        textFlow.setStyle("-fx-background-color:#f4f2e2;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+        textFlow.setStyle("-fx-background-color:#f4f2e2;-fx-background-radius: 16 16 16 2;"
+                + "-fx-padding-right:30px;-fx-padding-top:30px");
         textFlow.setPadding(new Insets(5, 5, 5, 5));
         if (messageVBox.getChildren().size() > 0) {
             if (((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().size() > 1) {
@@ -341,7 +342,7 @@ public class ChatWindowController implements Initializable {
      * **********Bodour
      *////////////
     @FXML
-    void saveMessages(ActionEvent event) {
+    void saveMessages(MouseEvent event) {
         try {
             WriteXml mywrite = new WriteXml();
             FileChooser mychooser = new FileChooser();
@@ -391,7 +392,8 @@ public class ChatWindowController implements Initializable {
                     hBox.setSpacing(4);
                     TextFlow textFlow = new TextFlow(text);
                     messageTextFlow = textFlow;
-                    textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+                    textFlow.setStyle("-fx-background-color:#0084ff;-fx-background-radius: 2 16 16 16;"
+                            + "-fx-padding-right:30px;-fx-padding-top:30px");
 
                     textFlow.setPadding(new Insets(5, 5, 5, 5));
 
@@ -419,6 +421,7 @@ public class ChatWindowController implements Initializable {
 
         }
     }
+    
 
     public Parent getMessageController() {
         Parent node = null;

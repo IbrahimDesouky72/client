@@ -13,7 +13,9 @@ import com.talktoki.chatinterfaces.commans.Message;
 import com.talktoki.chatinterfaces.commans.User;
 import com.talktoki.chatinterfaces.server.ServerInterface;
 import com.talktoki.client.model.Client;
+import com.talktoki.client.xmlIntegrate.WriteXml;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import java.io.File;
 import java.io.Serializable;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -44,6 +46,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 
 /**
  *
@@ -57,14 +60,12 @@ public class GroupChatWindowController implements Initializable{
     @FXML
     private TextField messageTextField;
 
-    @FXML
-    private FontAwesomeIconView fileAttachment;
+    
 
     @FXML
     private FontAwesomeIconView sendMessage;
 
-    @FXML
-    private FontAwesomeIconView phoneCall;
+    
 
     @FXML
     private JFXComboBox<String> fontFamily;
@@ -76,7 +77,7 @@ public class GroupChatWindowController implements Initializable{
     private JFXColorPicker colorPallet;
 
     @FXML
-    private JFXButton saveButton;
+    private FontAwesomeIconView saveButton;
 
     @FXML
     private TextFlow userName;
@@ -203,15 +204,24 @@ public class GroupChatWindowController implements Initializable{
     } 
      
      
-     
 
     @FXML
-    public void attachFile(MouseEvent event) {
-
-    }
-
-    @FXML
-    void saveMessages(ActionEvent event) {
+    void saveMessages(MouseEvent event) {
+        try {
+            if(messages.size()>0){
+                WriteXml mywrite = new WriteXml();
+            FileChooser mychooser = new FileChooser();
+            FileChooser.ExtensionFilter xmlFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+            mychooser.getExtensionFilters().add(xmlFilter);
+            File myfile = mychooser.showSaveDialog(messageTextField.getScene().getWindow());
+            if (myfile != null) {
+                mywrite.Write(messages, myfile, Client.getInstance().getUser().getEmail());
+            }
+            }
+            
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -244,9 +254,29 @@ public class GroupChatWindowController implements Initializable{
         //Text sentMessage=new Text(message.getText());
         TextFlow textFlow=new TextFlow(text);
         textFlow.setPadding(new Insets(10, 10, 10, 10));
-        hBox.setMargin(textFlow,new Insets(10, 10, 10, 10));
+        
         messageTextFlow=textFlow;
-        textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+        HBox lastHboxOfVBox=new HBox();
+        
+        
+        if(messageVBox.getChildren().size()>0){
+            lastHboxOfVBox=((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1));
+        if(lastHboxOfVBox.getAlignment()==Pos.BASELINE_LEFT){
+            lastHboxOfVBox.getChildren().get(1).setStyle("-fx-background-color:#f4f2e2;-fx-background-radius: 16 16 16 2");
+            textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 16 16 16;"
+                + "-fx-padding-right:30px;-fx-padding-top:30px");
+        
+        }else{
+            lastHboxOfVBox.getChildren().get(0).setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 16 2 16");
+            textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 2 16 16;"
+                + "-fx-padding-right:30px;-fx-padding-top:30px");
+        }
+        }else{
+            textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 2 16 16;"
+                + "-fx-padding-right:30px;-fx-padding-top:30px");
+        }
+//        textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius: 2 16 16 2;"
+//                + "-fx-padding-right:30px;-fx-padding-top:30px");
         textFlow.setPadding(new Insets(5, 5, 5, 5));
         //hBox.getChildren().add(im);
        
@@ -290,13 +320,25 @@ public class GroupChatWindowController implements Initializable{
         FontAwesomeIconView userIcon=new FontAwesomeIconView();
           
         HBox hBox=new HBox();
+        HBox lastHboxOfVBox=new HBox();
+        if(messageVBox.getChildren().size()>0){
+            lastHboxOfVBox=((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1));
+        if(lastHboxOfVBox.getAlignment()==Pos.BASELINE_LEFT){
+            lastHboxOfVBox.getChildren().get(1).setStyle("-fx-background-color:#f4f2e2;-fx-background-radius: 16 16 16 2");
+        
+        }else{
+            lastHboxOfVBox.getChildren().get(0).setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 16 2 16");
+        }
+        
+        }
+        
         
         //Text sentMessage=new Text(message.getText());
         TextFlow textFlow=new TextFlow(text);
         messageTextFlow=textFlow;
        userIcon.setGlyphName("USER");
         userIcon.setSize("25");
-        textFlow.setStyle("-fx-background-color:#f4f2e2;-fx-background-radius:20;-fx-padding-right:30px;-fx-padding-top:30px");
+        textFlow.setStyle("-fx-background-color:#f4f2e2;-fx-background-radius: 16 16 16 16;-fx-padding-right:30px;-fx-padding-top:30px");
         textFlow.setPadding(new Insets(5, 5, 5, 5));
         if (messageVBox.getChildren().size() > 0) {
             if(((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1)).getChildren().size()>1){
