@@ -244,7 +244,8 @@ public class ChatWindowController implements Initializable {
 
         text.setText(receivedMessage.getText());
         text.setFont(receivedMessageFont);
-        text.setStyle("-fx-fill:#" + receivedMessage.getTextColor());
+        text.setStyle("-fx-fill:" + receivedMessage.getTextColor());
+        System.out.println(receivedMessage.getTextColor());
 
         FontAwesomeIconView userIcon = new FontAwesomeIconView();
 
