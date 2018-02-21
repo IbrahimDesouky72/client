@@ -55,7 +55,7 @@
             <tabs>
                 <Tab closable="false" text="TalkToki">
                     <content>
-                        <AnchorPane minHeight="604.0" minWidth="659.0" prefHeight="604.0" prefWidth="684.0" style="-fx-background-color: linear-gradient(#4f8bbc 40%, #346183);">
+                        <AnchorPane minHeight="604.0" minWidth="659.0" prefHeight="604.0" prefWidth="684.0" style="-fx-background-color: f1f2f2;">
                      <children>
                         <ImageView fitHeight="183.0" fitWidth="499.0" layoutX="116.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -65,7 +65,7 @@
                               <Reflection fraction="0.61" topOpacity="0.38" />
                            </effect>
                         </ImageView>
-                        <TextArea fx:id="announcementsArea" editable="false" layoutX="24.0" layoutY="498.0" prefHeight="126.0" prefWidth="660.0" promptText="Server Announcements,Nothing to show....." style="-fx-background-color: #346183;" wrapText="true">
+                        <TextArea fx:id="announcementsArea" editable="false" layoutX="24.0" layoutY="498.0" prefHeight="126.0" prefWidth="660.0" promptText="&gt; Server Announcements,Nothing to show....." style="-fx-background-color: #efefef;" wrapText="true">
                            <font>
                               <Font name="Consolas" size="14.0" />
                            </font>
@@ -150,7 +150,7 @@
                                         </JFXButton>
                                         <JFXButton fx:id="requestsBtn" onAction="#setRequestsAsContent" styleClass="btnHover">
                                             <graphic>
-                                                <FontIcon iconLiteral="mdi-account-alert" iconSize="30" iconColor="white" />                            
+                                                <FontIcon iconColor="white" iconLiteral="mdi-account-alert" iconSize="30" />                            
                                             </graphic>
                                             <cursor>
                                                 <Cursor fx:constant="HAND" />

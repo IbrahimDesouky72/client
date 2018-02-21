@@ -787,10 +787,9 @@ public class MainUIController implements Initializable {
             }
         }
 
-        // TODO if chat window is opend if so then pass to it the new status
     }
 
     public void appendToAnnouncements(String announcement) {
-        announcementsArea.appendText("Server:"+announcement + "\n");
+        announcementsArea.appendText("> Server:"+announcement + "\n");
     }
 }
