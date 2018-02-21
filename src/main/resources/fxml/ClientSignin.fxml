@@ -40,13 +40,13 @@
                   <Font name="Arial" size="23.0" />
                </font>
             </Label>
-            <JFXButton layoutX="69.0" layoutY="281.0" onAction="#login" prefHeight="25.0" prefWidth="58.0" style="-fx-background-color: #e6e7e8;" text="Sign In" textFill="#4a4c4d" />
+            <JFXButton layoutX="69.0" layoutY="281.0" onAction="#login" onKeyPressed="#Entersignin" prefHeight="25.0" prefWidth="58.0" style="-fx-background-color: #e6e7e8;" text="Sign In" textFill="#4a4c4d" />
             <Label fx:id="refuseCheck" layoutX="69.0" layoutY="235.0" prefHeight="46.0" prefWidth="231.0" textFill="#87da44" />
             <FontAwesomeIconView fill="#171717" glyphName="ENVELOPE" layoutX="38.0" layoutY="132.0" size="25" wrappingWidth="31.0" />
             <FontAwesomeIconView glyphName="UNLOCK_ALT" layoutX="38.0" layoutY="230.0" size="30" wrappingWidth="6.000001668930054" />
             <FontAwesomeIconView fx:id="userCircle" glyphName="CLOSE" layoutX="284.0" layoutY="136.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
             <FontAwesomeIconView fx:id="passcircle" glyphName="CLOSE" layoutX="284.0" layoutY="228.0" size="20" text="" visible="false" wrappingWidth="24.000005960464478" />
-            <JFXButton layoutX="209.0" layoutY="281.0" onAction="#signUp" style="-fx-background-color: #e6e7e8;" text="Sign Up" />
+            <JFXButton layoutX="209.0" layoutY="281.0" onAction="#signUp" onKeyPressed="#EnterSignup" style="-fx-background-color: #e6e7e8;" text="Sign Up" />
          </children>
       </Pane>
       <ImageView fitHeight="134.0" fitWidth="190.0" layoutX="81.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">

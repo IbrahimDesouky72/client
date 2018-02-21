@@ -54,13 +54,13 @@
                </toggleGroup></JFXRadioButton>
             <JFXRadioButton fx:id="female" layoutX="193.0" layoutY="383.0" text="Female" toggleGroup="$gender" />
             <JFXComboBox fx:id="Mycombo" layoutX="69.0" layoutY="465.0" prefHeight="25.0" prefWidth="190.0" />
-            <JFXButton layoutX="57.0" layoutY="569.0" onAction="#signup" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #e6e7e8;" text="Sign Up" textFill="#4a4c4d" />
+            <JFXButton layoutX="69.0" layoutY="569.0" onAction="#signup" onKeyPressed="#EnterSignup" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #e6e7e8;" text="Sign Up" textFill="#4a4c4d" />
             <Label layoutX="135.0" layoutY="14.0" prefHeight="54.0" prefWidth="86.0" text="Sign Up" textFill="#eeeaea">
                <font>
                   <Font name="Arial" size="23.0" />
                </font>
             </Label>
-            <JFXButton layoutX="207.0" layoutY="569.0" onAction="#signin" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #e6e7e8;" text="Sign in" textFill="#4a4c4d" />
+            <JFXButton layoutX="207.0" layoutY="569.0" onAction="#signin" onKeyPressed="#EnterSignin" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #e6e7e8;" text="Sign in" textFill="#4a4c4d" />
             <FontAwesomeIconView fill="#171717" glyphName="USER" layoutX="38.0" layoutY="113.0" size="25" text="" wrappingWidth="31.0" />
             <FontAwesomeIconView glyphName="UNLOCK_ALT" layoutX="39.0" layoutY="297.0" size="30" text="" wrappingWidth="6.000001668930054" />
             <FontAwesomeIconView fx:id="fnameCircle" glyphName="CLOSE" layoutX="285.0" layoutY="110.0" size="20" visible="false" wrappingWidth="24.000006675720215" />
