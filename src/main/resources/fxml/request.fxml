@@ -7,22 +7,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefWidth="310.0" style="-fx-background-color: f8f8f8; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="55.0" prefWidth="294.0" style="-fx-background-color: f8f8f8; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="userName" layoutX="53.0" layoutY="2.0" prefHeight="64.0" prefWidth="147.0" text="Muhamed Mahrous" textFill="GREY" wrapText="true">
+      <Label fx:id="userName" layoutX="40.0" layoutY="7.0" prefHeight="41.0" prefWidth="174.0" text="mmrwwe@gmail.com" textFill="GREY" wrapText="true">
          <font>
-            <Font size="22.0" />
+            <Font size="17.0" />
          </font>
       </Label>
-      <JFXButton fx:id="accept" layoutX="175.0" layoutY="13.0" prefHeight="41.0" prefWidth="38.0">
+      <JFXButton fx:id="accept" layoutX="206.0" layoutY="7.0" prefHeight="41.0" prefWidth="44.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <graphic>
-            <FontAwesomeIconView fill="#0aae28" glyphName="CHECK" size="30" text="" wrappingWidth="29.0" />
+            <FontAwesomeIconView fill="#0aae28" glyphName="CHECK" size="25" text="" wrappingWidth="27.0" />
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="refuse" layoutX="238.0" layoutY="13.0" prefHeight="41.0" prefWidth="38.0">
+      <JFXButton fx:id="refuse" layoutX="235.0" layoutY="7.0" prefHeight="41.0" prefWidth="38.0">
          <graphic>
             <FontAwesomeIconView fill="#c1272d" glyphName="CLOSE" size="30" text="" />
          </graphic>
@@ -30,6 +30,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <FontAwesomeIconView fx:id="userIcon" glyphName="USER" layoutX="14.0" layoutY="44.0" size="30" />
+      <FontAwesomeIconView fx:id="userIcon" glyphName="USER" layoutX="14.0" layoutY="38.0" size="30" />
    </children>
 </AnchorPane>
