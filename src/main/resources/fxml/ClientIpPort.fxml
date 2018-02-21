@@ -49,7 +49,7 @@
                   <Font size="15.0" />
                </font>
             </JFXTextField>
-            <JFXButton buttonType="RAISED" layoutX="34.0" layoutY="287.0" onAction="#Connect" prefHeight="25.0" prefWidth="270.0" ripplerFill="#b21a1a" style="-fx-background-color: #e6e7e8;" styleClass="conn" text="Connect" textFill="#4a4c4d" />
+            <JFXButton buttonType="RAISED" layoutX="34.0" layoutY="287.0" onAction="#Connect" onKeyPressed="#EnterConnect" prefHeight="25.0" prefWidth="270.0" ripplerFill="#b21a1a" style="-fx-background-color: #e6e7e8;" styleClass="conn" text="Connect" textFill="#4a4c4d" />
             <Label layoutX="111.0" layoutY="28.0" prefHeight="54.0" prefWidth="124.0" text="Connection" textFill="#eeeaea">
                <font>
                   <Font name="Arial" size="23.0" />

@@ -146,7 +146,6 @@ public class MainUIController implements Initializable {
             initScrollPane();
             // TEST statusBox 
             statusBox.getItems().add("online");
-            statusBox.getItems().add("offline");
             statusBox.getItems().add("away");
             statusBox.getItems().add("busy");
             statusBox.getSelectionModel().selectFirst();
@@ -268,7 +267,7 @@ public class MainUIController implements Initializable {
     public void initScrollPane() {
         scrollpane = new ScrollPane();
         scrollpane.setPadding(new Insets(5));
-        scrollpane.setPrefViewportHeight(485.0);
+        scrollpane.setPrefViewportHeight(384.0);
         scrollpane.setPrefViewportWidth(331.0);
         scrollpane.setStyle("-fx-background-color: transparent;");
     }
@@ -317,7 +316,7 @@ public class MainUIController implements Initializable {
     public void friendshipRequestResponse(String sender_email, boolean accepted) {
         try {
             myServer.friendshipRequestResponse(myclient.getUser().getEmail(), sender_email, accepted);
-            // RELOAD FRIENDS AND GOTO IT
+            
         } catch (RemoteException ex) {
             Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -644,9 +643,11 @@ public class MainUIController implements Initializable {
     }
 
     public void setGroupsAsContent() {
+        System.out.println("UPDATING friends list "+myfriends.toString());
         updateFriendsList();
+        System.out.println("DONE UPDATING friends list "+myfriends.toString());
         initScrollPane();
-
+        
         Platform.runLater(new Runnable() {
 
             @Override
@@ -678,8 +679,8 @@ public class MainUIController implements Initializable {
 
     public void openCreateGroup() {
         updateFriendsList();
-        contentPane.getChildren().setAll(createGroupUI);
         createGroupController.notifyChange();
+        contentPane.getChildren().setAll(createGroupUI);        
     }
 
     public void updateGroupList() {
@@ -786,10 +787,9 @@ public class MainUIController implements Initializable {
             }
         }
 
-        // TODO if chat window is opend if so then pass to it the new status
     }
 
     public void appendToAnnouncements(String announcement) {
-        announcementsArea.appendText(announcement + "/n");
+        announcementsArea.appendText("> Server:"+announcement + "\n");
     }
 }

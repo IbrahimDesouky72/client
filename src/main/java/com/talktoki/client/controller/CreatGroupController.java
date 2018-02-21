@@ -37,6 +37,7 @@ import javafx.stage.Stage;
  * @author gR
  */
 public class CreatGroupController implements Initializable {
+
     @FXML
     private VBox GroupsVBOx;
     private ServerInterface Server;
@@ -51,6 +52,7 @@ public class CreatGroupController implements Initializable {
 
     @FXML
     private TextField GroupName;
+
     public CreatGroupController(ServerInterface myServer, MainUIController chatController) {
         this.Server = myServer;
         this.ChatController = chatController;
@@ -61,7 +63,7 @@ public class CreatGroupController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Scene scene =CheckKLabel.getScene();
-          //    scene.getStylesheets().add("/styles/mainui.css");
+        //    scene.getStylesheets().add("/styles/mainui.css");
         for (int i = 0; i < myFriends.size(); i++) {
             if (myFriends.get(i) != null) {
                 Parent node = getNode(myFriends.get(i));
@@ -73,7 +75,7 @@ public class CreatGroupController implements Initializable {
             }
         }
     }
-    
+
     public Parent getNode(User myUser) {
         Parent node = null;
         try {
@@ -91,10 +93,25 @@ public class CreatGroupController implements Initializable {
 
     public void notifyChange() {
         myFriends = ChatController.getMyfriends();
+        reRender();
+
+    }
+
+    public void reRender() {
+        GroupsVBOx.getChildren().setAll();
+        for (int i = 0; i < myFriends.size(); i++) {
+            if (myFriends.get(i) != null) {
+                Parent node = getNode(myFriends.get(i));
+                if (node != null) {
+                    GroupsVBOx.getChildren().add(node);
+                }
+            }
+        }
     }
 
     @FXML
-    void AddGroup(ActionEvent event) {
+    void AddGroup(ActionEvent event
+    ) {
         GroupMember.clear();
         GroupMember.add(myUser);
         for (int i = 0; i < listOfUsers.size(); i++) {
@@ -109,28 +126,25 @@ public class CreatGroupController implements Initializable {
                 String groupNam = GroupName.getText();
                 if (groupNam.trim().equals("")) {
                     CheckKLabel.setText("Enter Group Name");
-                    
+
                 } else {
                     Date currentDate = new Date();
                     System.out.println("Date : " + currentDate.toString());
-                    String totalName=groupNam+"$"+currentDate.toString();
+                    String totalName = groupNam + "$" + currentDate.toString();
                     int Result = Server.createGroup(totalName, GroupMember);
                     if (Result == 1) {
                         CheckKLabel.setText("The Group is Added ");
                         CheckKLabel.setTextFill(Paint.valueOf("#1aff1a"));
                         ChatController.updateGroupList();
-                    } 
-                    else if(Result == 3) {
+                    } else if (Result == 3) {
                         CheckKLabel.setText("Fatel Error Tray Again Later");
                     }
                 }
             } catch (RemoteException ex) {
                 Logger.getLogger(CreatGroupController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else
-        {
-           CheckKLabel.setText("Choose More Than 1"); 
+        } else {
+            CheckKLabel.setText("Choose More Than 1");
         }
 
     }

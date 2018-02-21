@@ -27,6 +27,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -79,7 +81,7 @@ public class ClientController implements Initializable {
     }
 
     @FXML
-    public void Connect(ActionEvent event) {
+    public void Connect() {
         
         refuseCheck.setText(" ");
         //check valud format Ip >>if false there is a circle red point appear
@@ -165,5 +167,11 @@ public class ClientController implements Initializable {
         Matcher resultMatcher = ipPatern.matcher(Port);
         boolean resultFlagCheck = resultMatcher.matches();
         return resultFlagCheck;
+    }
+     @FXML
+    void EnterConnect(KeyEvent event) {
+     if (event.getCode()==KeyCode.ENTER){
+         Connect();   
+        }
     }
 }

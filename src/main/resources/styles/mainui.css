@@ -227,7 +227,12 @@
     -fx-font-size: 14px;
 }*/
 .btnHover:hover {
-    -fx-background-color: white;
+    -fx-background-color: #2a4d69;
+    -fx-background-radius:50;
+    -fx-scale-x:1.1;
+    -fx-scale-y:1.1;
+    -fx-scale-z:1.1;
+    
 }
 .scroll-pane > .viewport {
    -fx-background-color: transparent;

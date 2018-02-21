@@ -283,10 +283,10 @@ public class ChatWindowController implements Initializable {
      *////////////
     @FXML
     void attachFile(MouseEvent event) {
-
-        Thread thread= new Thread(){
-                    @Override
-                    public void run() {
+//
+//        Thread thread= new Thread(){
+//                    @Override
+//                    public void run() {
         boolean firstSend = true;
         try {
             FileChooser fileChooser = new FileChooser();
@@ -303,7 +303,12 @@ public class ChatWindowController implements Initializable {
                     if (res == 2) {
                         break;
                     } else if (res == 0) {
-                        System.out.println("error");
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("SendFile Dialog");
+                        alert.setHeaderText("The file send interept");
+                        alert.setContentText("try Again");
+                        alert.showAndWait();
+                        break;
                     } else if (res == -1) {
                         Alert alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("SendFile Dialog");
@@ -314,7 +319,8 @@ public class ChatWindowController implements Initializable {
                     }
                     totalLength -= mylen;
                     if (totalLength <= 0) {
-                        
+                       message.setText("The file : "+file.getName()+"Downloaded in C:\\Users\\Public\\Downloads");
+                    myserver.sendToOne(myclient.getUser().getEmail(), otherUser.getEmail(), message);    
                     }
                     mylen = input.read(mydata);
                     firstSend = false;
@@ -334,8 +340,9 @@ public class ChatWindowController implements Initializable {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-           }
-           };
+//           }
+//           };
+//        thread.start();
     }
 
     /**
