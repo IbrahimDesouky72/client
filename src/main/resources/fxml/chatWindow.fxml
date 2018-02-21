@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="Main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="687.0" style="-fx-background-color: linear-gradient(#e7eff6,#adcbe3);" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="Main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="695.0" style="-fx-background-color: linear-gradient(#e7eff6,#adcbe3);" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ScrollPane layoutX="5.0" layoutY="89.0" prefHeight="393.0" prefWidth="677.0" style="-fx-background-color: #e7eff6;">
          <content>

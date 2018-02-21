@@ -13,7 +13,7 @@
 
 <!--<?import org.kordamp.ikonli.javafx.FontIcon?>-->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="687.0" style="-fx-background-color: linear-gradient(#e7eff6,#adcbe3);" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="695.0" style="-fx-background-color: linear-gradient(#e7eff6,#adcbe3);" styleClass="#phone" stylesheets="@../styles/chatwindow.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <JFXButton fx:id="sendMessage" defaultButton="true" layoutX="602.0" layoutY="567.0" onAction="#sendMessage" prefHeight="49.0" prefWidth="65.0">
          <graphic>
