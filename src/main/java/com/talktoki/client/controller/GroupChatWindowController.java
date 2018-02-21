@@ -33,6 +33,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -63,7 +64,7 @@ public class GroupChatWindowController implements Initializable{
     
 
     @FXML
-    private FontAwesomeIconView sendMessage;
+    private JFXButton sendMessage;
 
     
 
@@ -226,7 +227,7 @@ public class GroupChatWindowController implements Initializable{
     }
 
     @FXML
-    void sendMessage(MouseEvent event) {
+    void sendMessage() {
           
         try {
             //
@@ -249,6 +250,7 @@ public class GroupChatWindowController implements Initializable{
                 
                 
                 HBox hBox=new HBox();
+                
                 
         
         //Text sentMessage=new Text(message.getText());
@@ -292,6 +294,7 @@ public class GroupChatWindowController implements Initializable{
                         
                         
                         messageVBox.getChildren().add(hBox);
+                        messageTextField.setText("");
                     }
                 });
                  
@@ -320,6 +323,9 @@ public class GroupChatWindowController implements Initializable{
         FontAwesomeIconView userIcon=new FontAwesomeIconView();
           
         HBox hBox=new HBox();
+        hBox.setPrefHeight(Control.USE_COMPUTED_SIZE);
+        hBox.setPrefWidth(Control.USE_COMPUTED_SIZE);
+        
         HBox lastHboxOfVBox=new HBox();
         if(messageVBox.getChildren().size()>0){
             lastHboxOfVBox=((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1));

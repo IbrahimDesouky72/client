@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXColorPicker?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
@@ -17,7 +18,11 @@
          </content></ScrollPane>
       <TextField fx:id="messageTextField" layoutX="10.0" layoutY="568.0" prefHeight="46.0" prefWidth="567.0" promptText="Type Your Message" style="-fx-background-radius: 20;" />
       <FontAwesomeIconView id="attachFile" fx:id="fileAttachment" fill="#2a4d69" glyphName="PAPERCLIP" glyphStyle="SOLID" layoutX="627.0" layoutY="57.0" onMouseClicked="#attachFile" size="30" />
-      <FontAwesomeIconView fx:id="sendMessage" fill="#103de3" glyphName="LOCATION_ARROW" layoutX="618.0" layoutY="604.0" onMouseClicked="#sendMessage" rotate="45.0" size="40" wrappingWidth="42.85715173184872" />
+      <JFXButton fx:id="sendMessage" defaultButton="true" layoutX="605.0" layoutY="567.0" onAction="#sendMessage" prefHeight="25.0" prefWidth="71.0">
+         <graphic>
+            <FontAwesomeIconView fill="#103de3" glyphName="LOCATION_ARROW" onMouseClicked="#sendMessage" rotate="45.0" size="40" wrappingWidth="42.85715173184872" />
+         </graphic>
+      </JFXButton>
       <JFXComboBox fx:id="fontFamily" labelFloat="true" layoutX="26.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" unFocusColor="#d70202" />
       <JFXComboBox fx:id="fontSize" focusColor="#0e6aeb" labelFloat="true" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" unFocusColor="#f20b0b" />
       <JFXColorPicker fx:id="colorPallet" layoutX="429.0" layoutY="525.0" prefHeight="25.0" prefWidth="17.0" />

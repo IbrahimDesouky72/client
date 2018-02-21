@@ -5,6 +5,7 @@
  */
 package com.talktoki.client.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
 import com.jfoenix.controls.JFXComboBox;
 import com.sun.javafx.css.converters.FontConverter;
@@ -43,6 +44,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -83,7 +85,7 @@ public class ChatWindowController implements Initializable {
     private FontAwesomeIconView fileAttachment;
 
     @FXML
-    private FontAwesomeIconView sendMessage;
+    private JFXButton sendMessage;
 
     
 
@@ -246,6 +248,20 @@ public class ChatWindowController implements Initializable {
         FontAwesomeIconView userIcon = new FontAwesomeIconView();
 
         HBox hBox = new HBox();
+        hBox.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                hBox.setPrefWidth(Control.USE_COMPUTED_SIZE);
+        
+         HBox lastHboxOfVBox=new HBox();
+        if(messageVBox.getChildren().size()>0){
+            lastHboxOfVBox=((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1));
+        if(lastHboxOfVBox.getAlignment()==Pos.BASELINE_LEFT){
+            lastHboxOfVBox.getChildren().get(1).setStyle("-fx-background-color:#f4f2e2;-fx-background-radius: 16 16 16 2");
+        
+        }else{
+            lastHboxOfVBox.getChildren().get(0).setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 16 2 16");
+        }
+        
+        }
 
         //Text sentMessage=new Text(message.getText());
         TextFlow textFlow = new TextFlow(text);
@@ -351,6 +367,8 @@ public class ChatWindowController implements Initializable {
     @FXML
     void saveMessages(MouseEvent event) {
         try {
+            
+            if(messages.size()>0){
             WriteXml mywrite = new WriteXml();
             FileChooser mychooser = new FileChooser();
             FileChooser.ExtensionFilter xmlFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
@@ -359,13 +377,16 @@ public class ChatWindowController implements Initializable {
             if (myfile != null) {
                 mywrite.Write(messages, myfile, Client.getInstance().getUser().getEmail());
             }
+            
+            }
+
         } catch (RemoteException ex) {
             Logger.getLogger(ChatWindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    void sendMessage(MouseEvent event) {
+    void sendMessage(ActionEvent event) {
         boolean isOnline = mycontoller.checkUserStatus(otherUser.getEmail());
 
         if (isOnline) {
@@ -398,8 +419,28 @@ public class ChatWindowController implements Initializable {
                     HBox hBox = new HBox();
                     hBox.setSpacing(4);
                     TextFlow textFlow = new TextFlow(text);
+                    HBox lastHboxOfVBox=new HBox();
+                    if(messageVBox.getChildren().size()>0){
+                    lastHboxOfVBox=((HBox) messageVBox.getChildren().get(messageVBox.getChildren().size() - 1));
+                if(lastHboxOfVBox.getAlignment()==Pos.BASELINE_LEFT){
+                    lastHboxOfVBox.getChildren().get(1).setStyle("-fx-background-color:#f4f2e2;-fx-background-radius: 16 16 16 2");
+                    textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 16 16 16;"
+                        + "-fx-padding-right:30px;-fx-padding-top:30px");
+
+                }else{
+                    lastHboxOfVBox.getChildren().get(0).setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 16 2 16");
+                    textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 2 16 16;"
+                        + "-fx-padding-right:30px;-fx-padding-top:30px");
+                }
+                }else{
+                    textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius: 16 2 16 16;"
+                        + "-fx-padding-right:30px;-fx-padding-top:30px");
+                }
+                    
+                    
+                    
                     messageTextFlow = textFlow;
-                    textFlow.setStyle("-fx-background-color:#0084ff;-fx-background-radius: 2 16 16 16;"
+                    textFlow.setStyle("-fx-background-color:#005b96;-fx-background-radius: 2 16 16 16;"
                             + "-fx-padding-right:30px;-fx-padding-top:30px");
 
                     textFlow.setPadding(new Insets(5, 5, 5, 5));
