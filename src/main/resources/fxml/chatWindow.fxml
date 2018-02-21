@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXColorPicker?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
@@ -22,11 +21,10 @@
       <JFXComboBox fx:id="fontFamily" labelFloat="true" layoutX="26.0" layoutY="525.0" prefHeight="25.0" prefWidth="98.0" promptText=" font family" unFocusColor="#d70202" />
       <JFXComboBox fx:id="fontSize" focusColor="#0e6aeb" labelFloat="true" layoutX="146.0" layoutY="525.0" prefHeight="25.0" prefWidth="105.0" promptText="font size" unFocusColor="#f20b0b" />
       <JFXColorPicker fx:id="colorPallet" layoutX="429.0" layoutY="525.0" prefHeight="25.0" prefWidth="17.0" />
-      <JFXButton fx:id="saveButton" layoutX="557.0" layoutY="35.0" styleClass="groupChat" text="Save" />
       <TextFlow fx:id="userName" layoutX="111.0" layoutY="67.0" prefHeight="41.0" prefWidth="226.0" />
       <JFXComboBox fx:id="fontWeight" focusColor="#0c3dd0" labelFloat="true" layoutX="277.0" layoutY="525.0" prefHeight="25.0" prefWidth="124.0" promptText="fontType" unFocusColor="#bf0a0a" />
       <FontAwesomeIconView fill="#2a4d69" glyphName="USER" layoutX="14.0" layoutY="74.0" size="80" />
       <TextFlow layoutX="111.0" layoutY="24.0" prefHeight="46.0" prefWidth="200.0" />
-      <FontAwesomeIconView fill="#2a4d69" glyphName="DOWNLOAD" layoutX="497.0" layoutY="58.0" onMouseClicked="#saveMessages" size="30" styleClass="groupChat" />
+      <FontAwesomeIconView fill="#2a4d69" glyphName="DOWNLOAD" layoutX="577.0" layoutY="56.0" onMouseClicked="#saveMessages" size="30" styleClass="groupChat" />
    </children>
 </AnchorPane>
