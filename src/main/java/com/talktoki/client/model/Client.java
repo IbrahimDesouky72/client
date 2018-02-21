@@ -119,7 +119,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         try {
             if(firstSend)
             {
-                System.out.println("firsrTimeeeeeeeee");
+               
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
@@ -143,9 +143,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
                          } catch (IOException ex) {
                              System.out.println("Error in file Write");
                          }
-                } else {
-                }
-                    
+                }   
                     }
                 });
                
@@ -159,7 +157,6 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
                     out.write(data, 0, dataLength);
                     out.flush();
                     out.close();
-                    System.out.println("Done writing data...");
                return true;
             }
                 
