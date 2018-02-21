@@ -48,11 +48,11 @@
                   <Font size="15.0" />
                </font>
             </JFXPasswordField>
-            <JFXRadioButton fx:id="male" layoutX="57.0" layoutY="366.0" prefHeight="17.0" prefWidth="77.0" selected="true" text="Male">
+            <JFXRadioButton fx:id="male" layoutX="57.0" layoutY="366.0" prefHeight="17.0" prefWidth="77.0" selected="true" text="male">
                <toggleGroup>
                   <ToggleGroup fx:id="gender" />
                </toggleGroup></JFXRadioButton>
-            <JFXRadioButton fx:id="female" layoutX="169.0" layoutY="366.0" text="Female" toggleGroup="$gender" />
+            <JFXRadioButton fx:id="female" layoutX="169.0" layoutY="366.0" text="female" toggleGroup="$gender" />
             <JFXComboBox fx:id="Mycombo" layoutX="68.0" layoutY="420.0" prefHeight="25.0" prefWidth="231.0" />
             <JFXButton defaultButton="true" layoutX="68.0" layoutY="469.0" onAction="#signup" onKeyPressed="#EnterSignup" prefHeight="25.0" prefWidth="231.0" style="-fx-background-color: #e6e7e8;" text="Sign Up" textFill="#4a4c4d" />
             <Label layoutX="135.0" layoutY="14.0" prefHeight="54.0" prefWidth="86.0" text="Sign Up" textFill="#eeeaea">

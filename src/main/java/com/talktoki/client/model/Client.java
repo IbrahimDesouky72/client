@@ -119,7 +119,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
         try {
             if(firstSend)
             {
-               
+                System.out.println("firsrTimeeeeeeeee");
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {

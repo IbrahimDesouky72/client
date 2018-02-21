@@ -37,7 +37,7 @@
             <Font name="Browallia New Italic" size="54.0" />
          </font>
       </Label>
-      <Pane layoutX="343.0" layoutY="44.0" prefHeight="349.0" prefWidth="334.0" style="-fx-background-color: #C6194A;">
+      <Pane layoutX="343.0" layoutY="44.0" prefHeight="346.0" prefWidth="332.0" style="-fx-background-color: #C6194A;">
          <children>
             <JFXTextField fx:id="IpAdd" focusColor="#f6f5f5" labelFloat="true" layoutX="68.0" layoutY="107.0" prefHeight="25.0" prefWidth="231.0" promptText="Connection IP Address" style="-jfx-disable-animation: true;" unFocusColor="#f5f0f0">
                <font>

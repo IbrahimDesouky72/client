@@ -23,7 +23,7 @@
             <Image url="@../images/Background.2e16d0ba.fill-1422x800.jpg" />
          </image>
       </ImageView>
-      <Pane layoutX="341.0" layoutY="43.0" prefHeight="361.0" prefWidth="337.0" style="-fx-background-color: #C6194A;">
+      <Pane layoutX="341.0" layoutY="43.0" prefHeight="360.0" prefWidth="337.0" style="-fx-background-color: #C6194A;">
          <children>
             <JFXTextField fx:id="user" focusColor="#f6f5f5" labelFloat="true" layoutX="68.0" layoutY="107.0" prefHeight="25.0" prefWidth="231.0" promptText="Email" unFocusColor="#f5f0f0">
                <font>
@@ -40,7 +40,7 @@
                   <Font name="Arial" size="23.0" />
                </font>
             </Label>
-            <JFXButton layoutX="69.0" layoutY="281.0" onAction="#login" onKeyPressed="#Entersignin" prefHeight="25.0" prefWidth="58.0" style="-fx-background-color: #e6e7e8;" text="Sign In" textFill="#4a4c4d" />
+            <JFXButton defaultButton="true" layoutX="69.0" layoutY="281.0" onAction="#login" onKeyPressed="#Entersignin" prefHeight="25.0" prefWidth="58.0" style="-fx-background-color: #e6e7e8;" text="Sign In" textFill="#4a4c4d" />
             <Label fx:id="refuseCheck" layoutX="69.0" layoutY="235.0" prefHeight="46.0" prefWidth="231.0" textFill="#87da44" />
             <FontAwesomeIconView fill="#171717" glyphName="ENVELOPE" layoutX="38.0" layoutY="132.0" size="25" wrappingWidth="31.0" />
             <FontAwesomeIconView glyphName="UNLOCK_ALT" layoutX="38.0" layoutY="230.0" size="30" wrappingWidth="6.000001668930054" />
