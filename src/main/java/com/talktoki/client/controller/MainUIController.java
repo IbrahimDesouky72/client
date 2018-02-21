@@ -146,7 +146,6 @@ public class MainUIController implements Initializable {
             initScrollPane();
             // TEST statusBox 
             statusBox.getItems().add("online");
-            statusBox.getItems().add("offline");
             statusBox.getItems().add("away");
             statusBox.getItems().add("busy");
             statusBox.getSelectionModel().selectFirst();
@@ -268,7 +267,7 @@ public class MainUIController implements Initializable {
     public void initScrollPane() {
         scrollpane = new ScrollPane();
         scrollpane.setPadding(new Insets(5));
-        scrollpane.setPrefViewportHeight(485.0);
+        scrollpane.setPrefViewportHeight(384.0);
         scrollpane.setPrefViewportWidth(331.0);
         scrollpane.setStyle("-fx-background-color: transparent;");
     }
@@ -679,6 +678,8 @@ public class MainUIController implements Initializable {
     public void openCreateGroup() {
         updateFriendsList();
         contentPane.getChildren().setAll(createGroupUI);
+        System.out.println("Content GROUP SIZE "+contentPane.getWidth());
+        System.out.println("Content GROUP SIZE "+contentPane.getHeight());
         createGroupController.notifyChange();
     }
 
@@ -790,6 +791,6 @@ public class MainUIController implements Initializable {
     }
 
     public void appendToAnnouncements(String announcement) {
-        announcementsArea.appendText(announcement + "/n");
+        announcementsArea.appendText("Server:"+announcement + "\n");
     }
 }
